@@ -4217,8 +4217,8 @@ namespace CmlTechniques.CMS
             }
             //crConnectionInfo.ServerName = "213.171.197.149,49296";
             //crConnectionInfo.DatabaseName = "DBCML";
-            //crConnectionInfo.UserID = "CT_user";
-            //crConnectionInfo.Password = "CTplus#2016";
+            //crConnectionInfo.UserID = "CMLT";
+            //crConnectionInfo.Password = "C!m@l#S$q%l";
             crConnectionInfo.ServerName = Constants.CMLTConstants.serverName;
             crConnectionInfo.DatabaseName = Constants.CMLTConstants.dbName;
             crConnectionInfo.UserID = Constants.CMLTConstants.dbUserName;
