@@ -36,7 +36,7 @@ namespace Constants
         //public static string dbName { get { return "DBCML"; } }
         //public static string dbUserName { get { return "sa"; } }
         //public static string dbPassword { get { return "Admin@123"; } }
-        // For CML dubai server
+        // For CML Dubai Server
 
      }      
  }

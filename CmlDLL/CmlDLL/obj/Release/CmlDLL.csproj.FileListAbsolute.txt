@@ -33,3 +33,8 @@ C:\Techniques\Projects\CmlTechniques\CmlDLL\CmlDLL\bin\Release\CmlDLL.pdb
 C:\Techniques\Projects\CmlTechniques\CmlDLL\CmlDLL\obj\Release\CmlDLL.csproj.CoreCompileInputs.cache
 C:\Techniques\Projects\CmlTechniques\CmlDLL\CmlDLL\obj\Release\CmlDLL.dll
 C:\Techniques\Projects\CmlTechniques\CmlDLL\CmlDLL\obj\Release\CmlDLL.pdb
+E:\CMLT\CmlDLL\CmlDLL\bin\Release\CmlDLL.dll
+E:\CMLT\CmlDLL\CmlDLL\bin\Release\CmlDLL.pdb
+E:\CMLT\CmlDLL\CmlDLL\obj\Release\CmlDLL.csproj.CoreCompileInputs.cache
+E:\CMLT\CmlDLL\CmlDLL\obj\Release\CmlDLL.dll
+E:\CMLT\CmlDLL\CmlDLL\obj\Release\CmlDLL.pdb
