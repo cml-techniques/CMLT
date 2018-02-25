@@ -1,0 +1,605 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cmsdocreview.aspx.cs" Inherits="CmlTechniques.CMS.cmsdocreview" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title></title>
+    <script type="text/javascript">
+    
+      function pageLoad() {
+      }
+    
+    </script>
+    <link href="../page.css" rel="stylesheet" type="text/css" />
+    <link href="../StyleSheet1.css" rel="stylesheet" type="text/css" /> 
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div style="font-family: verdana; font-size: x-small;height:50%;width:100%;position:absolute">
+        <asp:ToolkitScriptManager runat="server">
+        </asp:ToolkitScriptManager>
+        <div>
+        <table style="background-color:#092443;color:White;width:100%">
+        <tr>
+        <td style="width:110px">Document Name</td>
+        <td style="width:300px"><asp:TextBox ID="txtreviewed" runat="server" Width="300px"></asp:TextBox></td>
+        <td style="width:110px">Issued to</td>
+        <td style="width:300px"><asp:DropDownList ID="drissuedto" runat="server" Width="300px"></asp:DropDownList></td>
+        <td>
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+        <asp:Button ID="btnadd" runat="server" Text="add" onclick="btnadd_Click" Width="100px" />
+        </ContentTemplate>
+            </asp:UpdatePanel>
+        </td>
+        <td style="font-size: xx-large; font-weight: bold;">DR</td>
+        </tr>
+        </table>
+        <%--<h1 style="margin:0; background-color: #092443; color: #FFFFFF;">Document Review Log:-&nbsp;<p></p>Document<asp:TextBox ID="txtreviewed" runat="server" Width="300px"></asp:TextBox></h1>--%>
+        <%--<p style="margin:0; background-color: #092443; color: #FFFFFF;height:30px"><span style="font-size:x-large;font-weight:bold">Document Review</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label1" runat="server" Text="Document Name" Height="20px"></asp:Label>&nbsp; <asp:TextBox ID="txtreviewed" runat="server" Width="300px"></asp:TextBox>&nbsp;<asp:Label 
+                ID="Label2" runat="server" Text="Issued to" Height="20px"></asp:Label>&nbsp;<asp:DropDownList ID="drissuedto" runat="server" Width="300px">
+                                </asp:DropDownList>&nbsp;<asp:Button ID="btnadd0" 
+                runat="server" Text="add" onclick="btnadd_Click" Width="100px" />
+                                                </p>--%>
+        </div>
+        <div style="height:200px;overflow:auto">
+            <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+            <ContentTemplate>
+            
+            <%--<asp:GridView ID="mygrid" runat="server" AutoGenerateColumns="False" 
+                Font-Bold="True" Width="100%" CellPadding="4" 
+                onrowdatabound="mygrid_RowDataBound" onrowcommand="mygrid_RowCommand" 
+                BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" >
+                <RowStyle BackColor="White" ForeColor="#003399" />
+                <Columns>
+                <asp:BoundField DataField="dr_no" HeaderText="DR.NO" />
+                <asp:ButtonField DataTextField="dr_no" HeaderText="DR.NO" ButtonType="Button" >
+                    <ControlStyle Font-Size="X-Small" Height="20px" Width="50px" />
+                    <ItemStyle Width="50px" />
+                    </asp:ButtonField>
+                <asp:BoundField DataField="dr_reviewed" HeaderText="DOCUMENT REVIEWED" />
+                <asp:BoundField DataField="issue_date" HeaderText="ISSUED DATE" 
+                        DataFormatString="{0:dd/MM/yy}" >
+                    <ItemStyle Width="75px" />
+                    </asp:BoundField>
+                <asp:BoundField DataField="uid" HeaderText="REVIEWED BY" />
+                <asp:BoundField DataField="issued_to" HeaderText="ISSUED TO" />
+                <asp:BoundField DataField="comments" HeaderText="NO.OF COMMENTS" >
+                    <ItemStyle Width="75px" />
+                    </asp:BoundField>
+                <asp:BoundField DataField="response"    HeaderText="NO.OF RESPONSE" >
+                    <ItemStyle Width="75px" />
+                    </asp:BoundField>
+                <asp:BoundField DataField="dr_status" HeaderText="STATUS" >
+                    <ItemStyle Width="100px" />
+                    </asp:BoundField>
+                <asp:BoundField DataField="dr_id" />
+                <asp:BoundField HeaderText="OVER DUE" />
+                </Columns>
+                <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
+                <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+                <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+            </asp:GridView>--%>
+            <asp:ListView ID="myview" runat="server" DataKeyNames="dr_id" 
+                style="width:100%" onitemcanceling="myview_ItemCanceling" 
+                onitemcommand="myview_ItemCommand" onitemediting="myview_ItemEditing" 
+                onselectedindexchanging="myview_SelectedIndexChanging">
+                <ItemTemplate>
+                    <tr style="background-color: #E0FFFF; color: #333333;">
+                        <td>
+                            <%--<asp:Label ID="dr_noLabel" runat="server" Text='<%# Eval("dr_no") %>' />--%>
+                            <asp:Button ID="btndr_no" runat="server" Text='<%# Eval("dr_no") %>' CommandName="select" />
+                        </td>
+                        <td>
+                            <asp:Label ID="dr_reviewedLabel" runat="server" 
+                                Text='<%# Eval("dr_reviewed") %>' Width="200px" />
+                        </td>
+                        <td>
+                            <asp:Label ID="issue_dateLabel" runat="server" 
+                                Text='<%# Eval("issue_date","{0:dd-MM-yy}" ) %>'   />
+                        </td>
+                        <td>
+                        <asp:Label ID="uidLabel" runat="server" Text='<%# Eval("uid") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="issued_toLabel" runat="server" Text='<%# Eval("issued_to") %>' />
+                        </td>
+                        <td>
+                        <asp:Label ID="commentsLabel" runat="server" Text='<%# Eval("comments") %>' />
+                            
+                        </td>
+                        <td>
+                        <asp:Label ID="responseLabel" runat="server" Text='<%# Eval("response") %>' />
+                            
+                        </td>
+                        <td>
+                        <asp:Label ID="dr_statusLabel" runat="server" Text='<%# Eval("dr_status") %>' />
+                            
+                        </td>
+                        <td>
+                            <asp:Label ID="dr_idLabel" runat="server" Text='<%# Eval("dr_id") %>' />
+                        </td>
+                        <td>
+                            <asp:Button ID="EditButton" runat="server" CommandName="Edit" 
+                                        Text="Edit" style="cursor:pointer" />
+                        </td>
+                    </tr>
+                </ItemTemplate>
+                <AlternatingItemTemplate>
+                    <tr style="background-color: #FFFFFF; color: #284775;">
+                         <td>
+                            <%--<asp:Label ID="dr_noLabel" runat="server" Text='<%# Eval("dr_no") %>' />--%>
+                            <asp:Button ID="btndr_no" runat="server" Text='<%# Eval("dr_no") %>' CommandName="select" />
+                        </td>
+                        <td>
+                            <asp:Label ID="dr_reviewedLabel" runat="server" 
+                                Text='<%# Eval("dr_reviewed") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="issue_dateLabel" runat="server" 
+                                Text='<%# Eval("issue_date","{0:dd-MM-yy}" ) %>'   />
+                        </td>
+                        <td>
+                        <asp:Label ID="uidLabel" runat="server" Text='<%# Eval("uid") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="issued_toLabel" runat="server" Text='<%# Eval("issued_to") %>' />
+                        </td>
+                        <td>
+                        <asp:Label ID="commentsLabel" runat="server" Text='<%# Eval("comments") %>' />
+                            
+                        </td>
+                        <td>
+                        <asp:Label ID="responseLabel" runat="server" Text='<%# Eval("response") %>' />
+                            
+                        </td>
+                        <td>
+                        <asp:Label ID="dr_statusLabel" runat="server" Text='<%# Eval("dr_status") %>' />
+                            
+                        </td>
+                        <td>
+                            <asp:Label ID="dr_idLabel" runat="server" Text='<%# Eval("dr_id") %>' />
+                        </td>
+                        <td>
+                                <asp:Button ID="EditButton" runat="server" CommandName="Edit" 
+                                        Text="Edit" style="cursor:pointer" />
+                        </td>
+                    </tr>
+                </AlternatingItemTemplate>
+                <EmptyDataTemplate>
+                    <table runat="server" 
+                        style="background-color: #FFFFFF;border-collapse: collapse;border-color: #999999;border-style:none;border-width:1px;">
+                        <tr>
+                            <td>
+                                No data was returned.</td>
+                        </tr>
+                    </table>
+                </EmptyDataTemplate>
+                <InsertItemTemplate>
+                    <tr style="">
+                        <td>
+                            <asp:Button ID="InsertButton" runat="server" CommandName="Insert" 
+                                Text="Insert" />
+                            <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" 
+                                Text="Clear" />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="dr_noTextBox" runat="server" Text='<%# Bind("dr_no") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="dr_reviewedTextBox" runat="server" 
+                                Text='<%# Bind("dr_reviewed") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="issue_dateTextBox" runat="server" 
+                                Text='<%# Bind("issue_date") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="issued_toTextBox" runat="server" 
+                                Text='<%# Bind("issued_to") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="dr_statusTextBox" runat="server" 
+                                Text='<%# Bind("dr_status") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="uidTextBox" runat="server" Text='<%# Bind("uid") %>' />
+                        </td>
+                        <td>
+                            &nbsp;</td>
+                        <td>
+                            <asp:TextBox ID="commentsTextBox" runat="server" 
+                                Text='<%# Bind("comments") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="responseTextBox" runat="server" 
+                                Text='<%# Bind("response") %>' />
+                        </td>
+                    </tr>
+                </InsertItemTemplate>
+                <LayoutTemplate>
+                    <table runat="server">
+                        <tr runat="server">
+                            <td runat="server">
+                                <table ID="itemPlaceholderContainer" runat="server" border="1" 
+                                    style="background-color: #FFFFFF;border-collapse: collapse;border-color: #999999;border-style:none;border-width:1px;font-family: Verdana, Arial, Helvetica, sans-serif;">
+                                    <tr runat="server" style="background-color: #E0FFFF; color: #333333;">
+                                        <th runat="server">
+                                            DR.NO</th>
+                                        <th runat="server">
+                                            DOCUMENT NAME</th>
+                                        <th runat="server">
+                                            ISSUED DATE</th>
+                                        <th runat="server">
+                                            REVIEWED BY</th>
+                                        <th runat="server">
+                                            ISSUED TO</th>
+                                        <th runat="server">
+                                            COMMENTS</th>
+                                        <th runat="server">
+                                            RESPONSE</th>
+                                        <th runat="server">
+                                            STATUS</th>
+                                        <th runat="server">
+                                            </th>
+                                    </tr>
+                                    <tr ID="itemPlaceholder" runat="server">
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr runat="server">
+                            <td runat="server" 
+                                
+                                style="text-align: center;background-color: #5D7B9D; font-family: Verdana, Arial, Helvetica, sans-serif;color: #FFFFFF;">
+                            </td>
+                        </tr>
+                    </table>
+                </LayoutTemplate>
+                <EditItemTemplate>
+                    <tr style="background-color: #999999;">
+                        <%--<td>
+                            <asp:Button ID="UpdateButton" runat="server" CommandName="Update" 
+                                Text="Update" />
+                            <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" 
+                                Text="Cancel" />
+                        </td>--%>
+                        <td>
+                            <asp:Label ID="dr_noLabel" runat="server" Text='<%# Eval("dr_no") %>' />
+                        </td>
+                        <td>
+                            <%--<asp:TextBox ID="dr_reviewedTextBox" runat="server" 
+                                Text='<%# Bind("dr_reviewed") %>' />--%>
+                                <asp:Label ID="Label5" runat="server" Text='<%# Eval("dr_reviewed") %>' />
+                        </td>
+                        <td>
+                            <%--<asp:TextBox ID="issue_dateTextBox" runat="server" 
+                                Text='<%# Bind("issue_date") %>' />--%>
+                              <asp:Label ID="Label6" runat="server" Text='<%# Eval("issue_date") %>' />  
+                        </td>
+                        <td>
+                            <%--<asp:TextBox ID="uidTextBox" runat="server" Text='<%# Bind("uid") %>' />--%>
+                            <asp:Label ID="Label3" runat="server" Text='<%# Eval("uid") %>' />
+                        </td>
+                        
+                        <td>
+                            <%--<asp:TextBox ID="issued_toTextBox" runat="server" 
+                                Text='<%# Bind("issued_to") %>' />--%>
+                             <asp:Label ID="Label4" runat="server" Text='<%# Eval("issued_to") %>' />   
+                        </td>
+                        <td>
+                            <%--<asp:TextBox ID="commentsTextBox" runat="server" 
+                                Text='<%# Bind("comments") %>' />--%>
+                                <asp:Label ID="Label1" runat="server" Text='<%# Eval("comments") %>' />
+                        </td>
+                        <td>
+                            <%--<asp:TextBox ID="responseTextBox" runat="server" 
+                                Text='<%# Bind("response") %>' />--%>
+                                <asp:Label ID="Label2" runat="server" Text='<%# Eval("response") %>' />
+                        </td>
+                        <td>
+                            <%--<asp:TextBox ID="dr_statusTextBox" runat="server" 
+                                Text='<%# Bind("dr_status") %>' />--%>
+                            <asp:DropDownList ID="drstatus" runat="server" >
+                            </asp:DropDownList>
+                        </td>
+                        
+                        <td>
+                            <asp:Label ID="dr_idLabel1" runat="server" Text='<%# Eval("dr_id") %>' />
+                        </td>
+                        
+                        
+                        <td>
+                            <asp:Button ID="UpdateButton" runat="server" CommandName="Update" 
+                                Text="Update" />
+                            <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" 
+                                Text="Cancel" />
+                        </td>
+                    </tr>
+                </EditItemTemplate>
+                <SelectedItemTemplate>
+                    <tr style="background-color: #E2DED6; font-weight: bold;color: #333333;">
+                        <td>
+                            <asp:Label ID="dr_noLabel" runat="server" Text='<%# Eval("dr_no") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="dr_reviewedLabel" runat="server" 
+                                Text='<%# Eval("dr_reviewed") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="issue_dateLabel" runat="server" 
+                                Text='<%# Eval("issue_date") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="issued_toLabel" runat="server" Text='<%# Eval("issued_to") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="dr_statusLabel" runat="server" Text='<%# Eval("dr_status") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="uidLabel" runat="server" Text='<%# Eval("uid") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="dr_idLabel" runat="server" Text='<%# Eval("dr_id") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="commentsLabel" runat="server" Text='<%# Eval("comments") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="responseLabel" runat="server" Text='<%# Eval("response") %>' />
+                        </td>
+                    </tr>
+                </SelectedItemTemplate>
+            </asp:ListView>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+                ConnectionString="<%$ ConnectionStrings:dbCMLConnectionString %>" 
+                SelectCommand="Load_doc_review_log" SelectCommandType="StoredProcedure">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue="1" Name="project_code" Type="String" />
+                </SelectParameters>
+            </asp:SqlDataSource>
+            </ContentTemplate>
+            </asp:UpdatePanel>
+            <asp:Panel ID="pnlPopup" runat="server" Width="300px" style="display:none;" >
+                    <asp:Label ID="Label1" runat="server" Font-Names="verdana" Font-Size="Medium" ForeColor="White"></asp:Label>
+                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%" id="tblPopup">
+                            <tr>
+                                <td class="heading"  style="background-image: url('images/headingbg_13.gif'); background-repeat: repeat-x;" >
+     </td>
+                            </tr>
+                            
+                            <tr>
+                                <td align="left" height="75px" valign="middle"   bgcolor="White">
+                                <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                    <ContentTemplate>
+                        <asp:CheckBoxList ID="chkuser" runat="server" BackColor="White" Width="100%" >
+                        </asp:CheckBoxList>
+                                    </ContentTemplate>
+                    </asp:UpdatePanel>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <td class="footer" height="30px" >
+                                    <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                                    <ContentTemplate>
+                                    <asp:Button ID="btnCont" runat="server" Text="Continue" OnClick="btnCont_Click"   /><asp:Button ID="btncancel" runat="server" Text="Cancel" OnClick="btncancel_Click"    />
+                                    </ContentTemplate>
+                                    </asp:UpdatePanel>
+                                    <%--<asp:UpdateProgress ID="UpdateProgress1" runat="server">
+                                    <ProgressTemplate>
+                                     <div id="myprogress" runat="server" style="position: absolute; z-index: 40; top: 50%; left: 50%">
+                                            <asp:Image ID="myimage" runat="server" ImageUrl="~/images/loading30.gif" />
+                                            </div>
+                                            </ProgressTemplate>
+                                    </asp:UpdateProgress>--%>
+                                </td>
+                            </tr>
+                       </table>
+                  </asp:Panel>
+                  
+                    <asp:Button ID="btnDummy" runat="server" Text="Button" style="display:none;" />
+                  <asp:ModalPopupExtender ID="btnDummy_ModalPopupExtender" runat="server" 
+                  TargetControlID="btnDummy"  PopupControlID="pnlPopup"
+                  BackgroundCssClass="modal"
+                  DropShadow="true">
+                  </asp:ModalPopupExtender>
+            </div>
+        <asp:UpdatePanel ID="UpdatePanel21" runat="server">
+        <ContentTemplate>        
+         <div style="padding-top:10px;height:150px"  id="mydiv" runat="server">
+         <div>
+         <table style="background-color:#092443;color:White;width:100%">
+        <tr>
+        <td style="width:110px">Details</td>
+        <td style="width:300px"><asp:TextBox ID="txtdetails" runat="server" Width="300px"></asp:TextBox></td>
+        <td><asp:Button ID="btnaddtr" runat="server" Text="add" onclick="btnaddtr_Click" Width="100px" /></td>
+        <td style="font-size: xx-large; font-weight: bold;">
+            <asp:Label ID="lbldrno" runat="server" ForeColor="Red"></asp:Label>Details</td>
+        </tr>
+        </table>
+        </div>
+        <div style="height:100%;overflow:auto;width:100% ">
+            <%--<asp:UpdatePanel ID="UpdatePanel6" runat="server">
+            <ContentTemplate>--%>
+            <%--<asp:GridView ID="mygrid1" runat="server" AutoGenerateColumns="False" 
+                Font-Bold="True" Width="100%" CellPadding="4" BackColor="White" 
+                BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" onrowdatabound="mygrid1_RowDataBound" 
+                >
+                <RowStyle BackColor="White" ForeColor="#003399" />
+                <Columns>
+                <asp:BoundField HeaderText="ITM.NO" >
+                    <ItemStyle Width="50px" />
+                    </asp:BoundField>
+                <asp:BoundField DataField="details" HeaderText="DETAILS" />
+                <asp:BoundField DataField="response" HeaderText="RESPONDS" />
+                </Columns>
+                <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
+                <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+                <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+            </asp:GridView>--%>
+            <asp:ListView ID="mydetailsview" runat="server" 
+                DataKeyNames="dr_itm_id" style="width:100%" 
+                onitemcanceling="mydetailsview_ItemCanceling" 
+                onitemediting="mydetailsview_ItemEditing">
+                <ItemTemplate>
+                    <tr style="background-color: #E0FFFF;color: #333333;">
+                        <td>
+                            <asp:Label ID="dr_itm_idLabel" runat="server" Text='<%# Eval("dr_itm_id") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="detailsLabel" runat="server" Text='<%# Eval("details") %>' Width="30%" />
+                        </td>
+                        <td>
+                            <asp:Label ID="responseLabel" runat="server" Text='<%# Eval("response") %>' Width="50%" />
+                        </td>
+                        <td>
+                                <asp:Button ID="EditButton" runat="server" CommandName="Edit" 
+                                        Text="Response" style="cursor:pointer" />
+                        </td>
+                    </tr>
+                </ItemTemplate>
+                <AlternatingItemTemplate>
+                    <tr style="background-color: #FFFFFF;color: #284775;">
+                        <td>
+                            <asp:Label ID="dr_itm_idLabel" runat="server" Text='<%# Eval("dr_itm_id") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="detailsLabel" runat="server" Text='<%# Eval("details") %>' Width="30%" />
+                        </td>
+                        <td>
+                            <asp:Label ID="responseLabel" runat="server" Text='<%# Eval("response") %>' Width="50%" />
+                        </td>
+                        <td>
+                                <asp:Button ID="EditButton" runat="server" CommandName="Edit" 
+                                        Text="Response" style="cursor:pointer" />
+                        </td>
+                    </tr>
+                </AlternatingItemTemplate>
+                <EmptyDataTemplate>
+                    <table runat="server" 
+                        style="background-color: #FFFFFF;border-collapse: collapse;border-color: #999999;border-style:none;border-width:1px;">
+                        <tr>
+                            <td>
+                                No data was returned.</td>
+                        </tr>
+                    </table>
+                </EmptyDataTemplate>
+                <InsertItemTemplate>
+                    <tr style="">
+                        <td>
+                            <asp:Button ID="InsertButton" runat="server" CommandName="Insert" 
+                                Text="Insert" />
+                            <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" 
+                                Text="Clear" />
+                        </td>
+                        <td>
+                            &nbsp;</td>
+                        <td>
+                            <asp:TextBox ID="detailsTextBox" runat="server" Text='<%# Bind("details") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="responseTextBox" runat="server" 
+                                Text='<%# Bind("response") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="_dateTextBox" runat="server" Text='<%# Bind("_date") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="uidTextBox" runat="server" Text='<%# Bind("uid") %>' />
+                        </td>
+                    </tr>
+                </InsertItemTemplate>
+                <LayoutTemplate>
+                    <table runat="server">
+                        <tr runat="server">
+                            <td runat="server">
+                                <table ID="itemPlaceholderContainer" runat="server" border="1" 
+                                    style="background-color: #FFFFFF;border-collapse: collapse;border-color: #999999;border-style:none;border-width:1px;font-family: Verdana, Arial, Helvetica, sans-serif;">
+                                    <tr runat="server" style="background-color: #E0FFFF;color: #333333;">
+                                        <th runat="server">
+                                            </th>
+                                        <th runat="server">
+                                            DETAILS</th>
+                                        <th runat="server">
+                                            RESPONSE</th>
+                                    </tr>
+                                    <tr ID="itemPlaceholder" runat="server">
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr runat="server">
+                            <td runat="server" 
+                                style="text-align: center;background-color: #5D7B9D;font-family: Verdana, Arial, Helvetica, sans-serif;color: #FFFFFF">
+                            </td>
+                        </tr>
+                    </table>
+                </LayoutTemplate>
+                <EditItemTemplate>
+                    <tr style="background-color: #999999;">
+                        <td>
+                            <asp:Label ID="dr_itm_idLabel1" runat="server" 
+                                Text='<%# Eval("dr_itm_id") %>' />
+                        </td>
+                        <td>
+                            <%--<asp:TextBox ID="detailsTextBox" runat="server" Text='<%# Bind("details") %>' />--%>
+                            <asp:Label ID="Label7" runat="server" 
+                                Text='<%# Eval("details") %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="responseTextBox" runat="server" 
+                                Text='<%# Bind("response") %>' />
+                        </td>
+                        <td>
+                            <asp:Button ID="UpdateButton" runat="server" CommandName="Update" 
+                                Text="Update" />
+                            <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" 
+                                Text="Cancel" />
+                        </td>
+                    </tr>
+                </EditItemTemplate>
+                <SelectedItemTemplate>
+                    <tr style="background-color: #E2DED6;font-weight: bold;color: #333333;">
+                        <td>
+                            <asp:Label ID="dr_itm_idLabel" runat="server" Text='<%# Eval("dr_itm_id") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="detailsLabel" runat="server" Text='<%# Eval("details") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="responseLabel" runat="server" Text='<%# Eval("response") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="_dateLabel" runat="server" Text='<%# Eval("_date") %>' />
+                        </td>
+                        <td>
+                            <asp:Label ID="uidLabel" runat="server" Text='<%# Eval("uid") %>' />
+                        </td>
+                    </tr>
+                </SelectedItemTemplate>
+            </asp:ListView>
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
+                ConnectionString="<%$ ConnectionStrings:dbCMLConnectionString %>" 
+                SelectCommand="Load_doc_review_details" SelectCommandType="StoredProcedure">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue="1" Name="dr_id" Type="Int32" />
+                </SelectParameters>
+            </asp:SqlDataSource>
+            <%--</ContentTemplate>
+            </asp:UpdatePanel>--%>
+            
+            </div>
+         
+         </div>
+         </ContentTemplate>
+        </asp:UpdatePanel>
+        
+    </div>
+    </form>
+</body>
+</html>

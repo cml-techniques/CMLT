@@ -1,0 +1,75 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Table1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="C_id" type="xs:int" minOccurs="0" />
+              <xs:element name="Uid" type="xs:string" minOccurs="0" />
+              <xs:element name="Sys_id" type="xs:int" minOccurs="0" />
+              <xs:element name="Sys_name" type="xs:string" minOccurs="0" />
+              <xs:element name="E_b_ref" type="xs:string" minOccurs="0" />
+              <xs:element name="B_Z" type="xs:string" minOccurs="0" />
+              <xs:element name="Cat" type="xs:string" minOccurs="0" />
+              <xs:element name="F_Lvl" type="xs:string" minOccurs="0" />
+              <xs:element name="Sq_No" type="xs:string" minOccurs="0" />
+              <xs:element name="Des" type="xs:string" minOccurs="0" />
+              <xs:element name="Loc" type="xs:string" minOccurs="0" />
+              <xs:element name="P_P_to" type="xs:string" minOccurs="0" />
+              <xs:element name="F_from" type="xs:string" minOccurs="0" />
+              <xs:element name="Substation" type="xs:string" minOccurs="0" />
+              <xs:element name="Pwr_on" type="xs:string" minOccurs="0" />
+              <xs:element name="S_c_m" type="xs:string" minOccurs="0" />
+              <xs:element name="Con_Acce" type="xs:string" minOccurs="0" />
+              <xs:element name="T_S_Filed" type="xs:string" minOccurs="0" />
+              <xs:element name="Comm" type="xs:string" minOccurs="0" />
+              <xs:element name="Act_by" type="xs:string" minOccurs="0" />
+              <xs:element name="Act_Date" type="xs:string" minOccurs="0" />
+              <xs:element name="devices1" type="xs:string" minOccurs="0" />
+              <xs:element name="devices2" type="xs:string" minOccurs="0" />
+              <xs:element name="devices3" type="xs:string" minOccurs="0" />
+              <xs:element name="test1" type="xs:string" minOccurs="0" />
+              <xs:element name="test2" type="xs:string" minOccurs="0" />
+              <xs:element name="test3" type="xs:string" minOccurs="0" />
+              <xs:element name="test4" type="xs:string" minOccurs="0" />
+              <xs:element name="test5" type="xs:string" minOccurs="0" />
+              <xs:element name="test6" type="xs:string" minOccurs="0" />
+              <xs:element name="test7" type="xs:string" minOccurs="0" />
+              <xs:element name="test8" type="xs:string" minOccurs="0" />
+              <xs:element name="test9" type="xs:string" minOccurs="0" />
+              <xs:element name="test10" type="xs:string" minOccurs="0" />
+              <xs:element name="per_com1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="tested1" type="xs:string" minOccurs="0" />
+              <xs:element name="tested2" type="xs:string" minOccurs="0" />
+              <xs:element name="test11" type="xs:string" minOccurs="0" />
+              <xs:element name="test12" type="xs:string" minOccurs="0" />
+              <xs:element name="test13" type="xs:string" minOccurs="0" />
+              <xs:element name="test14" type="xs:string" minOccurs="0" />
+              <xs:element name="test15" type="xs:string" minOccurs="0" />
+              <xs:element name="testsheet" type="xs:string" minOccurs="0" />
+              <xs:element name="possition" type="xs:int" minOccurs="0" />
+              <xs:element name="accept1" type="xs:string" minOccurs="0" />
+              <xs:element name="accept2" type="xs:string" minOccurs="0" />
+              <xs:element name="filed1" type="xs:string" minOccurs="0" />
+              <xs:element name="filed2" type="xs:string" minOccurs="0" />
+              <xs:element name="Seq_No" type="xs:int" minOccurs="0" />
+              <xs:element name="Position" type="xs:int" minOccurs="0" />
+              <xs:element name="per_com2" type="xs:decimal" minOccurs="0" />
+              <xs:element name="per_com3" type="xs:decimal" minOccurs="0" />
+              <xs:element name="per_com4" type="xs:decimal" minOccurs="0" />
+              <xs:element name="per_com5" type="xs:decimal" minOccurs="0" />
+              <xs:element name="per_com6" type="xs:decimal" minOccurs="0" />
+              <xs:element name="per_com7" type="xs:decimal" minOccurs="0" />
+              <xs:element name="per_com8" type="xs:decimal" minOccurs="0" />
+              <xs:element name="per_com9" type="xs:decimal" minOccurs="0" />
+              <xs:element name="per_com10" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Cate_name" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

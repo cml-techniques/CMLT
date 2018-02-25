@@ -1,0 +1,81 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Login.master.cs" Inherits="CmlTechniques.Login" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>CML Techniques Online Project Management Systems</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">      
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+    body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	}
+    </style>
+    <script type="text/javascript">
+        function getIP(id) {
+            var ip = '<%=Request.ServerVariables["REMOTE_ADDR"]%>';
+            document.getElementById(id).value = ip;
+//            var dt = new Date();
+//            document.getElementById('_login').value = dt.toString();
+        }
+</script>
+</head>
+<body style="background-image:url('images/login_bg.jpg');" >
+    <form id="form1" runat="server">
+    <div>
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+    <table 
+            style="position: absolute ; width: 100%; height: 100%; ">
+            <tr>
+                <td   align="center"  valign="middle" 
+                    style="background-repeat: no-repeat" height="150px" >
+                    &nbsp;&nbsp;
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                    <asp:Image ID="Image1" runat="server" Height="75px" 
+                        ImageUrl="~/images/logo.JPG" Width="150px" />
+                            &nbsp;</td>
+                            <td>
+                    <asp:Label ID="Label1" runat="server" Font-Names="Arial" Font-Size="45pt"  
+                        ForeColor="White" Text="PROJECT MANAGEMENT SYSTEMS"></asp:Label>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" height="100%">
+                 
+                <br />
+                    <br />
+                <br />
+                    <table border="0" cellpadding="0" cellspacing="0" align="center" >
+                        <tr>
+                            <td align="center" height="400px" 
+                                style="background-image: url('images/loginbox.png'); background-repeat: no-repeat ;" 
+                                valign="middle" width="600px">
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+                            </td>
+                        </tr>
+                        </table>
+                </td>
+            </tr>
+            <tr>
+            <td  >
+            
+            </td>
+            </tr>
+        </table>
+        
+    </div>
+    </form>
+</body>
+</html>

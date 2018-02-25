@@ -1,0 +1,89 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CmlTechniques.CMS.Dashboard" %>
+
+<%@ Register Assembly="CrystalDecisions.Web, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"
+    Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+
+    <script></script>
+
+    <link href="../page.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        html, body
+        {
+            width: 100%;
+        }
+        table
+        {
+            margin: 0 auto;
+        }
+        .hideableFrame, .leftPanel, .menuShadow
+        {
+            display: none !important;
+        }
+        .dialogzone
+        {
+            background-color: transparent !important;
+        }
+        .insetBorder
+        {
+            background-color: transparent !important;
+            border: none !important;
+        }
+        .insetBorder div
+        {
+            border: none !important;
+            margin: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" AsyncPostBackTimeout="1000">
+    </asp:ToolkitScriptManager>
+    <asp:Label ID="lbldiv" runat="server" Text="" Style="display: none"></asp:Label>
+    <asp:Label ID="lblprj" runat="server" Text="" Style="display: none"></asp:Label>
+    <div>
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+            <ContentTemplate>
+                <asp:Label ID="lblmode" runat="server" Text="" Style="display: none"></asp:Label>
+                <asp:Label ID="lblsrv" runat="server" Text="" Style="display: none"></asp:Label>
+                <asp:Label ID="lblfl" runat="server" Text="" Style="display: none"></asp:Label>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+                            <ContentTemplate>
+                                <CR:CrystalReportViewer ID="CrystalReportViewer2" runat="server" AutoDataBind="true"
+                                    HasCrystalLogo="False" HasToggleGroupTreeButton="False" ToolPanelView="None"
+                                    HasPrintButton="False" HasExportButton="False" HasDrillUpButton="False" HasDrilldownTabs="False"
+                                    HasPageNavigationButtons="False" HasSearchButton="False" HasGotoPageButton="False"
+                                    HasZoomFactorList="False" DisplayToolbar="False" DisplayStatusbar="False" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:PostBackTrigger ControlID="CrystalReportViewer2" />
+                            </Triggers>
+                        </asp:UpdatePanel>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="Div11" runat="server" style="position: absolute; z-index: 40; top: 30%;
+        left: 35%">
+        <asp:UpdateProgress ID="UpdateProgress13" runat="server">
+            <ProgressTemplate>
+                <asp:Image ID="imgload12" runat="server" ImageUrl="../images/loading.gif" Height="200px"
+                    Width="250px" />
+            </ProgressTemplate>
+        </asp:UpdateProgress>
+    </div>
+    </form>
+</body>
+</html>

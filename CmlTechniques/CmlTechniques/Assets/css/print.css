@@ -1,0 +1,16 @@
+﻿@media print{
+    @page {
+        size: A4;
+        margin: 0mm;
+    }
+
+    html, body {
+        width: 1024px;
+    }
+
+    body {
+        margin: 0 auto;
+    }
+}
+
+

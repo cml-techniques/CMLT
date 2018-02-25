@@ -1,0 +1,54 @@
+﻿.accordion .accordion-title{
+	border: 1px solid #ddd;
+	border-top:none;
+	display: block;
+	/*background-image: linear-gradient(bottom, #d1d1d1 0%, #656565 100%);
+	background-image: -o-linear-gradient(bottom, #d1d1d1 0%, #656565 100%);
+	background-image: -moz-linear-gradient(bottom, #d1d1d1 0%, #656565 100%);
+	background-image: -webkit-linear-gradient(bottom, #d1d1d1 0%, #656565 100%);
+	background-image: -ms-linear-gradient(bottom, #d1d1d1 0%, #656565 100%);*/
+	background-color: #656565;
+	-webkit-border-radius: 3px;
+	   -moz-border-radius: 3px;
+			border-radius: 3px;
+	-webkit-box-shadow:0px 1px 1px 0px rgba(180, 180, 180, 0.1);
+       -moz-box-shadow:0px 1px 1px 0px rgba(180, 180, 180, 0.1);
+            box-shadow:0px 1px 1px 0px rgba(180, 180, 180, 0.1);
+	font-weight:600;
+	margin-bottom:0px;
+	
+}
+.accordion .accordion-title a{
+	display:block;
+	padding:5px 10px 5px 40px;
+	background: url('../Asset/accordion-close.png') no-repeat left center;
+	color:#999999 !important;
+	text-decoration:none;
+	text-transform:uppercase;	
+}
+
+.accordion .accordion-title a i{
+	margin:0px 8px 0 0px;
+	opacity: 0.4;
+}
+	.accordion .accordion-title.active a:hover
+	{
+		color:#61b9ff;
+	}
+.accordion .accordion-title.active a{
+	color:#4a8bc2 !important;
+	background: url('../Asset/accordion-open.png') no-repeat left center;
+}
+.accordion .accordion-title.active a i{
+	opacity: 0.95;
+}	
+.accordion .accordion-inner{
+	/*padding:2px 12px 14px 12px;*/
+	padding:5px;
+	background-color:#dddddd;
+	display:none;
+}
+
+.accordion .accordion-inner div{
+	max-width: 100%;
+}

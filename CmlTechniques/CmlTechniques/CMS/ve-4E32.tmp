@@ -1,0 +1,146 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BusinessLogic;
+using App_Properties;
+
+namespace CmlTechniques.CMS
+{
+    public partial class docview : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            _ReadCookies();
+            if (!IsPostBack)
+                load_document();
+        }
+        void _ReadCookies()
+        {
+            if (Request.Browser.Cookies)
+            {
+                if (Request.Cookies["uid"] != null)
+                {
+                    Session["uid"] = Server.HtmlEncode(Request.Cookies["uid"].Value);
+                }
+                if (Request.Cookies["project"] != null)
+                {
+                    Session["project"] = Server.HtmlEncode(Request.Cookies["project"].Value);
+                }
+                if (Request.Cookies["projectname"] != null)
+                {
+                    Session["projectname"] = Server.HtmlEncode(Request.Cookies["projectname"].Value);
+                }
+                if (Request.Cookies["cfile"] != null)
+                {
+                    Session["cfile"] = Server.HtmlEncode(Request.Cookies["cfile"].Value);
+                }
+                if (Request.Cookies["file"] != null)
+                {
+                    Session["file"] = Server.HtmlEncode(Request.Cookies["file"].Value);
+                }
+                if (Request.Cookies["access"] != null)
+                {
+                    Session["access"] = Server.HtmlEncode(Request.Cookies["access"].Value);
+                }
+                if (Request.Cookies["id"] != null)
+                {
+                    Session["id"] = Server.HtmlEncode(Request.Cookies["id"].Value);
+                }
+
+
+
+            }
+        }
+        private void load_document()
+        {
+            Session["cfile"] = (string)Session["file"];
+            if ((string)Session["viewmode"] == "MS")
+            {
+                lblhead.Text = "METHOD STATEMENT";
+                lbstatus.Text = (string)Session["head"];
+                Session["type"] = "2";
+            }
+            else
+            {
+                lblhead.Text = "COMMISSIONING PLANS";
+                lbstatus.Text = "";
+                Session["type"] = "3";
+            }
+            load_Basket();
+            Session["module"] = "CMS";
+            myframe.Attributes.Add("src", "../viewdocument.aspx");
+
+        }
+        protected void btnNo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("../cmsnew.aspx");
+        }
+        protected void cmdadd_Click(object sender, EventArgs e)
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _clscomment _objcls = new _clscomment();
+            _objcls.page_no = txtpno.Text;
+            _objcls.sec_no = txtsno.Text;
+            _objcls.comment = txtcmnt.Text;
+            _objcls.user_id = (string)Session["uid"];
+            _objcls.prj_code = (string)Session["project"];
+            _objcls.module = "CMS";
+            if ((string)Session["viewmode"] == "MS")
+            {
+                _objcls.type = 2;//for MS
+            }
+            else
+            {
+                _objcls.type = 3;//for CP
+            }
+            _objbll.addtobasket(_objcls);
+            load_Basket();
+            txtpno.Text = "";
+            txtsno.Text = "";
+            txtcmnt.Text = "";
+        }
+        void load_Basket()
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _clscomment _objcls = new _clscomment();
+            _objcls.user_id = (string)Session["uid"];
+            _objcls.prj_code = (string)Session["project"];
+            _objcls.module = "CMS";
+            _objcls.type = Convert.ToInt32((string)Session["type"]);
+            mybasket.DataSource = _objbll.load_commentbasket(_objcls);
+            mybasket.DataBind();
+        }
+        protected void cmdsave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void cmdadd1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void mybasket_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int _rowidx = Convert.ToInt32(e.CommandArgument);
+            GridViewRow _srow = mybasket.Rows[_rowidx];
+            TableCell _id = _srow.Cells[4];
+            BLL_Dml _objbll = new BLL_Dml();
+            _clscomment _objcls = new _clscomment();
+            _objcls.comm_id = Convert.ToInt32(_id.Text);
+            _objbll.Remove_basket(_objcls);
+            load_Basket();
+        }
+
+        protected void mybasket_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+                e.Row.Cells[3].Attributes.Add("style", "word-break:break-all;word-wrap:break-word");
+
+            e.Row.Cells[4].Visible = false;
+        }
+    }
+}

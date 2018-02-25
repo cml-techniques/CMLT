@@ -1,0 +1,43 @@
+﻿
+.modal
+{
+	background-color: Gray;
+	filter:alpha(opacity=40);
+	opacity:0.7;
+	
+}
+
+#tblPopup
+{
+    background-color: black;
+	color:Black;
+	padding:5px;
+	
+}
+
+#tblPopup .heading
+{
+	font-size:150%;
+	/*font-weight:bold;
+	background-color: SaddleBrown;*/
+	color:Blue;
+	height:34px;
+}
+
+#tblPopup .footer
+{
+	padding:10px;
+	text-align:center;
+}
+.cms
+{
+	height:136px;
+	width:150px;
+	background:url('images/cms_icon.png');
+	cursor:pointer;
+	border:none;
+}
+.cms:hover
+{
+	background:url('images/cms_icono.png');
+}

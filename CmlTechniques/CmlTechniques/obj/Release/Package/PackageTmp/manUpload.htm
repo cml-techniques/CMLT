@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0099)https://www.cmlinteractive.co.uk/ADMINinteractive/ASPUpload/Xupload/manUpload.asp -->
+<%@ import Namespace="System.IO" %>
+<HTML><HEAD><TITLE>Upload Manufacturer Information Files</TITLE>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+<STYLE type=text/css>.submitLink {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BACKGROUND-COLOR: transparent; WIDTH: 200px; COLOR: #00f; BORDER-TOP: medium none; CURSOR: hand; BORDER-RIGHT: medium none; TEXT-DECORATION: underline
+}
+</STYLE>
+
+<SCRIPT language=JavaScript>
+
+function PrintPage()
+{
+window.open("PrintScheduleMAN.asp", "null", "menubar=1,resizable=1,width=600,height=750,scrollbars=1");
+}
+
+
+</SCRIPT>
+<SCRIPT language=VBScript>
+
+
+Sub Select_OnClick
+dim strLength1  
+dim strLength2  
+dim strFilename  
+dim strIndex  
+dim strResult  
+dim strDelCounter  
+dim strRealIndex  
+UploadCtl.Select  
+strDelCounter=-1 
+For Each File in UploadCtl.SelectedFiles  
+strLength = Len(File.Path)- InStrRev(File.Path,"\")  
+strFilename = Right(File.Path,strLength)  
+strIndex = (File.Index)  
+'strResult = CheckDB(strFilename,strIndex)
+strResult=1
+If strResult=0 then 
+strDelCounter=strDelCounter+1 
+strRealIndex=(strIndex-strDelCounter) 
+UploadCtl.Remove strRealIndex
+End If
+Next 
+End Sub 
+</SCRIPT>
+
+            <SCRIPT language=VBScript>
+
+Sub Remove_OnClick
+  UploadCtl.RemoveHighlighted
+End Sub
+
+Sub RemoveAll_OnClick
+  UploadCtl.RemoveAll
+End Sub
+
+Sub Upload_OnClick
+  UploadCtl.Upload
+End Sub
+</SCRIPT>
+<META name=GENERATOR content="MSHTML 9.00.8112.16434"></HEAD>
+<BODY>
+<!--<TABLE width="100%">
+  <TBODY>
+  <TR>
+    <TD>&nbsp;</TD></TR>
+  <TR>
+    <TD>
+      <DIV align=center>
+      <TABLE border=1 cellSpacing=1 borderColor=#333333 cellPadding=10 
+      bgColor=#c0c0c0
+        <TBODY>
+        <TR>
+          <TD bgColor=#c0c0c0 vAlign=middle align=center>-->
+            
+
+            <!--<OBJECT id=UploadCtl codeBase="XUpload.ocx" 
+            classid=CLSID:E87F6C8E-16C0-11D3-BEF7-009027438003 width=600 
+            height=200 >
+            <PARAM NAME="Directory" VALUE="c:\My Documents\test" />
+            <PARAM NAME="SSL" VALUE="True"><PARAM NAME="server" VALUE="www.cmldubai.com" />
+            <PARAM NAME="script" VALUE="CMS_DOCS/" />
+            <PARAM NAME="EnablePopupMenu" VALUE="False" />
+            <PARAM NAME="ViewServerReply" VALUE="False" />
+            <PARAM NAME="Redirect" VALUE="True"><!--<PARAM NAME="RedirectURL" VALUE="showreply.asp">-->
+            <!--Do not view reply from server--><!--Redirect browser to a server 
+            script upon completion of an upload--><!--</OBJECT>-->
+            
+            <OBJECT WIDTH=500 HEIGHT=200 
+  ID="UploadCtl" 
+  CLASSID="CLSID:E87F6C8E-16C0-11D3-BEF7-009027438003" 
+  CODEBASE="XUpload.ocx"> 
+<param name="server" value="localhost" /> 
+<param name="script" value="simple_upload.aspx" />
+<param name="ViewServerReply" value="False" />
+</OBJECT>
+
+         <p>
+         <INPUT TYPE=BUTTON NAME="SELECT" VALUE="Select">
+<INPUT TYPE=BUTTON NAME="REMOVE" VALUE="Remove">
+<INPUT TYPE=BUTTON NAME="REMOVEALL" VALUE="Remove All">
+<INPUT TYPE=BUTTON NAME="UPLOAD" VALUE="Upload">
+
+         </p>   
+            
+            
+            
+            <!--<P><INPUT name=SELECT value="Browse Files" type=button> <INPUT name=REMOVE value=Remove type=button> <INPUT name=REMOVEALL value="Remove All" type=button> <INPUT name=UPLOAD value=Upload type=button>-->
+            
+            
+             <!-- Microsoft workaround for the Click-to-Activate problem -->
+            <SCRIPT type=text/javascript 
+            src="ie_workaround.js"></SCRIPT>
+            <!--</P></TD></TR></TBODY></TABLE></DIV></TD></TR>
+  <TR>
+    <TD>
+      <FORM method=post name=form1>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD>
+            <DIV align=center><INPUT style="WIDTH: 300px; FONT-FAMILY: Arial; HEIGHT: 30px; FONT-SIZE: 12px" class=submitlink onclick=PrintPage() name=Schedule value="VIEW MANUFACTURER INFORMATION SCHEDULE" type=button div <> 
+            </DIV></TD></TR></TBODY></TABLE></FORM></TD></TR></TBODY>-->
+            
+            <!--</TABLE>--></BODY></HTML>

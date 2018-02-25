@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Demo.master.cs" Inherits="Demo" %>
+<%@ Register Assembly="DevExpress.Web.v7.2" Namespace="DevExpress.Web.ASPxRoundPanel" TagPrefix="dxrp" %>
+<%@ Register Assembly="DevExpress.Web.v7.2" Namespace="DevExpress.Web.ASPxMenu" TagPrefix="dxm" %>
+<%@ Register Assembly="DevExpress.Web.v7.2" Namespace="DevExpress.Web.ASPxSiteMapControl" TagPrefix="dxsm" %>
+<%@ Register Assembly="DevExpress.Web.v7.2" Namespace="DevExpress.Web.ASPxNavBar" TagPrefix="dxnb" %>
+<%@ Register Assembly="DevExpress.Web.v7.2" Namespace="DevExpress.Web.ASPxTabControl" TagPrefix="dxtc" %>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head id="Head1" runat="server">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <asp:ContentPlaceHolder EnableViewState="False" ID="localCssPlaceholder" runat="server"></asp:ContentPlaceHolder>
+    </head>
+    <body>
+        <form id="form1" runat="server" class="Form">
+            <table border="0" cellpadding="0" cellspacing="0" class="Main" id="Main">
+                <tr id="Header">
+                    <td valign="top" class="Navigation Header"><asp:HyperLink EnableViewState="false" ID="Logotype" runat="server" NavigateUrl="~/Default.aspx"><asp:Image Width="231px" Height="61px" ID="ImageLogo" GenerateEmptyAlternateText="True" runat="server" ImageUrl="~/Images/Design/Logo.png" AlternateText="Developer Express ASP.NET Technologies" EnableViewState="False" OnLoad="ImageLogo_Load" /></asp:HyperLink></td>
+                    <td align="right">
+                        <dxm:ASPxMenu EnableViewState="False" SkinID="IconMenu" DataSourceID="smdsIconMenu" runat="server" ID="mIcon">
+                        </dxm:ASPxMenu>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="Navigation" style="padding-left: 2px;">
+                    <dxrp:ASPxRoundPanel SkinID="MainMenu" ID="rpMenu" runat="server" EnableViewState="False">
+                        <PanelCollection>
+                            <dxrp:PanelContent ID="PanelContent2" runat="server">
+                                <dxnb:ASPxNavBar SkinID="MainMenu" id="nbMenu" EnableViewState="False" runat="server" DataSourceID="dsMenu" OnGroupDataBound="nbMenu_GroupDataBound" OnItemDataBound="nbMenu_ItemDataBound">
+                                    <GroupHeaderTemplate>
+                                        <asp:Label ID="Label1" EnableViewState="false" runat="server" Text='<%# Eval("Text") %>' /><asp:Image ID="ImageNew" runat="server" EnableViewState="False" GenerateEmptyAlternateText="True" Visible='<%# GetIsNewVisible(Container.Group.DataItem) %>' CssClass="StatusImage" Width="20px" Height="11px" ImageUrl="~/Images/Design/New.png" OnLoad="ImageNew_Load" /><asp:Image ID="ImageUpdated" runat="server" EnableViewState="False" GenerateEmptyAlternateText="True" Visible='<%# GetIsUpdatedVisible(Container.Group.DataItem) %>' CssClass="StatusImage" Width="34px" Height="11px" ImageUrl="~/Images/Design/Updated.png" OnLoad="ImageUpdated_Load" />
+                                    </GroupHeaderTemplate>
+                                    <ItemTextTemplate>
+                                        <asp:HyperLink ID="HyperLink1" Text='<%# Eval("Text") %>' NavigateUrl='<%# Eval("NavigateUrl") %>' EnableViewState="false" runat="server" Visible='<%# !IsCurrentPage(Page, Container.EvalDataItem("NavigateUrl")) %>' /><asp:Label ID="Label3" Text='<%# Eval("Text") %>' EnableViewState="False" runat="server" Visible='<%# IsCurrentPage(Page, Container.EvalDataItem("NavigateUrl")) %>' /><asp:Image ID="ImageNew2" runat="server" EnableViewState="False" GenerateEmptyAlternateText="True" Visible='<%# GetIsNewVisible(Container.Item.DataItem) %>' CssClass="StatusImage" Width="20px" Height="11px" ImageUrl="~/Images/Design/New.png" OnLoad="ImageNew2_Load" /><asp:Image ID="ImageUpdated2" runat="server" EnableViewState="False" GenerateEmptyAlternateText="True" Visible='<%# GetIsUpdatedVisible(Container.Item.DataItem) %>' CssClass="StatusImage" Width="34px" Height="11px" ImageUrl="~/Images/Design/Updated.png" OnLoad="ImageUpdated2_Load" />
+                                    </ItemTextTemplate>
+                                </dxnb:ASPxNavBar>
+                            </dxrp:PanelContent>
+                        </PanelCollection>
+                    </dxrp:ASPxRoundPanel>
+                    <div class="Banners">
+                        <dxrp:ASPxRoundPanel HorizontalAlign="Center" ShowDefaultImages="False" EnableDefaultAppearance="False" ID="rpBanner" runat="server" ShowHeader="False" EnableViewState="False" Width="230px" SkinID="None">
+                            <BackgroundImage ImageUrl="Images/Design/Banner.jpg" Repeat="NoRepeat" />
+                            <Border BorderWidth="0px" />
+                            <ContentPaddings PaddingLeft="18px" PaddingRight="18px" PaddingTop="74px" PaddingBottom="9px" />
+                            <PanelCollection>
+                                <dxrp:PanelContent ID="PanelContent3" runat="server">
+                                    <div class="BannerLime">To learn more about other<br />Developer Express ASP.NET Components<br />Visit: <a href="http://www.devexpress.com/WebForms/" target="_blank">www.devexpress.com/WebForms/</a></div>
+                                </dxrp:PanelContent>
+                            </PanelCollection>
+                        </dxrp:ASPxRoundPanel>
+                    </div>
+                    </td>
+                    <td valign="top" class="Content" id="Content">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" runat="server" EnableViewState="False" id="tblTitle"><tr>
+                            <td valign="top"><asp:Image EnableViewState="False" GenerateEmptyAlternateText="True" ID="Image1" runat="server" ImageUrl="~/App_Themes/Glass/RoundPanelInternal/DetailsPage/TopLeftCorner.png" Width="6px" Height="65px" OnLoad="Image1_Load" /></td>
+                            <td valign="top" class="DetailsPageHeader">
+                                <table cellpadding="0" cellspacing="0" border="0" class="Title"><tr>
+                                    <td style="height: 50px;"><asp:Image ID="iTitleImage" runat="server" EnableViewState="False" GenerateEmptyAlternateText="True" OnLoad="iTitleImage_Load" /></td>
+                                    <td>
+                                        <h1 class="h1Blue"><asp:Label ID="lGroupName" runat="server" EnableViewState="False" /></h1>
+                                        <h2 class="h2Gray" EnableViewState="False" runat="server" id="hName">&nbsp;<asp:Literal ID="lName" runat="server" EnableViewState="False"></asp:Literal></h2>
+                                    </td>
+                                </tr></table>                                                
+                            </td>
+                            <td valign="top"><asp:Image EnableViewState="False" ID="Image2" runat="server" ImageUrl="~/App_Themes/Glass/RoundPanelInternal/DetailsPage/TopRightCorner.png" Width="65px" Height="65px" OnLoad="Image2_Load" GenerateEmptyAlternateText="True" /></td>
+                        </tr></table>
+                        <table runat="server" id="tblHeader" border="0" cellpadding="0" cellspacing="0" width="100%" EnableViewState="False"><tr>
+                            <td style="height: 16px; background-color: #F1F1F1; border-bottom: Solid 1px #CFD4DB;"><div class="Spacer"></div></td>
+                        </tr></table>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" runat="server" id="tblContent"><tr>
+                            <td valign="top">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                                    <td valign="top" style="background-color: White; padding: 33px 33px 27px 27px;">
+                                        <asp:Literal ID="lGeneralTerms" EnableViewState="False" Visible="False" runat="server" />
+                                        <div style="margin-left: 6px;"><asp:ContentPlaceHolder id="phContent" runat="server"></asp:ContentPlaceHolder></div>
+                                        <table border="0" cellpadding="0" cellspacing="0" runat="server" EnableViewState="False" id="tblSourceCode"><tr><td valign="top" style="padding-left: 6px;">
+                                        <table border="0" cellpadding="0" cellspacing="0"><tr>
+                                            <td valign="top" style="width: 100%;">
+                                                <dxtc:ASPxPageControl SkinID="SourceCode" ID="pcSourceCode" runat="server" EnableViewState="False" OnActiveTabChanged="pcSourceCode_ActiveTabChanged">
+                                                    <TabPages>
+                                                        <dxtc:TabPage Name="Description" Text="Description">
+                                                        </dxtc:TabPage>
+                                                        <dxtc:TabPage Name="C#" Text="C#">
+                                                        </dxtc:TabPage>
+                                                        <dxtc:TabPage Name="VB" Text="VB">
+                                                        </dxtc:TabPage>
+                                                        <dxtc:TabPage Name="ASPX" Text="ASPX">
+                                                        </dxtc:TabPage>
+                                                        <dxtc:TabPage Name="JS" Text="JS">
+                                                        </dxtc:TabPage>
+                                                    </TabPages>
+                                                    <ActiveTabTemplate>
+                                                        <table border="0" cellpadding="0" cellspacing="0"><tr>
+                                                          <td><asp:Image EnableViewState="False" ID="Image7" runat="server"
+                                                            GenerateEmptyAlternateText="True"
+                                                            ImageUrl="~/App_Themes/Glass/PageControlInternal/SourceCode/SelectedLeft.gif" /></td>
+                                                          <td class="SourceCodeActiveTabTemplate"><asp:Label EnableViewState="False"
+                                                            ID="Label1" runat="server" Text="<%# Container.TabPage.Text %>"
+                                                            Font-Names="Tahoma" ForeColor="#01305A" Font-Size="12px"></asp:Label></td>
+                                                          <td><asp:Image EnableViewState="False" ID="Image6" runat="server"
+                                                            GenerateEmptyAlternateText="True"
+                                                            ImageUrl="~/App_Themes/Glass/PageControlInternal/SourceCode/SelectedRight.gif"/></td>
+                                                          </tr>
+                                                        </table>
+                                                    </ActiveTabTemplate>
+                                                    <TabTemplate>
+                                                        <table border="0" cellpadding="0" cellspacing="0"><tr>
+                                                          <td><asp:Image ID="Image4" runat="server" EnableViewState="False"
+                                                            GenerateEmptyAlternateText="True"
+                                                            ImageUrl="~/App_Themes/Glass/PageControlInternal/SourceCode/UnSelectedLeft.gif" /></td>
+                                                          <td class="SourceCodeTabTemplate"><asp:Label EnableViewState="False"
+                                                            ID="Label5" runat="server" Text="<%# Container.TabPage.Text %>"
+                                                            Font-Names="Tahoma" ForeColor="#01305A" Font-Size="12px"></asp:Label></td>
+                                                          <td><asp:Image ID="Image5" runat="server" EnableViewState="False"
+                                                            GenerateEmptyAlternateText="True"
+                                                            ImageUrl="~/App_Themes/Glass/PageControlInternal/SourceCode/UnSelectedRight.gif"/></td>
+                                                          </tr>
+                                                        </table>
+                                                    </TabTemplate>
+                                                </dxtc:ASPxPageControl>    
+                                            </td>
+                                            <td valign="top">
+                                                <table border="0" cellpadding="0" cellspacing="0"><tr>
+                                                    <td valign="top" style="height: 73px;"><div class="Spacer"></div></td>
+                                                </tr><tr>
+                                                    <td valign="top" style="height: 4px;"><asp:Image ID="Image8" EnableViewState="False" runat="server" GenerateEmptyAlternateText="True" ImageUrl="~/App_Themes/Glass/PageControlInternal/SourceCode/TopRightCorner.gif" Width="4px" Height="4px" /></td>
+                                                </tr><tr>
+                                                    <td valign="top" style="height: 394px;" class="SourceCodeRight"><div class="Spacer"></div></td>
+                                                </tr></table>
+                                            </td>    
+                                        </tr></table>
+                                        <table border="0" cellpadding="0" cellspacing="0"><tr>
+                                            <td valign="top"><asp:Image ID="Image9" EnableViewState="False" runat="server" GenerateEmptyAlternateText="True" ImageUrl="~/App_Themes/Glass/PageControlInternal/SourceCode/BottomLeftCorner.gif" Width="4px" Height="4px" /></td>
+                                            <td valign="top" class="SourceCodeMiddleBottom"><div class="Spacer"></div></td>
+                                            <td valign="top" style="height: 4px;"><asp:Image ID="Image10" EnableViewState="False" runat="server" GenerateEmptyAlternateText="True" ImageUrl="~/App_Themes/Glass/PageControlInternal/SourceCode/BottomRightCorner.gif" Width="4px" Height="4px" /></td>
+                                        </tr></table>
+                                        </td></tr></table>
+                                    </td>
+                                </tr></table>
+                            </td>
+                        </tr></table>
+                        <table runat="server" id="tblFooter" border="0" cellpadding="0" cellspacing="0" width="100%" EnableViewState="False"><tr>
+                            <td><asp:Image EnableViewState="False" GenerateEmptyAlternateText="True" ID="Image14" Height="6px" Width="6px" runat="server" ImageUrl="~/App_Themes/Glass/RoundPanelInternal/DetailsPage/BottomLeftCorner.png" OnLoad="Image14_Load" /></td>
+                            <td style="width: 100%; background-color: White;"><div class="Spacer"></div></td>
+                            <td><asp:Image EnableViewState="False" GenerateEmptyAlternateText="True" ID="Image13" Height="6px" Width="6px" runat="server" ImageUrl="~/App_Themes/Glass/RoundPanelInternal/DetailsPage/BottomRightCorner.png" OnLoad="Image13_Load" /></td>
+                        </tr></table>
+                        <asp:ContentPlaceHolder id="phOnceContent" runat="server"></asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+                <tr id="Spacer">
+                    <td><div id="SpacerDiv" class="Spacer"></div></td>
+                    <td id="divSpacer"><div class="Spacer" style="width: 719px;"></div></td>
+                </tr>
+                <tr id="Footer">
+                    <td valign="top"><div class="Spacer" style="width: 0px; height: 0px;"></div></td>
+                    <td valign="top" class="Footer" runat="server" id="tdFooter" EnableViewState="False">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                            <td><asp:HyperLink ID="hlXhtml" runat="server" NavigateUrl="http://www.devexpress.com/Products/NET/WebForms/ASPxCore/xhtml.xml" EnableViewState="False" Target="_blank"><asp:Image ID="Image3" GenerateEmptyAlternateText="True" runat="server" EnableViewState="False" Width="98px" Height="35px" ImageUrl="~/Images/Design/xhtml10.gif" /></asp:HyperLink></td>
+                            <td align="right">
+                                <table border="0" cellpadding="0" cellspacing="0"><tr>
+                                    <td><asp:Image ID="ImageCopyright" runat="server" EnableViewState="False" Width="21px" Height="21px" ImageUrl="~/Images/Design/Copyright.png" OnLoad="ImageCopyright_Load" GenerateEmptyAlternateText="True" /></td>
+                                    <td style="padding-left: 5px;">2006-<asp:Label ID="lblCurrentYear" EnableViewState="False" runat="server" /> Developer Express Inc.</td>
+                                </tr></table>        
+                            </td>
+                        </tr></table>                
+                    </td>
+                </tr>
+            </table>
+            <dxsm:ASPxSiteMapDataSource ID="smdsIconMenu" runat="server" SiteMapProvider="FooterMenuSiteMapProvider" />
+            <asp:XmlDataSource ID="dsMenu" runat="server" DataFile="~/App_Data/Demos.xml" XPath="/Demos/*" EnableViewState="False" />
+        </form>
+    </body>
+</html>

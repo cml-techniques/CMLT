@@ -1,0 +1,51 @@
+#navigation {
+	width: 250px;
+}
+#content {
+	width: 700px;
+}
+#navigation {
+	margin: 10px; float: left;
+}
+#content {
+	margin: 10px; float: left;
+}
+.collapsible {
+	background: rgb(204, 204, 204); margin: 0px; padding:10px 0 0 10px; height: 20px; color: rgb(0, 0, 0); text-transform: uppercase; font-family: Arial, Helvetica, sans-serif; font-size: 1em; text-decoration: none; border-top-color: rgb(240, 240, 240); border-top-width: 1px; border-top-style: solid;cursor:pointer;
+}
+.page_collapsible {
+	background: rgb(204, 204, 204); margin: 0px; padding: 10px; height: 20px; color: rgb(0, 0, 0); text-transform: uppercase; font-family: Arial, Helvetica, sans-serif; font-size: 1em; text-decoration: none; border-top-color: rgb(240, 240, 240); border-top-width: 1px; border-top-style: solid;
+}
+.collapse-open {
+	background: rgb(0, 0, 0); color: rgb(255, 255, 255);
+}
+.collapse-open span {
+	padding:5px 10px; float: right; display: block;
+}
+.collapse-open span {
+	background: url("minus.png") no-repeat center;
+}
+.collapse-close span {
+	background: url("plus.png") no-repeat center; padding:5px 10px; float: right; display: block;
+}
+div.container {
+	margin: 0px; padding: 0px;
+}
+div.content {
+	background: rgb(240, 240, 240); margin: 0px; padding: 0px; line-height: 1.5em; font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif; font-size: 0.9em;
+}
+div.content ul {
+	margin: 0px; padding: 3px;
+}
+div.content p {
+	margin: 0px; padding: 3px;
+}
+div.content ul li {
+	line-height: 25px; list-style-position: inside;
+}
+div.content ul li a {
+	color: rgb(85, 85, 85);
+}
+code {
+	overflow: auto;
+}

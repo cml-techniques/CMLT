@@ -1,0 +1,169 @@
+
+.RadGrid_WebBlue
+{	padding: 0px;
+	margin: 0;
+	background: #fff;
+	color: #000;
+	font-size: x-small;
+	line-height: 13px;
+	font-family: Verdana;
+	
+}
+
+.GridDataDiv_WebBlue
+{
+	overflow-y: scroll !important;
+}
+
+ .RadGrid_WebBlue .rgMasterTable
+{
+	border-spacing: 1px;
+}  
+  .RadGrid_WebBlue .rgInput
+{
+	visibility: collapse;
+	display: none;
+}
+
+.GridToolTip_WebBlue {
+  font-size: x-small;
+ line-height: 13px;
+  font-family: Verdana; }
+
+.RadGrid_WebBlue .rgHeader
+{
+	padding: 0;
+	margin: 0;
+	display: none;
+}
+
+
+.RadGrid_WebBlue .rgHeader:first-child, .RadGrid_WebBlue th.rgResizeCol:first-child, .RadGrid_WebBlue .rgFilterRow > td:first-child, .RadGrid_WebBlue .rgRow > td:first-child, .RadGrid_WebBlue .rgAltRow > td:first-child
+{
+	
+	border-left-width: 1px;
+	
+}
+.RadGrid_WebBlue .rgSave, .RadGrid_WebBlue .rgAdd, .RadGrid_WebBlue .rgRefresh, .RadGrid_WebBlue .rgEdit, .RadGrid_WebBlue .rgDel, .RadGrid_WebBlue .rgFilter, .RadGrid_WebBlue .rgPagePrev, .RadGrid_WebBlue .rgPageNext, .RadGrid_WebBlue .rgPageFirst, .RadGrid_WebBlue .rgPageLast, .RadGrid_WebBlue .rgExpand, .RadGrid_WebBlue .rgCollapse, .RadGrid_WebBlue .rgSortAsc, .RadGrid_WebBlue .rgSortDesc, .RadGrid_WebBlue .rgUpdate, .RadGrid_WebBlue .rgCancel, .RadGrid_WebBlue .rgUngroup, .RadGrid_WebBlue .rgExpXLS, .RadGrid_WebBlue .rgExpDOC, .RadGrid_WebBlue .rgExpPDF, .RadGrid_WebBlue .rgExpCSV {
+  visibility: collapse;
+	display: none; }
+	
+     /*
+.RadGrid_WebBlue .rgRow td, .RadGrid_WebBlue .rgAltRow td, .RadGrid_WebBlue .rgEditRow td, .RadGrid_WebBlue .rgFooter td
+{
+	border-style: solid;
+	border-width: 0 0px 1px 1px;
+}*/
+.RadGrid_WebBlue .rgRow
+{
+	padding: 5px 5px 5px 5px;
+	
+	
+}
+.RadGrid_WebBlue .rgRow td
+{
+	border: 1pt solid #003366;
+	padding: 5px 5px 5px 5px;
+	margin: 2px;
+	border-collapse: separate;
+}
+.RadGrid_WebBlue .rgAltRow
+{
+	padding: 5px 5px 5px 5px;
+	
+	
+}
+  .RadGrid_WebBlue .rgAltRow td
+{
+	border: 1pt solid #003366;
+	padding: 5px 5px 5px 5px;
+	margin: 2px;
+	border-collapse: separate;
+	background-color: #F3F3F4;
+}
+
+
+
+div.RadGrid_WebBlue
+{
+	
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+	width: 100%;
+	
+}
+  
+div.RadGrid_WebBlue .rgFilterRow td
+{
+	display:none;
+}
+
+/*
+.RadGridRTL_WebBlue .rgHeader:first-child, .RadGridRTL_WebBlue th.rgResizeCol:first-child, .RadGridRTL_WebBlue .rgFilterRow > td:first-child, .RadGridRTL_WebBlue .rgRow > td:first-child, .RadGridRTL_WebBlue .rgAltRow > td:first-child {
+  border-left-width: 1px;
+  padding-left: 15px; }*/
+  
+  .RadGridRTL_WebBlue .rgRow > td:first-child, .RadGridRTL_WebBlue .rgAltRow > td:first-child
+{
+	padding: 0px;
+	margin: 0px;
+}
+
+
+.Button_WebBlue
+{
+	font-family: verdana;
+	font-size: small;
+	font-weight: bold;
+	background-color: #CCCCCC;
+	text-align: center;
+	vertical-align: middle;	
+	height: 28px;
+}
+
+
+ .RadComboBox_WebBlue .rcbInputCell .rcbEmptyMessage
+{
+	
+}  
+
+
+div.RadComboBox_WebBlue table td.rcbInputCell
+{
+		
+}
+
+div.RadComboBox_WebBlue .rcbInputCell INPUT.rcbInput
+{
+	font-style: normal;
+	font-family: verdana;
+	font-size: 11px;
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+.RadInput_WebBlue 
+{
+	font-style: normal;
+	font-family: verdana;
+	font-size: 11px;
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+ .RadInput_WebBlue .riHover
+{
+    color: #333;
+    border: solid 1px Green;
+}
+
+ .RadInput_WebBlue .riEmpty
+{
+	font-family: verdana;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 11px;
+	font-variant: normal;
+}
+

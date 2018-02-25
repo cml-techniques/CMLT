@@ -1,0 +1,311 @@
+﻿@import url(//fonts.googleapis.com/css?family=Open+Sans);
+
+body
+{
+	margin: 0;
+    padding: 0;
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+    
+}
+h1
+{
+	color:#353535!important;
+	font-family: 'Open Sans', sans-serif;
+	font-size:25px;
+	font-weight:normal;
+}
+p
+{
+	text-align:justify;
+	color:#353535!important;
+	font-family: 'Open Sans', sans-serif;
+	font-size:13px;
+}
+.modal_box
+{
+	display:block;
+	background-color:#ffffff;
+	position:relative;
+	z-index:1;
+}
+.modal_header
+{
+	display:block;
+	background-color:#353535;
+	padding:10px;
+	color:#ffffff;
+	font-weight:bold;
+}
+.modal_content
+{
+	display:block;
+	padding:10px;
+	position:relative;
+	z-index:1!important;
+}
+
+#popup_box { 
+     display:none; /* Hide the DIV */
+     position:fixed;  
+     _position:absolute; /* hack for internet explorer 6 */  
+     
+     background:#d2d2d2;  
+     left: 25%;
+     top: 25%;
+     z-index:100; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+     margin-left: 15px;  
+     
+     /* additional features, can be omitted */
+     /*border:2px solid #ff0000; 
+     padding:15px;     */  
+     font-size:14px;  
+     -moz-box-shadow: 0 0 5px #353535;
+     -webkit-box-shadow: 0 0 5px #353535;
+     box-shadow: 0 0 5px #353535;
+     
+ }
+#popup_box .header
+{
+	display:block;
+	background-color:#353535;
+	color:#ffffff;
+	font-weight:bold;
+	padding:15px;
+}
+#popup_box .container
+{
+	background-color:#d2d2d2;
+	display:block;
+     padding:10px;
+}
+ #container {
+     background: #d2d2d2; /*Sample*/
+     display:block;
+     padding:10px;
+ }
+
+ a{  
+ cursor: pointer;  
+ text-decoration:none;  
+ } 
+
+ /* This is for the positioning of the Close Link */
+ #popupBoxClose {
+     font-size:25px;  
+     line-height:15px;  
+     right:20px;  
+     top:20px;  
+     position:absolute;  
+     color:#6fa5e2;  
+     font-weight:bold;      
+ }
+ 
+ .submitbtn {
+    border-style: none;
+	border-color: inherit;
+	border-width: medium;
+	margin: 0px;
+	border-radius: 4px;
+    	transition: 0.15s;
+    	color: #ffffff !important;
+    	vertical-align: middle;
+    	display: inline-block;
+    	position: relative;
+    	cursor: pointer;
+    	box-shadow: 0px 1px 2px 0px rgba(50,50,50,0.5) !important;
+    	background-image: none !important;
+    	width: 100px;
+    	font-family: 'Open Sans', sans-serif;
+    	background-color: #353535!important;
+    	padding: 5px;
+    	font-weight:bold;
+	
+}
+#header
+{
+	display:block;
+	position:absolute;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	
+}
+#header .prjimg
+{
+	width:100%;
+	height:115px;
+	border:1px solid #c4c4c4;
+}
+#header .prjinfo
+{
+	display:block;
+	position:relative;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	height:25px;
+	padding:3px 10px;
+	background-color:#c4c4c4;
+	font-family:'Open Sans', sans-serif;
+	color:#353535;
+	/*border-top:1px solid #dddddd;
+	border-bottom:1px solid #dddddd;*/
+	line-height:23px;
+}
+.prjinfo a
+{
+	font-weight:bold;
+	color:#353535;
+}
+.prjinfo a:hover
+{
+	color:#e6422c;
+}
+.prjinfo .pullleft
+{
+	float:left;
+	display:inline-block;
+}
+.prjinfo .pullright
+{
+	float:right;
+	display:inline-block;
+}
+.prjinfo .overlap
+{
+	display:block;
+	position:absolute;
+	top:-90px;
+	right:10px;
+	background-color:rgba(0,0,0,0.8);
+	color:#ffffff;
+	font-family:'Open Sans', sans-serif;
+	font-size:12px;
+	padding:10px;
+	font-weight:normal;
+}
+.font-big
+{
+	font-weight:normal;
+	font-size:14px;
+}
+.font-small
+{
+	font-weight:normal;
+	font-size:12px;
+}
+.fixedhead
+{
+	display:block;
+	top:0px;
+	left:0px;
+	right:0px;
+	height:63px;
+	position:absolute;
+}
+.fixedcontent
+{
+	display:block;
+	top:63px;
+	left:0px;
+	right:0px;
+	bottom:-127px;
+	position:absolute;
+
+}
+#infobar
+{
+	display:block;
+	background:#c4c4c4;
+}
+#infobar .prjinfo
+{
+	display:block;
+	position:relative;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	height:25px;
+	padding:3px 10px;
+	background-color:#c4c4c4;
+	font-family:'Open Sans', sans-serif;
+	color:#353535;
+	/*border-top:1px solid #dddddd;
+	border-bottom:1px solid #dddddd;*/
+	line-height:23px;
+}
+.prjinfo a
+{
+	font-weight:bold;
+	color:#353535;
+}
+.prjinfo a:hover
+{
+	color:#e6422c;
+}
+.prjinfo .pullleft
+{
+	float:left;
+	display:inline-block;
+}
+.prjinfo .pullright
+{
+	float:right;
+	display:inline-block;
+}
+#menu
+{
+	display:block;
+	background-color:#353535;
+}
+ul.menu
+{
+	margin:0px;
+	padding:0px;
+}
+ul.menu li
+{
+	
+	display:inline-block;
+	margin:0px 5px;
+}
+ul.menu li a
+{
+	display:block;
+	padding:7px 10px;
+	color:#f1f1f1;
+	font-family:'Open Sans', sans-serif;
+	font-size:14px;
+	font-weight:normal;
+	
+}
+ul.menu li a:hover
+{
+	color:#e6422c;
+	/*border-bottom:5px solid #e6422c;*/
+}
+
+ul.menu li.selected a
+{
+	color:#e6422c;
+	/*border-bottom:5px solid #e6422c;*/
+}
+#pagetitle
+{
+	display:block;
+	padding:5px 4px 0px;
+	background-color:#353535;
+	color:#f1f1f1;
+	font-family:'Open Sans', sans-serif;
+	font-size:14px;
+	font-weight:normal;
+	height:30px;
+}
+#pagetitle .title
+{
+	display:block;
+	padding:2px;
+	
+}

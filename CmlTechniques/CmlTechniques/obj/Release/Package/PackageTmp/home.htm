@@ -1,0 +1,25 @@
+﻿<HTML >
+    <head>
+  <script language="javascript" type="text/javascript">
+function click()
+{
+    document.getElementById("3").src = "userlogin.aspx";
+}
+
+
+</script>
+  <title>Frames</title>
+    </head>
+
+    <FRAMESET cols="210px,100%" border="0" frameSpacing="0" frameBorder="0">
+         <!--<FRAMESET rows="100%,100%">-->
+            <frame id="menu" name="menu" src="menu.aspx" scrolling="no"></frame>
+            
+        <!--</FRAMESET>-->
+         <FRAMESET rows="151px,100%">
+            <frame id="head" name="head" src="head.aspx" scrolling="no"></frame>
+            <frame id="content" name="content" src="welcome.aspx" ></frame>
+        </FRAMESET>
+
+    </FRAMESET>
+</HTML>

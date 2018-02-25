@@ -1,0 +1,19 @@
+﻿body
+{
+	scrollbar-hightlight-color:blue;scrollbar-arrow-color:red;scrollbar-base-color:gold;
+}
+.coolscrollbar
+ {
+      scrollbar-arrow-color: blue;
+      scrollbar-3dlight-color: black;
+      scrollbar-darkshadow-color: black;
+      scrollbar-face-color: #4e4e4e;
+      scrollbar-highlight-color: black;
+      scrollbar-shadow-color: black;
+      scrollbar-track-color: black; 
+      
+      
+           
+ }
+
+ 

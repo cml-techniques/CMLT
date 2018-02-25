@@ -1,0 +1,1074 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<countries>
+<country>
+   <name>Antigua and Barbuda</name>
+   <category>Regional/Caribbean/Antigua_and_Barbuda</category>
+</country>
+
+<country>
+   <name>Argentina</name>
+   <category>Regional/South_America/Argentina</category>
+</country>
+
+<country>
+   <name>Armenia</name>
+   <category>Regional/Asia/Armenia </category>
+</country>
+
+<country>
+   <name>Aruba</name>
+   <category>Regional/Caribbean/Aruba</category>
+</country>
+
+<country>
+   <name>Australia</name>
+   <category>Regional/Oceania/Australia</category>
+</country>
+
+<country>
+   <name>Austria</name>
+   <category>Regional/Europe/Austria</category>
+</country>
+
+<country>
+   <name>Azerbaijan</name>
+   <category>Regional/Asia/Azerbaijan</category>
+</country>
+
+<country>
+   <name>Bahamas</name>
+   <category>Regional/Caribbean/Bahamas</category>
+</country>
+
+<country>
+   <name>Bahrain</name>
+   <category>Regional/Middle_East/Bahrain </category>
+</country>
+
+<country>
+   <name>Bangladesh</name>
+   <category>Regional/Asia/Bangladesh</category>
+</country>
+
+<country>
+   <name>Barbados</name>
+   <category>Regional/Caribbean/Barbados</category>
+</country>
+
+<country>
+   <name>Belgium</name>
+   <category>Regional/Europe/Belgium</category>
+</country>
+
+<country>
+   <name>Belize</name>
+   <category>Regional/Central_America/Belize</category>
+</country>
+
+<country>
+   <name>Benin</name>
+   <category>Regional/Africa/Benin</category>
+</country>
+
+<country>
+   <name>Bermuda</name>
+   <category>Regional/North_America/Bermuda</category>
+</country>
+
+<country>
+   <name>Bolivia</name>
+   <category>Regional/South_America/Bolivia</category>
+</country>
+
+<country>
+   <name>Bosnia and Herzegovina</name>
+   <category>Regional/Europe/Bosnia_and_Herzegovina</category>
+</country>
+
+<country>
+   <name>Botswana</name>
+   <category>Regional/Africa/Botswana</category>
+</country>
+
+<country>
+   <name>Brazil</name>
+   <category>Regional/South_America/Brazil</category>
+</country>
+
+<country>
+   <name>Bulgaria</name>
+   <category>Regional/Europe/Bulgaria</category>
+</country>
+
+<country>
+   <name>Burkina Faso</name>
+   <category>Regional/Africa/Burkina_Faso</category>
+</country>
+
+<country>
+   <name>Cambodia</name>
+   <category>Regional/Asia/Cambodia</category>
+</country>
+
+<country>
+   <name>Cameroon</name>
+   <category>Regional/Africa/Cameroon</category>
+</country>
+
+<country>
+   <name>Canada</name>
+   <category>Regional/North_America/Canada</category>
+</country>
+
+<country>
+   <name>Cape Verde</name>
+   <category>Regional/Africa/Cape_Verde</category>
+</country>
+
+<country>
+   <name>Central African Republic</name>
+   <category>Regional/Africa/Central_African_Republic</category>
+</country>
+
+<country>
+   <name>Chad</name>
+   <category>Regional/Africa/Chad</category>
+</country>
+
+<country>
+   <name>Chile</name>
+   <category>Regional/South_America/Chile</category>
+</country>
+
+<country>
+   <name>China</name>
+   <category>Regional/Asia/China</category>
+</country>
+
+<country>
+   <name>Colombia</name>
+   <category>Regional/South_America/Colombia</category>
+</country>
+
+<country>
+   <name>Congo</name>
+   <category>Regional/Africa/Congo</category>
+</country>
+
+<country>
+   <name>Congo, Democratic Republic of the</name>
+   <category>Regional/Africa/Congo,_Democratic_Republic_of_the</category>
+</country>
+
+<country>
+   <name>Costa Rica</name>
+   <category>Regional/Central_America/Costa_Rica</category>
+</country>
+
+<country>
+   <name>Croatia</name>
+   <category>Regional/Europe/Croatia</category>
+</country>
+
+<country>
+   <name>Cuba</name>
+   <category>Regional/Caribbean/Cuba</category>
+</country>
+
+<country>
+   <name>Cyprus</name>
+   <category>Regional/Middle_East/Cyprus</category>
+</country>
+
+<country>
+   <name>Czech Republic</name>
+   <category>Regional/Europe/Czech_Republic</category>
+</country>
+
+<country>
+   <name>Denmark</name>
+   <category>Regional/Europe/Denmark</category>
+</country>
+
+<country>
+   <name>Djibouti</name>
+   <category>Regional/Africa/Djibouti</category>
+</country>
+
+<country>
+   <name>Dominica</name>
+   <category>Regional/Caribbean/Dominica</category>
+</country>
+
+<country>
+   <name>Dominican Republic</name>
+   <category>Regional/Caribbean/Dominican_Republic</category>
+</country>
+
+<country>
+   <name>Ecuador</name>
+   <category>Regional/South_America/Ecuador</category>
+</country>
+
+<country>
+   <name>Egypt</name>
+   <category>Regional/Africa/Egypt</category>
+</country>
+
+<country>
+   <name>El Salvador</name>
+   <category>Regional/Central_America/El_Salvador</category>
+</country>
+
+<country>
+   <name>England</name>
+   <category>Regional/Europe/United_Kingdom/England</category>
+</country>
+
+<country>
+   <name>Equatorial_Guinea</name>
+   <category>Regional/Africa/Equatorial_Guinea</category>
+</country>
+
+<country>
+   <name>Eritrea</name>
+   <category>Regional/Africa/Eritrea</category>
+</country>
+
+<country>
+   <name>Estonia</name>
+   <category>Regional/Europe/Estonia</category>
+</country>
+
+<country>
+   <name>Ethiopia</name>
+   <category>Regional/Africa/Ethiopia</category>
+</country>
+
+<country>
+   <name>Falkland Islands</name>
+   <category>Regional/South_America/Falkland_Islands</category>
+</country>
+
+<country>
+   <name>Faroe Islands</name>
+   <category>Regional/Europe/Faroe_Islands</category>
+</country>
+
+<country>
+   <name>Fiji</name>
+   <category>Regional/Oceania/Fiji</category>
+</country>
+
+<country>
+   <name>Finland</name>
+   <category>Regional/Europe/Finland</category>
+</country>
+
+<country>
+   <name>France</name>
+   <category>Regional/Europe/France</category>
+</country>
+
+<country>
+   <name>French Guiana</name>
+   <category>Regional/South_America/French_Guiana</category>
+</country>
+
+<country>
+   <name>French Polynesia</name>
+   <category>Regional/Oceania/French_Polynesia</category>
+</country>
+
+<country>
+   <name>French Southern Territories</name>
+   <category>Regional/Polar_Regions/French_Southern_Territories</category>
+</country>
+
+<country>
+   <name>Gabon</name>
+   <category>Regional/Africa/Gabon</category>
+</country>
+
+<country>
+   <name>Gambia</name>
+   <category>Regional/Africa/Gambia</category>
+</country>
+
+<country>
+   <name>Georgia</name>
+   <category>Regional/Asia/Georgia</category>
+</country>
+
+<country>
+   <name>Germany</name>
+   <category>Regional/Europe/Germany</category>
+</country>
+
+<country>
+   <name>Ghana</name>
+   <category>Regional/Africa/Ghana</category>
+</country>
+
+<country>
+   <name>Gibraltar</name>
+   <category>Regional/Europe/Gibraltar</category>
+</country>
+
+<country>
+   <name>Greece</name>
+   <category>Regional/Europe/Greece</category>
+</country>
+
+<country>
+   <name>Greenland</name>
+   <category>Regional/North_America/Greenland</category>
+</country>
+
+<country>
+   <name>Grenada</name>
+   <category>Regional/Caribbean/Grenada</category>
+</country>
+
+<country>
+   <name>Guadeloupe</name>
+   <category>Regional/Caribbean/Guadeloupe</category>
+</country>
+
+<country>
+   <name>Guam</name>
+   <category>Regional/Oceania/Guam</category>
+</country>
+
+<country>
+   <name>Guatemala</name>
+   <category>Regional/Central_America/Guatemala</category>
+</country>
+
+<country>
+   <name>Guernsey</name>
+   <category>Regional/Europe/Guernsey</category>
+</country>
+
+<country>
+   <name>Guinea</name>
+   <category>Regional/Africa/Guinea</category>
+</country>
+
+<country>
+   <name>Guinea Bissau</name>
+   <category>Regional/Africa/Guinea_Bissau</category>
+</country>
+
+<country>
+   <name>Guyana</name>
+   <category>Regional/South_America/Guyana</category>
+</country>
+
+<country>
+   <name>Haiti</name>
+   <category>Regional/Caribbean/Haiti</category>
+</country>
+
+<country>
+   <name>Honduras</name>
+   <category>Regional/Central_America/Honduras</category>
+</country>
+
+<country>
+   <name>Hong Kong</name>
+   <category>Regional/Asia/Hong_Kong</category>
+</country>
+
+<country>
+   <name>Hungary</name>
+   <category>Regional/Europe/Hungary</category>
+</country>
+
+<country>
+   <name>Iceland</name>
+   <category>Regional/Europe/Iceland</category>
+</country>
+
+<country>
+   <name>India</name>
+   <category>Regional/Asia/India</category>
+</country>
+
+<country>
+   <name>Indonesia</name>
+   <category>Regional/Asia/Indonesia</category>
+</country>
+
+<country>
+   <name>Iran</name>
+   <category>Regional/Middle_East/Iran</category>
+</country>
+
+<country>
+   <name>Iraq</name>
+   <category>Regional/Middle_East/Iraq</category>
+</country>
+
+<country>
+   <name>Ireland</name>
+   <category>Regional/Europe/Ireland</category>
+</country>
+
+<country>
+   <name>Isle of Man</name>
+   <category>Regional/Europe/Isle_of_Man</category>
+</country>
+
+<country>
+   <name>Israel</name>
+   <category>Regional/Middle_East/Israel</category>
+</country>
+
+<country>
+   <name>Italy</name>
+   <category>Regional/Europe/Italy</category>
+</country>
+
+<country>
+   <name>Jamaica</name>
+   <category>Regional/Caribbean/Jamaica</category>
+</country>
+
+<country>
+   <name>Japan</name>
+   <category>Regional/Asia/Japan</category>
+</country>
+
+<country>
+   <name>Jersey</name>
+   <category>Regional/Europe/Jersey</category>
+</country>
+
+<country>
+   <name>Jordan</name>
+   <category>Regional/Middle_East/Jordan</category>
+</country>
+
+<country>
+   <name>Kazakhstan</name>
+   <category>Regional/Asia/Kazakhstan</category>
+</country>
+
+<country>
+   <name>Kenya</name>
+   <category>Regional/Africa/Kenya</category>
+</country>
+
+<country>
+   <name>Kiribati</name>
+   <category>Regional/Oceania/Kiribati</category>
+</country>
+
+<country>
+   <name>Kuwait</name>
+   <category>Regional/Middle_East/Kuwait</category>
+</country>
+
+<country>
+   <name>Kyrgyzstan</name>
+   <category>Regional/Asia/Kyrgyzstan</category>
+</country>
+
+<country>
+   <name>Laos</name>
+   <category>Regional/Asia/Laos</category>
+</country>
+
+<country>
+   <name>Latvia</name>
+   <category>Regional/Europe/Latvia</category>
+</country>
+
+<country>
+   <name>Lebanon</name>
+   <category>Regional/Middle_East/Lebanon</category>
+</country>
+
+<country>
+   <name>Lesotho</name>
+   <category>Regional/Africa/Lesotho</category>
+</country>
+
+<country>
+   <name>Liberia</name>
+   <category>Regional/Africa/Liberia</category>
+</country>
+
+<country>
+   <name>Libya</name>
+   <category>Regional/Africa/Libya</category>
+</country>
+
+<country>
+   <name>Liechtenstein</name>
+   <category>Regional/Europe/Liechtenstein</category>
+</country>
+
+<country>
+   <name>Lithuania</name>
+   <category>Regional/Europe/Lithuania</category>
+</country>
+
+<country>
+   <name>Luxembourg</name>
+   <category>Regional/Europe/Luxembourg</category>
+</country>
+
+<country>
+   <name>Macau</name>
+   <category>Regional/Asia/Macau</category>
+</country>
+
+<country>
+   <name>Macedonia</name>
+   <category>Regional/Europe/Macedonia</category>
+</country>
+
+<country>
+   <name>Madagascar</name>
+   <category>Regional/Africa/Madagascar</category>
+</country>
+
+<country>
+   <name>Malawi</name>
+   <category>Regional/Africa/Malawi</category>
+</country>
+
+<country>
+   <name>Malaysia</name>
+   <category>Regional/Asia/Malaysia</category>
+</country>
+
+<country>
+   <name>Maldives</name>
+   <category>Regional/Asia/Maldives</category>
+</country>
+
+<country>
+   <name>Mali</name>
+   <category>Regional/Africa/Mali</category>
+</country>
+
+<country>
+   <name>Malta</name>
+   <category>Regional/Europe/Malta</category>
+</country>
+
+<country>
+   <name>Man, Isle of</name>
+   <category>Regional/Europe/Isle_of_Man</category>
+</country>
+
+<country>
+   <name>Martinique</name>
+   <category>Regional/Caribbean/Martinique</category>
+</country>
+
+<country>
+   <name>Mauritania</name>
+   <category>Regional/Africa/Mauritania</category>
+</country>
+
+<country>
+   <name>Mauritius</name>
+   <category>Regional/Africa/Mauritius</category>
+</country>
+
+<country>
+   <name>Mayotte</name>
+   <category>Regional/Africa/Mayotte</category>
+</country>
+
+<country>
+   <name>Mexico</name>
+   <category>Regional/North_America/Mexico</category>
+</country>
+
+<country>
+   <name>Micronesia, Federated States of</name>
+   <category>Regional/Oceania/Micronesia,_Federated_States_of</category>
+</country>
+
+<country>
+   <name>Moldova</name>
+   <category>Regional/Europe/Moldova</category>
+</country>
+
+<country>
+   <name>Monaco</name>
+   <category>Regional/Europe/Monaco</category>
+</country>
+
+<country>
+   <name>Mongolia</name>
+   <category>Regional/Asia/Mongolia</category>
+</country>
+
+<country>
+   <name>Montserrat</name>
+   <category>Regional/Caribbean/Montserrat</category>
+</country>
+
+<country>
+   <name>Morocco</name>
+   <category>Regional/Africa/Morocco</category>
+</country>
+
+<country>
+   <name>Mozambique</name>
+   <category>Regional/Africa/Mozambique</category>
+</country>
+
+<country>
+   <name>Myanmar</name>
+   <category>Regional/Asia/Myanmar</category>
+</country>
+
+<country>
+   <name>Namibia</name>
+   <category>Regional/Africa/Namibia</category>
+</country>
+
+<country>
+   <name>Nauru</name>
+   <category>Regional/Oceania/Nauru/</category>
+</country>
+
+<country>
+   <name>Nepal</name>
+   <category>Regional/Asia/Nepal</category>
+</country>
+
+<country>
+   <name>Netherlands</name>
+   <category>Regional/Europe/Netherlands</category>
+</country>
+
+<country>
+   <name>Netherlands Antilles</name>
+   <category>Regional/Caribbean/Netherlands_Antilles</category>
+</country>
+
+<country>
+   <name>New Caledonia</name>
+   <category>Regional/Oceania/New_Caledonia</category>
+</country>
+
+<country>
+   <name>New Zealand</name>
+   <category>Regional/Oceania/New_Zealand</category>
+</country>
+
+<country>
+   <name>Nicaragua</name>
+   <category>Regional/Central_America/Nicaragua</category>
+</country>
+
+<country>
+   <name>Niger</name>
+   <category>Regional/Africa/Niger</category>
+</country>
+
+<country>
+   <name>Nigeria</name>
+   <category>Regional/Africa/Nigeria</category>
+</country>
+
+<country>
+   <name>Niue</name>
+   <category>Regional/Oceania/Niue</category>
+</country>
+
+<country>
+   <name>North Korea</name>
+   <category>Regional/Asia/North_Korea</category>
+</country>
+
+<country>
+   <name>Northern Ireland</name>
+   <category>Regional/Europe/United_Kingdom/Northern_Ireland</category>
+</country>
+
+<country>
+   <name>Norway</name>
+   <category>Regional/Europe/Norway</category>
+</country>
+
+<country>
+   <name>Oman</name>
+   <category>Regional/Middle_East/Oman</category>
+</country>
+
+<country>
+   <name>Pakistan</name>
+   <category>Regional/Asia/Pakistan</category>
+</country>
+
+<country>
+   <name>Palau</name>
+   <category>Regional/Oceania/Palau</category>
+</country>
+
+<country>
+   <name>Palestinian Territory</name>
+   <category>Regional/Middle_East/Palestinian_Territory</category>
+</country>
+
+<country>
+   <name>Panama</name>
+   <category>Regional/Central_America/Panama</category>
+</country>
+
+<country>
+   <name>Papua New Guinea</name>
+   <category>Regional/Oceania/Papua_New_Guinea</category>
+</country>
+
+<country>
+   <name>Paraguay</name>
+   <category>Regional/South_America/Paraguay</category>
+</country>
+
+<country>
+   <name>Peru</name>
+   <category>Regional/South_America/Peru</category>
+</country>
+
+<country>
+   <name>Philippines</name>
+   <category>Regional/Asia/Philippines</category>
+</country>
+
+<country>
+   <name>Poland</name>
+   <category>Regional/Europe/Poland</category>
+</country>
+
+<country>
+   <name>Portugal</name>
+   <category>Regional/Europe/Portugal</category>
+</country>
+
+<country>
+   <name>Puerto Rico</name>
+   <category>Regional/Caribbean/Puerto_Rico</category>
+</country>
+
+<country>
+   <name>Qatar</name>
+   <category>Regional/Middle_East/Qatar</category>
+</country>
+
+<country>
+   <name>Reunion</name>
+   <category>Regional/Africa/Reunion</category>
+</country>
+
+<country>
+   <name>Romania</name>
+   <category>Regional/Europe/Romania</category>
+</country>
+
+<country>
+   <name>Russia</name>
+   <category>Regional/Europe/Russia</category>
+</country>
+
+<country>
+   <name>Rwanda</name>
+   <category>Regional/Africa/Rwanda</category>
+</country>
+
+<country>
+   <name>Saint Kitts and Nevis</name>
+   <category>Regional/Caribbean/Saint_Kitts_and_Nevis</category>
+</country>
+
+<country>
+   <name>Saint Lucia</name>
+   <category>Regional/Caribbean/Saint_Lucia</category>
+</country>
+
+<country>
+   <name>Saint Vincent and the Grenadines</name>
+   <category>Regional/Caribbean/Saint_Vincent_and_the_Grenadines</category>
+</country>
+
+<country>
+   <name>Samoa</name>
+   <category>Regional/Oceania/Samoa</category>
+</country>
+
+<country>
+   <name>San Marino</name>
+   <category>Regional/Europe/San_Marino</category>
+</country>
+
+<country>
+   <name>Sao Tome and Principe</name>
+   <category>Regional/Africa/Sao_Tome_and_Principe</category>
+</country>
+
+<country>
+   <name>Saudi Arabia</name>
+   <category>Regional/Middle_East/Saudi_Arabia</category>
+</country>
+
+<country>
+   <name>Scotland</name>
+   <category>Regional/Europe/United_Kingdom/Scotland</category>
+</country>
+
+<country>
+   <name>Senegal</name>
+   <category>Regional/Africa/Senegal</category>
+</country>
+
+<country>
+   <name>Serbia and Montenegro</name>
+   <category>Regional/Europe/Serbia_and_Montenegro</category>
+</country>
+
+<country>
+   <name>Seychelles</name>
+   <category>Regional/Africa/Seychelles</category>
+</country>
+
+<country>
+   <name>Sierra Leone</name>
+   <category>Regional/Africa/Sierra_Leone</category>
+</country>
+
+<country>
+   <name>Singapore</name>
+   <category>Regional/Asia/Singapore</category>
+</country>
+
+<country>
+   <name>Slovakia</name>
+   <category>Regional/Europe/Slovakia</category>
+</country>
+
+<country>
+   <name>Slovenia</name>
+   <category>Regional/Europe/Slovenia</category>
+</country>
+
+<country>
+   <name>Solomon Islands</name>
+   <category>Regional/Oceania/Solomon_Islands</category>
+</country>
+
+<country>
+   <name>Somalia</name>
+   <category>Regional/Africa/Somalia</category>
+</country>
+
+<country>
+   <name>South Africa</name>
+   <category>Regional/Africa/South_Africa</category>
+</country>
+
+<country>
+   <name>South Korea</name>
+   <category>Regional/Asia/South_Korea</category>
+</country>
+
+<country>
+   <name>Spain</name>
+   <category>Regional/Europe/Spain</category>
+</country>
+
+<country>
+   <name>Sri Lanka</name>
+   <category>Regional/Asia/Sri_Lanka</category>
+</country>
+
+<country>
+   <name>Sudan</name>
+   <category>Regional/Africa/Sudan</category>
+</country>
+
+<country>
+   <name>Suriname</name>
+   <category>Regional/South_America/Suriname</category>
+</country>
+
+<country>
+   <name>Swaziland</name>
+   <category>Regional/Africa/Swaziland</category>
+</country>
+
+<country>
+   <name>Sweden</name>
+   <category>Regional/Europe/Sweden</category>
+</country>
+
+<country>
+   <name>Switzerland</name>
+   <category>Regional/Europe/Switzerland</category>
+</country>
+
+<country>
+   <name>Syria</name>
+   <category>Regional/Middle_East/Syria</category>
+</country>
+
+<country>
+   <name>Taiwan</name>
+   <category>Regional/Asia/Taiwan</category>
+</country>
+
+<country>
+   <name>Tajikistan</name>
+   <category>Regional/Asia/Tajikistan</category>
+</country>
+
+<country>
+   <name>Tanzania</name>
+   <category>Regional/Africa/Tanzania</category>
+</country>
+
+<country>
+   <name>Thailand</name>
+   <category>Regional/Asia/Thailand</category>
+</country>
+
+<country>
+   <name>Togo</name>
+   <category>Regional/Africa/Togo</category>
+</country>
+
+<country>
+   <name>Tokelau</name>
+   <category>Regional/Oceania/Tokelau</category>
+</country>
+
+<country>
+   <name>Tonga</name>
+   <category>Regional/Oceania/Tonga</category>
+</country>
+
+<country>
+   <name>Trinidad and Tobago</name>
+   <category>Regional/Caribbean/Trinidad_and_Tobago</category>
+</country>
+
+<country>
+   <name>Tunisia</name>
+   <category>Regional/Africa/Tunisia</category>
+</country>
+
+<country>
+   <name>Turkey</name>
+   <category>Regional/Middle_East/Turkey</category>
+</country>
+
+<country>
+   <name>Turkmenistan</name>
+   <category>Regional/Asia/Turkmenistan</category>
+</country>
+
+<country>
+   <name>Turks and Caicos</name>
+   <category>Regional/Caribbean/Turks_and_Caicos</category>
+</country>
+
+<country>
+   <name>Tuvalu</name>
+   <category>Regional/Oceania/Tuvalu</category>
+</country>
+
+<country>
+   <name>US Virgin Islands</name>
+   <category>Regional/Caribbean/US_Virgin_Islands</category>
+</country>
+
+<country>
+   <name>Uganda</name>
+   <category>Regional/Africa/Uganda</category>
+</country>
+
+<country>
+   <name>Ukraine</name>
+   <category>Regional/Europe/Ukraine</category>
+</country>
+
+<country>
+   <name>United Arab Emirates</name>
+   <category>Regional/Middle_East/United_Arab_Emirates</category>
+</country>
+
+<country>
+   <name>United Kingdom</name>
+   <category>Regional/Europe/United_Kingdom</category>
+</country>
+
+<country>
+   <name>United States</name>
+   <category>Regional/North_America/United_States</category>
+</country>
+
+<country>
+   <name>Uruguay</name>
+   <category>Regional/South_America/Uruguay</category>
+</country>
+
+<country>
+   <name>Uzbekistan</name>
+   <category>Regional/Asia/Uzbekistan</category>
+</country>
+
+<country>
+   <name>Vanuatu</name>
+   <category>Regional/Oceania/Vanuatu</category>
+</country>
+
+<country>
+   <name>Vatican City</name>
+   <category>Regional/Europe/Vatican_City</category>
+</country>
+
+<country>
+   <name>Venezuela</name>
+   <category>Regional/South_America/Venezuela</category>
+</country>
+
+<country>
+   <name>Vietnam</name>
+   <category>Regional/Asia/Vietnam</category>
+</country>
+
+<country>
+   <name>Wales</name>
+   <category>Regional/Europe/United_Kingdom/Wales</category>
+</country>
+
+<country>
+   <name>Western Sahara</name>
+   <category>Regional/Africa/Western_Sahara</category>
+</country>
+
+<country>
+   <name>Yemen</name>
+   <category>Regional/Middle_East/Yemen</category>
+</country>
+
+<country>
+   <name>Zambia</name>
+   <category>Regional/Africa/Zambia</category>
+</country>
+
+<country>
+   <name>Zimbabwe</name>
+   <category>Regional/Africa/Zimbabwe</category>
+</country>
+
+</countries>

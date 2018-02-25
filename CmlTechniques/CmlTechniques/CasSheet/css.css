@@ -1,0 +1,20 @@
+﻿.temp_ruUploadSuccess {
+    float: left !important;
+    height: 20px !important;
+    margin: 35px 0 0 !important;
+    padding-left: 5px !important;
+    width: 15px !important;
+}
+
+.temp_ruFileWrap {
+    height: 100px !important;
+    line-height: 100px !important;
+    overflow: visible !important;
+    white-space: normal !important;
+}
+
+.image-thumbnail {
+    width: 150px;
+    height: 100px;
+    float: left;
+}
