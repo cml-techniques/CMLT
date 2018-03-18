@@ -22,6 +22,8 @@ namespace CmlTechniques.CMS
                 lblprj.Text = Request.QueryString["prj"].ToString();
                 if (lblprj.Text == "ARSD")
                     lbl1.Text = "The Address Residence Sky View";
+                if (lblprj.Text == "AFV")
+                    lbl1.Text = "The Address Residence Fountain View";
                 else if (lblprj.Text == "PCD")
                     lbl1.Text = "Planned Completion Date Development";
             }

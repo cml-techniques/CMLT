@@ -78,6 +78,11 @@ namespace CmlTechniques.CMS
                         _prm = mod[0].ToString() + "_M" + mod[0].ToString() + "_N" + mod[1].ToString() + "_P" + Project;
                         _n0.NavigateUrl = "javascript:parent.callcms('" + _prm + "','1')";
                     }
+                    else if (mod[1].ToString() == "Dashboard")
+                    {
+                        //_prm = mod[0].ToString() + "_M" + mod[0].ToString() + "_N" + mod[1].ToString() + "_P" + Project;
+                        _n0.NavigateUrl = "javascript:parent.callcms('" + Project + "','28')";
+                    }
                     else if (mod[1].ToString() == "Commissioning Report")
                     {
                         _prm = mod[0].ToString() + "_M" + mod[0].ToString() + "_N" + mod[1].ToString() + "_P" + Project;
@@ -157,7 +162,7 @@ namespace CmlTechniques.CMS
                                 _n1.SelectAction = TreeNodeSelectAction.Expand;
                                 if (mod[1].ToString() == "CAS Sheets" || mod[1].ToString() == "T & C Documentation" || mod[1].ToString() == "Test Packs")
                                 {
-                                    if (Project == "11736" || Project == "Traini")
+                                    if (Project == "11736" || Project == "Traini" || Project == "AFV")
                                     {
                                         if (div[1].ToString() != "Infrastructure")
                                             _n01.ChildNodes.Add(_n1);
