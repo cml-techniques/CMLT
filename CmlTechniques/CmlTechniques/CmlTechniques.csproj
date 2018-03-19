@@ -4571,6 +4571,7 @@
     <Content Include="Assets\js\jquery.dataTables.min.js" />
     <Content Include="Assets\js\sweetalert.min.js" />
     <Content Include="cmlhome.aspx" />
+    <Content Include="CMS\Dashboard.aspx" />
     <Content Include="createuser.aspx" />
     <Content Include="fileupload.aspx" />
     <Content Include="images\adobe_pdf_logo.jpg" />
@@ -5257,7 +5258,6 @@
     <Content Include="CMS\CX_RO_Summary.aspx" />
     <Content Include="CMS\CX_Summary_Updation.aspx" />
     <Content Include="CMS\CrystalStyle.css" />
-    <Content Include="CMS\Dashboard.aspx" />
     <Content Include="CMS\Dashboard1.aspx" />
     <Content Include="CMS\DocPdfView.aspx" />
     <Content Include="CMS\DocumentLog.aspx" />

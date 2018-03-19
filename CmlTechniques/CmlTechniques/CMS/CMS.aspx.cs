@@ -10,6 +10,8 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using App_Properties;
+using BusinessLogic;
 
 namespace CmlTechniques.CMS
 {
@@ -218,7 +220,7 @@ namespace CmlTechniques.CMS
                 else
                 {
                     if (_prm == "000") _prm = (string)Session["project"];
-                    if (_prm == "11736" || _prm == "Traini")
+                    if (_prm == "11736" || _prm == "Traini" || _prm == "AFV")
                         tree.Attributes.Add("src", "cmstree1.aspx?PRJ=" + _prm);
                     //else if (_prm == "11736i")
                     //    tree.Attributes.Add("src", "cmstree2.aspx?PRJ=" + _prm);
@@ -227,10 +229,16 @@ namespace CmlTechniques.CMS
                     head.Attributes.Add("src", "../head.aspx?id=CMS&prj=" + _prm);
                     menu.Attributes.Add("src", "cmsmenu.aspx?prj=" + _prm);
 
-                    if (_prm == "PCD" || _prm == "ARSD") content.Attributes.Add("src", "Dashboard1.aspx?prj=" + _prm);
-                }
-                
+                    bool ispcdProject = (Array.IndexOf(Constants.CMLTConstants.PcdProjects, _prm) > -1) ? true : false;
 
+                    if (ispcdProject) content.Attributes.Add("src", "Dashboard1.aspx?prj=" + _prm);
+                    else
+                    {
+                        if (DashboardAcces(_prm)) content.Attributes.Add("src", "Dashboard.aspx?prj=" + _prm);
+                    }
+
+                }
+               
 
                 //}
                 //string _prm=Request.QueryString["PRJ"].ToString();
@@ -239,6 +247,31 @@ namespace CmlTechniques.CMS
                 //    Response.Redirect("../userlogin.aspx?id=1P_123M_CP");
             }
             //}
+        }
+        bool DashboardAcces(string Project)
+        {
+            bool dashboard=false;
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clsuser _objcls = new _clsuser();
+            _clscassheet _objcls1 = new _clscassheet();
+            _objdb.DBName = "dbCML";
+            _objcls.uid = (string)Session["uid"];
+            _objcls.project_code = Project;
+            string _permission = _objbll.Get_User_Permission(_objcls, _objdb);
+            _objdb.DBName = "DB_" + Project;
+            DataTable _dtmodule = _objbll.Load_Prj_Module(_objdb);
+
+            var _module = from o in _dtmodule.AsEnumerable()
+                          where (o.Field<int>(2) == 0 && o.Field<string>(1) == "Dashboard")
+                          select o;
+            int _idx = 0;
+            foreach (var mod in _module)
+            {
+                if (_permission.Substring(_idx, 1) == "1") return true;
+            }
+           
+            return dashboard;
         }
         void _ReadCookies()
         {

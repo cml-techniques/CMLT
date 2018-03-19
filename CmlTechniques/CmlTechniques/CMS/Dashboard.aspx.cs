@@ -1,148 +1,269 @@
 ﻿using System;
-using System.Collections;
-using System.Configuration;
-using System.Data;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
 using BusinessLogic;
 using App_Properties;
-using System.Collections.Generic;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.ReportSource;
-using CrystalDecisions.Shared;
-
+using System.Data;
+using System.Web.Services;  
 namespace CmlTechniques.CMS
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        public static DataTable _dtService;
+        public static DataTable _dtCassheet;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
-        }
-        void _ReadCookies()
-        {
-            if (Request.Browser.Cookies)
+        
+            if (!IsPostBack)
             {
-                if (Request.Cookies["uid"] != null)
-                {
-                    Session["uid"] = Server.HtmlEncode(Request.Cookies["uid"].Value);
-                }
-                if (Request.Cookies["project"] != null)
-                {
-                    Session["project"] = Server.HtmlEncode(Request.Cookies["project"].Value);
-                }
-                if (Request.Cookies["projectname"] != null)
-                {
-                    Session["projectname"] = Server.HtmlEncode(Request.Cookies["projectname"].Value);
-                }
-                if (Request.Cookies["sch"] != null)
-                {
-                    Session["sch"] = Server.HtmlEncode(Request.Cookies["sch"].Value);
-                }
-                if (Request.Cookies["srv"] != null)
-                {
-                    Session["srv"] = Server.HtmlEncode(Request.Cookies["srv"].Value);
-                }
+                lblprj.Text = Request.QueryString["prj"].ToString();
+                lbl1.Text = Get_ProjectName();
             }
         }
-        private void Page_Init(object sender, EventArgs e)
-        {
-            _ReadCookies();
-            if (!IsPostBack) {
-                string _prm = Request.QueryString[0].ToString();
-                lblprj.Text = _prm;
-                Generate_Project_Summary_New();
-              
-
-                Generate_Reports("All","All","0");
-            }            
-        }
-        private void Generate_Project_Summary_New()
+        private string Get_ProjectName()
         {
             BLL_Dml _objbll = new BLL_Dml();
             _database _objdb = new _database();
-            _objdb.DBName = "DB_" + lblprj.Text;
-
-            _clscassheet _objcls = new _clscassheet();
-            _objcls.b_zone = "All";
-            _objcls.f_level = "All";
-            _objbll.Generate_Prj_summary_Overall(_objcls, _objdb);
-
+            _objdb.DBName = "DBCML";
+            _clsuser _objcls = new _clsuser();
+            _objcls.project_code = lblprj.Text;
+            return _objbll.Get_ProjectName(_objcls, _objdb);
         }
-        ReportDocument cryRpt = new ReportDocument();
-        protected void Page_Unload(object sender, EventArgs e)
+        [WebMethod]
+        public static List<ChartDetails> GetChartData(string prj)
         {
-                //cryRpt.Dispose();
-                //cryRpt.Close();
+            BLL_Dml _objbll = new BLL_Dml();
+
+            _database _objdb = new _database
+            {
+                DBName = "DB_" + prj
+            };
+            _clscassheet _objcls = new _clscassheet
+            {
+                date = DateTime.Today,
+                b_zone = "All",
+                f_level = "All"
+            };
+            DataSet ds = _objbll.GetDashBoardSummary(_objcls, _objdb);
+            List<ChartDetails> dataList = new List<ChartDetails>();
+            int count = ds.Tables.Count;
+            foreach (DataRow dr in ds.Tables[count - 1].Rows)
+            {
+                ChartDetails details = new ChartDetails   
+                {
+                    Label = dr["CAS_NAME"].ToString(),
+                    GraphActualData = Convert.ToDecimal(dr["PROGRESS"]),
+                    //GraphPlannedData = Convert.ToDecimal(dr[2])
+                };
+                dataList.Add(details);
+            }
+            return dataList;
         }
-        private void Generate_Reports(string _bz, string _fl, string mode)
+        [WebMethod]
+        public static List<List<ServiceDetails>> GetServiceData(string prj)
         {
-            TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
-            TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
-            ConnectionInfo crConnectionInfo = new ConnectionInfo();
-            Tables CrTables;
-            if (lblprj.Text == "14211")
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database
             {
-                cryRpt.Load(Server.MapPath("ServiceSummary_KAIA.rpt"));
-               // string _bldg = Get_Facility_Name();
-               // cryRpt.SetParameterValue("bldg", _bldg);
-            }
-            else if (lblprj.Text == "HMIM")
-            {
-                cryRpt.Load(Server.MapPath("ServiceSummary_HMIM.rpt"));
-                string _bldg = "";
-                if (lbldiv.Text == "1") _bldg = "CENTRAL UTILITY CENTRE";
-                else if (lbldiv.Text == "2") _bldg = "PIAZZA";
-                else if (lbldiv.Text == "3") _bldg = "SERVICE BUILDING";
-                else if (lbldiv.Text == "4") _bldg = "HARAM";
-                cryRpt.SetParameterValue("bldg", _bldg);
-            }
-            else if (lblprj.Text == "PCD" && mode == "2")
-            {
-                cryRpt.Load(Server.MapPath("ProjectSummary_Pcd.rpt"));
-            }
-            else
-                cryRpt.Load(Server.MapPath("ServiceSummary.rpt"));
+                DBName = "DB_" + prj
+            };
 
-            //crConnectionInfo.ServerName = "213.171.197.149,49296";
-            //crConnectionInfo.DatabaseName = "DBCML";
-            //crConnectionInfo.UserID = "CMLT";
-            //crConnectionInfo.Password = "C!m@l#S$q%l";
-            crConnectionInfo.ServerName = Constants.CMLTConstants.serverName;
-            crConnectionInfo.DatabaseName = Constants.CMLTConstants.dbName;
-            crConnectionInfo.UserID = Constants.CMLTConstants.dbUserName;
-            crConnectionInfo.Password = Constants.CMLTConstants.dbPassword;
-            CrTables = cryRpt.Database.Tables;
-            foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+            Load_Service(_objdb.DBName);
+            List<int> list = _dtService.AsEnumerable().Where(x => (x.Field<int>("SYS_SER_ID") == 1 || x.Field<int>("SYS_SER_ID") == 2 || x.Field<int>("SYS_SER_ID") == 4)).Select(dr => dr.Field<int>("SYS_SER_ID")).ToList();
+            List<List<ServiceDetails>> nestedlist = new List<List<ServiceDetails>>();
+            foreach (int i in list)
             {
-                crtableLogoninfo = CrTable.LogOnInfo;
-                crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                _clscassheet _objcls = new _clscassheet();
+                // _objdb.DBName = 
+                _objcls.srv = i;
+                _objcls.date = DateTime.Today;
+                _objcls.b_zone = "ALL";
+                //_objcls.cate = "ALL";
+                _objcls.f_level = "ALL";
+                DataSet _dt1 = _objbll.GeneratePlannedServiceSummary(_objcls, _objdb);
+                int count = _dt1.Tables.Count;
+                List<ServiceDetails> datalist1 = new List<ServiceDetails>();
+                List<ServiceDetails> datalist2 = new List<ServiceDetails>();
+                List<ServiceDetails> datalist4 = new List<ServiceDetails>();
+                foreach (DataRow dr in _dt1.Tables[count - 1].Rows)
+                {
+                    ServiceDetails serdetails = new ServiceDetails
+                    {
+                        Label = dr["CAS_NAME"].ToString(),
+                        Progress = Convert.ToDecimal(dr["AMOUNT"]),
+                        //PlannedProgress = Convert.ToDecimal(dr["PCOMPROGRESS"]),
+                        ID = Convert.ToInt32(dr["CAS_ID"])
+                    };
+                    if (i == 1)
+                        datalist1.Add(serdetails);
+                    else if (i == 2)
+                        datalist2.Add(serdetails);
+                    else if (i == 4)
+                        datalist4.Add(serdetails);
+                }
+                if (i == 1)
+                    nestedlist.Add(datalist1);
+                else if (i == 2)
+                    nestedlist.Add(datalist2);
+                else if (i == 4)
+                    nestedlist.Add(datalist4);
             }
-            //string _s = "MEP";
-            //string selectionformula = "{CAS_RPT.BZONE}='" + _s + "' and {CAS_RPT.CATE}=\"DB\"";
-            //SelectionFormula(cryRpt, (string)Session["zone"], (string)Session["cat"], (string)Session["flvl"], (string)Session["fed"]);
-            //if((string)Session["srv"]=="0")
-            //    cryRpt.SetParameterValue("srv","P");
-            //else
-            //cryRpt.Refresh();
-            //if ((string)Session["bz"] == null) Session["bz"] = "All";
-            //if ((string)Session["fl"] == null) Session["fl"] = "All";
-            CrystalReportViewer2.ReportSource = null;
-            cryRpt.SetParameterValue("srv", lblsrv.Text);
-            cryRpt.SetParameterValue("project", (string)Session["projectname"]);
-            cryRpt.SetParameterValue("BZ", _bz);
-            cryRpt.SetParameterValue("FL", _fl);
-            CrystalReportViewer2.ReportSource = cryRpt;
-            CrystalReportViewer2.DataBind();
-            Session["Report"] = cryRpt;
+            return nestedlist;
         }
+        //[WebMethod]
+        //public static List<ExecutiveDetails> GetExecutiveData(string prj)
+        //{
+        //    BLL_Dml _objbll = new BLL_Dml();
 
+        //    _database _objdb = new _database
+        //    {
+        //        DBName = "DB_" + prj
+        //    };
+        //    List<ExecutiveDetails> datalist3 = new List<ExecutiveDetails>();
+        //    if (prj == "PCD")
+        //    {
+        //        DataTable dsresult = _objbll.load_dashboarddummy(_objdb);
+        //        foreach (DataRow dr in dsresult.Rows)  //Tables[count - 1]
+        //        {
+        //            ExecutiveDetails execdetails = new ExecutiveDetails
+        //            {
+        //                Label = dr["CAS_NAME"].ToString(),
+        //                ActualProgress = ((dr["PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["PROGRESS"]),
+        //                PlannedProgress = ((dr["P_PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["P_PROGRESS"])
+        //            };
+        //            datalist3.Add(execdetails);
+        //        }
+        //    }
+
+        //    else if (prj == "ARSD")
+        //    {
+        //        _clscassheet _objcls = new _clscassheet();
+        //        _objcls.mode = 1;
+        //        var todaysdate = DateTime.Today;
+        //        string from = DateTime.Today.AddMonths(-3).ToString("dd/MM/yyyy");
+        //        string to = DateTime.Today.AddMonths(2).ToString("dd/MM/yyyy");
+        //        _objcls.dtastart = DateTime.ParseExact(from, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        //        _objcls.dtpstart = DateTime.ParseExact(to, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        //        _objcls.cate = "Overall";
+        //        DataSet dsresult = _objbll.Get_Total_Executive_Summary_DashBoard(_objcls, _objdb);
+        //        int count = dsresult.Tables.Count;
+        //        foreach (DataRow dr in dsresult.Tables[count - 1].Rows)
+        //        {
+        //            ExecutiveDetails execdetails = new ExecutiveDetails
+        //            {
+        //                Label = dr["CAS_NAME"].ToString(),
+        //                ActualProgress = ((dr["PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["PROGRESS"]),
+        //                PlannedProgress = ((dr["P_PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["P_PROGRESS"])
+        //            };
+        //            datalist3.Add(execdetails);
+        //        }
+        //    }
+        //    return datalist3;
+        //}
+
+        [WebMethod]
+        public static List<List<ChartDetails>> GetCasDetails(string prj)
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database { DBName = "DB_" + prj };
+            Load_Cassheet(_objdb.DBName);
+            List<int> list = _dtCassheet.AsEnumerable().Where(x => (x.Field<int>("PRJ_CAS_ID") == 10 || x.Field<int>("PRJ_CAS_ID") == 20)).Select(dr => dr.Field<int>("PRJ_CAS_ID")).ToList();
+            List<List<ChartDetails>> nestedlist = new List<List<ChartDetails>>();
+            foreach (int i in list)
+            {
+                _clscassheet _objcls = new _clscassheet();
+                _objcls.sch = i;
+                _objcls.b_zone = "ALL";
+                _objcls.cate = "ALL";
+                _objcls.f_level = "ALL";
+                _objcls.fed_from = "ALL";
+                _objcls.loca = "ALL";
+                _objcls.build_id = 0;
+                _objcls.mode = 1;
+                _objcls.date = DateTime.Today;
+                DataSet _dt1 = _objbll.Generate_ProgressComparison_Graph(_objcls, _objdb);
+                List<ChartDetails> datalist1 = new List<ChartDetails>();
+                List<ChartDetails> datalist2 = new List<ChartDetails>();
+                foreach (DataRow dr in _dt1.Tables[0].Rows)
+                {
+                    ChartDetails casdetails = new ChartDetails
+                    {
+                        Label = dr["PKG_NAME"].ToString(),
+                        //GraphPlannedData = Convert.ToDecimal(dr["PCOMPROGRESS"]),
+                        GraphActualData = Convert.ToDecimal(dr["Overall"]),
+                    };
+                    if (i == 10)
+                        datalist1.Add(casdetails);
+                    else if (i == 20)
+                        datalist2.Add(casdetails);
+                }
+                if (i == 10)
+                    nestedlist.Add(datalist1);
+                else if (i == 20)
+                    nestedlist.Add(datalist2);
+            }
+            return nestedlist;
+        }
+        [WebMethod]
+        public static List<CasSheetDetails> GetModalDetails(int casid, string prj)
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database { DBName = "DB_" + prj };
+            Load_Cassheet(_objdb.DBName);
+            List<CasSheetDetails> datalist1 = new List<CasSheetDetails>();
+            bool i = _dtCassheet.AsEnumerable().Where(x => x.Field<int>("PRJ_CAS_ID") == casid).Any();
+            if (i)
+            {
+                _clscassheet _objcls = new _clscassheet();
+                _objcls.sch = casid;
+                _objcls.b_zone = "ALL";
+                _objcls.cate = "ALL";
+                _objcls.f_level = "ALL";
+                _objcls.fed_from = "ALL";
+                _objcls.loca = "ALL";
+                _objcls.build_id = 0;
+                _objcls.mode = 1;
+                DataTable _dt1 = _objbll.Generate_CAS_Graph_Summary1(_objcls, _objdb);
+                foreach (DataRow dr in _dt1.Rows)
+                {
+                    CasSheetDetails casdetails = new CasSheetDetails
+                    {
+                        Label = dr["PKG_NAME"].ToString(),
+                        Progress = Convert.ToDecimal(dr["OVERALL"]),
+                    };
+                    datalist1.Add(casdetails);
+                }
+
+            }
+            return datalist1;
+        }
+        private static void Load_Service(string prj)
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database
+            {
+                DBName = prj
+            };
+            _dtService = _objbll.Load_Prj_Service(_objdb);
+        }
+        private static void Load_Cassheet(string prj)
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database
+            {
+                DBName = prj
+            };
+            _dtCassheet = _objbll.Load_Prj_Cassheet(_objdb);
+        }
+        //private static LoadData()
+        //{
+
+        //    return List;
+        //}
     }
+
 }

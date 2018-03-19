@@ -14,6 +14,13 @@ namespace Constants
                 return new string[] { "123", "Traini", "Trial", "demo", "HMIM", "HMHS", "MOE", "11784", "AZC", "NCP", "MOE1", "PCD", "ARSD", "ABS", "12660", "DMRL", "KHUH", "KDT", "MON" };
                 }
          }
+        public static string[] PcdProjects   
+        {
+            get
+            {
+                return new string[] {  "PCD", "ARSD", "AFV"};
+            }
+        }
 
         //Project List for loading sodetails_new.aspx
         public static string[] hasBuilding

@@ -124,9 +124,9 @@
               //document.getElementById("content").src = "graph.aspx?id=" + _id;
               document.getElementById("content").src = "cxissue_master.aspx?id=" + _id;
           }
-          else if (type == "28") {
-              document.getElementById("content").src = "MechReview.aspx?id=" + _id;
-          }
+          //else if (type == "28") {
+          //    document.getElementById("content").src = "MechReview.aspx?id=" + _id;
+          //}
           else if (type == "29") {
               document.getElementById("content").src = "CXIR_Schedule.aspx?id=" + _id;
           }

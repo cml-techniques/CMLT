@@ -122,7 +122,13 @@ namespace CmlTechniques.CMS
                     else if (mod[1].ToString() == "Dashboard")
                     {
                         //_prm = mod[0].ToString() + "_M" + mod[0].ToString() + "_N" + mod[1].ToString() + "_P" + Project;
-                        _n0.NavigateUrl = "javascript:parent.callcms('" + Project + "','28')";
+
+                        bool ispcdProject = (Array.IndexOf(Constants.CMLTConstants.PcdProjects, Project) > -1) ? true : false;   
+
+                        if (ispcdProject) _n0.NavigateUrl = "javascript:parent.callcms('" + Project + "','28')";
+                        else _n0.NavigateUrl = "javascript:parent.callcms('" + Project + "','40')";
+
+
                     }
                     //Jenevieve - 22/-1/2018
                     else if (mod[1].ToString() == "MV Cables Test Documentation Log")
