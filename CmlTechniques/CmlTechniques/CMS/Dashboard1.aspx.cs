@@ -20,13 +20,24 @@ namespace CmlTechniques.CMS
             if (!IsPostBack)
             {
                 lblprj.Text = Request.QueryString["prj"].ToString();
-                if (lblprj.Text == "ARSD")
-                    lbl1.Text = "The Address Residence Sky View";
-                if (lblprj.Text == "AFV")
-                    lbl1.Text = "The Address Residence Fountain View";
-                else if (lblprj.Text == "PCD")
-                    lbl1.Text = "Planned Completion Date Development";
+                //if (lblprj.Text == "ARSD")
+                //    lbl1.Text = "The Address Residence Sky View";
+                //if (lblprj.Text == "AFV")
+                //    lbl1.Text = "The Address Residence Fountain View";
+                //else if (lblprj.Text == "PCD")
+                //    lbl1.Text = "Planned Completion Date Development
+
+                lbl1.Text = Get_ProjectName();
             }
+        }
+        private string Get_ProjectName()
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _objdb.DBName = "DBCML";
+            _clsuser _objcls = new _clsuser();
+            _objcls.project_code = lblprj.Text;
+            return _objbll.Get_ProjectName(_objcls, _objdb);
         }
         [WebMethod]
         public static List<ChartDetails> GetChartData(string prj)
@@ -119,8 +130,7 @@ namespace CmlTechniques.CMS
                 DBName = "DB_"+prj
             };
             List<ExecutiveDetails> datalist3 = new List<ExecutiveDetails>();
-            if(prj == "PCD")
-            {
+
                 DataTable dsresult = _objbll.load_dashboarddummy(_objdb);
                 foreach (DataRow dr in dsresult.Rows)  //Tables[count - 1]
                 {
@@ -132,31 +142,30 @@ namespace CmlTechniques.CMS
                     };
                     datalist3.Add(execdetails);
                 }
-            }
                 
-            else if(prj == "ARSD")
-            {
-                _clscassheet _objcls = new _clscassheet();
-                _objcls.mode = 1;
-                var todaysdate = DateTime.Today;
-                string from = DateTime.Today.AddMonths(-3).ToString("dd/MM/yyyy");
-                string to = DateTime.Today.AddMonths(2).ToString("dd/MM/yyyy");
-                _objcls.dtastart = DateTime.ParseExact(from, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-                _objcls.dtpstart = DateTime.ParseExact(to, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-                _objcls.cate = "Overall";
-                DataSet dsresult = _objbll.Get_Total_Executive_Summary_DashBoard(_objcls, _objdb);
-                int count = dsresult.Tables.Count;
-                foreach (DataRow dr in dsresult.Tables[count-1].Rows)
-                {
-                    ExecutiveDetails execdetails = new ExecutiveDetails
-                    {
-                        Label = dr["CAS_NAME"].ToString(),
-                        ActualProgress = ((dr["PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["PROGRESS"]),
-                        PlannedProgress = ((dr["P_PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["P_PROGRESS"])
-                    };
-                    datalist3.Add(execdetails);
-                }
-            }           
+            //else if(prj == "ARSD")
+            //{
+            //    _clscassheet _objcls = new _clscassheet();
+            //    _objcls.mode = 1;
+            //    var todaysdate = DateTime.Today;
+            //    string from = DateTime.Today.AddMonths(-3).ToString("dd/MM/yyyy");
+            //    string to = DateTime.Today.AddMonths(2).ToString("dd/MM/yyyy");
+            //    _objcls.dtastart = DateTime.ParseExact(from, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            //    _objcls.dtpstart = DateTime.ParseExact(to, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            //    _objcls.cate = "Overall";
+            //    DataSet dsresult = _objbll.Get_Total_Executive_Summary_DashBoard(_objcls, _objdb);
+            //    int count = dsresult.Tables.Count;
+            //    foreach (DataRow dr in dsresult.Tables[count-1].Rows)
+            //    {
+            //        ExecutiveDetails execdetails = new ExecutiveDetails
+            //        {
+            //            Label = dr["CAS_NAME"].ToString(),
+            //            ActualProgress = ((dr["PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["PROGRESS"]),
+            //            PlannedProgress = ((dr["P_PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["P_PROGRESS"])
+            //        };
+            //        datalist3.Add(execdetails);
+            //    }
+            //}           
             return datalist3;
         }
 

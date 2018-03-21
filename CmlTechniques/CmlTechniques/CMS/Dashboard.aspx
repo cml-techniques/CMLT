@@ -158,7 +158,7 @@
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Overall Summary",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 series: { 0: { color: '#C98E33' }},
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
                 animation: { startup: true, duration: 2000, easing: 'out' },
@@ -232,9 +232,9 @@
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Electrical Summarys",
-                legend: { position: 'right', maxLines: 1, textStyle: { fontSize: 10 } },
+                legend: { position: 'none', maxLines: 1, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
-                series: { 0: { color: '#2CA736' }},
+                series: { 0: { color: '#800080' }},
                 vAxis: {
                     title: "Progress %",
                     viewWindowMode: 'maximized',
@@ -275,7 +275,7 @@
                 // backgroundColor: '#f1f1f1',
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Mechanical Summary",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 9 } },
+                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 9 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#D0EA11' }, 1: { color: '#1144EA' } },
                 vAxis: {
@@ -318,7 +318,7 @@
             var options4 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Fire Protection and Public Health Services Summary",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#3399ff' }, 1: { color: '#2F262F' } },
                 vAxis: {
@@ -533,7 +533,7 @@
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Fire & Voice Alarm Services Summary",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#E8396E' } },
                 vAxis: {
@@ -575,7 +575,7 @@
             var options2 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "BMS Summary",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 7000, easing: 'out' },
                 series: { 0: { color: '#FF5733' }, 1: { color: '#00FF00' } },
                 vAxis: {
@@ -735,7 +735,7 @@
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: label,
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 colors: ['#ff6666'],
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
                 animation: { startup: true, duration: 2000, easing: 'out' },
@@ -806,7 +806,7 @@
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: label,
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 colors: ['#ff6666'],
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
                 animation: { startup: true, duration: 2000, easing: 'out' },
