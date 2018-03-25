@@ -9,61 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="../Assets/css/fonts/bootstrap.css" rel="stylesheet" />
     <link href="../Assets/css/jquery-ui.min.css" rel="stylesheet" />
+      <link href="../Assets/css/style1.css" rel="stylesheet" />
+     <link href="../Assets/css/Dashboard.css" rel="stylesheet" />
+
     <script src="../Assets/js/jquery.min.js"></script>
     <script src="../Assets/js/jquery-ui.min.js"></script>
     <script src="../Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <style>
-        .chart {
-            width: 100%;
-            min-height: 350px;
-        }
-
-        .border-rad {
-            border: 5px solid white;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            box-shadow: 0 1px 4px 0 rgba(40,44,53,0.30);
-        }
-           [class^="col-md"], [class*=" col-md"], [class^="col-sm"], [class*=" col-sm"], [class^="col-xs"], [class*="col-xs"], [class^="col-lg"], [class*=" col-lg"] {
-            margin-top: 20px;
-            padding-right: 10px;
-            padding-left: 10px;
-        }
-
-        .loader {
-            position: absolute;
-            border: 10px solid #6699ff;
-            border-radius: 50%;
-            border-top: 10px solid #0516F0;
-            width: 50px;
-            height: 50px;
-            left: 45%;
-            top: 45%;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-        }
-
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+        @page {
+    margin-top: 0;
+}
     </style>
     <script> 
         var chartData; // holds chart data
@@ -76,7 +32,28 @@
         var detailData;
         google.load("visualization", "1", { packages: ['corechart'] });
         //fill chart data
-        $(document).ready(function() {
+        $(document).ready(function () {
+
+
+            $("#btnPrint").click(function (event) {
+                $(".sec-head").addClass('hide');
+                $(".print-head").removeClass('hide');
+                
+                window.print();
+
+
+                $(".sec-head").removeClass('hide');
+                $(".print-head").addClass('hide');
+
+
+            });
+
+            $(".print-head").addClass('hide');
+            $(".top-line").addClass('hidden-print');
+
+            getsrc();
+
+
             $('#loader7').hide();
             $('#loader8').hide();
             $('#loader9').hide();
@@ -874,25 +851,51 @@
             var charts = document.getElementById("detailchart");
             charts.innerHTML = "";
         }
+        function getsrc() {
+
+            var path = 'LoadImage.ashx?id=' + $("#lblprj").text();;
+
+            $("#imglogo").attr("src", path);
+
+        }
     </script>
 </head>
 <body style="background-color: #f1f1f1">
     <div class="container-fluid">
-        <div class="row-fluid">
-            <%--  <div class="col-md-3" style="margin-left: 20px;">
-                <img src="../images/123logo.jpg" style="width: 100px; height: 100px">
-            </div>--%>
-            <div class="col-lg-6 col-lg-offset-3">
-                <p class="text-center font-weight-bold">
-                    <strong><asp:Label runat="server" ID="lbl1"></asp:Label><span> | Dashboard</span>
-                        </strong>
-                </p>
-            </div>
+         <div class="row print-head">
+            <div class="col-lg-12">
+                <table class="full-width">
+                    <tr>
+                        <td class="col-width-100">
+  <img src='#' id="imglogo" class="col-height-100 col-width-100"/>  
+                        </td>
+                        <td  class="text-center">
+                            <ul>
+                                <li>
+                            <strong ><span class="cml-head">CML International (Dubai)</span> </strong>
+                                </li>
+                                <li>  <strong class="check-link"><asp:Label runat="server" ID="lblprojectprint" Text=""></asp:Label><span> | Dashboard</span> </strong></li>
+                            </ul>                    
+                        </td>
+                       <td class="col-width-100">
+                        <img src="../images/logo.JPG" class="col-height-100 col-width-100"/>  
+                        </td>
+                    </tr>
+                </table>
 
-            <%-- <div class="col-md-3 text-right">
-                <img src="../images/cmllogo_small.jpg" style="width: 100px; height: 100px" />
-            </div>--%>
-        </div>
+             </div>
+             </div>
+         <div class="row sec-head">
+            <div class="col-lg-11">
+                  <p class="text-center font-weight-bold">
+                    <strong class="check-link"><asp:Label runat="server" ID="lblproject"></asp:Label><span> | Dashboard</span>
+                     </strong>
+                   </p>
+                </div>
+                 <div class="col-lg-1">     
+                <button type="button" id="btnPrint" class="btn btn-outline btn-default btn-primary">Print</button>
+                </div> 
+             </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-m-t">
                 <div id="chartdiv3" class="chart border-rad"></div>

@@ -3128,5 +3128,9 @@ namespace BusinessLogic
         {
             return _objDLL.Get_file(sp, _obj, _objdb);
         }
+        public DataTable Get_ProjectInformation(_clsuser _obj,_database _objdb) 
+        {
+            return _objDLL.load_master("Get_ProjectInformation_Code", _obj, _objdb);
+        }
     }
 }

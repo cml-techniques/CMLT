@@ -20,24 +20,24 @@ namespace CmlTechniques.CMS
             if (!IsPostBack)
             {
                 lblprj.Text = Request.QueryString["prj"].ToString();
-                //if (lblprj.Text == "ARSD")
-                //    lbl1.Text = "The Address Residence Sky View";
-                //if (lblprj.Text == "AFV")
-                //    lbl1.Text = "The Address Residence Fountain View";
-                //else if (lblprj.Text == "PCD")
-                //    lbl1.Text = "Planned Completion Date Development
-
-                lbl1.Text = Get_ProjectName();
+                Get_ProjectDetails();
             }
         }
-        private string Get_ProjectName()
+        private void Get_ProjectDetails()
         {
             BLL_Dml _objbll = new BLL_Dml();
             _database _objdb = new _database();
             _objdb.DBName = "DBCML";
             _clsuser _objcls = new _clsuser();
             _objcls.project_code = lblprj.Text;
-            return _objbll.Get_ProjectName(_objcls, _objdb);
+            DataTable dt = _objbll.Get_ProjectInformation(_objcls, _objdb);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                lblproject.Text = dr["prj_name"].ToString();
+                lblprojectprint.Text = dr["prj_name"].ToString();
+
+            }
         }
         [WebMethod]
         public static List<ChartDetails> GetChartData(string prj)

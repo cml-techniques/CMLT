@@ -166,6 +166,10 @@
           else if (type == "39") {
               document.getElementById("content").src = "../cmsuploads1.aspx?" + _id;
           }
+          else if (type == "40") {
+              //document.getElementById("content").src = "../cmsuploads1.aspx?" + _id;
+              document.getElementById("content").src = "Dashboard.aspx?prj=" + _id;
+          }
       }
       function MenuClick(type) {
           if (type == 1) {

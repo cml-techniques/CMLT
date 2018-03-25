@@ -7,22 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CmlTechniques.CMS
-{
-
+namespace CmlTechniques.CMS {
+    
+    
+    public partial class Dashboard {
         
-    public partial class Dashboard
-    {
-
         /// <summary>
-        /// lbl1 control.
+        /// lblprojectprint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl1;
-
+        protected global::System.Web.UI.WebControls.Label lblprojectprint;
+        
+        /// <summary>
+        /// lblproject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblproject;
+        
         /// <summary>
         /// lblprj control.
         /// </summary>

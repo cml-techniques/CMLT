@@ -3079,6 +3079,9 @@
       <DependentUpon>Graph_Pcd.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CMS\LoadImage.ashx.cs">
+      <DependentUpon>LoadImage.ashx</DependentUpon>
+    </Compile>
     <Compile Include="CMS\pcd_comparison.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4558,11 +4561,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="adminpage.aspx" />
+    <Content Include="Assets\css\Dashboard.css" />
     <Content Include="Assets\css\dropzone.css" />
     <Content Include="Assets\css\fixedHeader.dataTables.min.css" />
     <Content Include="Assets\css\jquery.dataTables.min.css" />
     <Content Include="Assets\css\smartadmin-production-plugins.css" />
     <Content Include="Assets\css\Spinner.css" />
+    <Content Include="Assets\css\style1.css" />
     <Content Include="Assets\css\sweetalert.css" />
     <Content Include="Assets\js\dataTables.fixedHeader.min.js" />
     <Content Include="Assets\js\dropzone.js" />
@@ -5002,6 +5007,7 @@
     <None Include="CMS\DataSet2.xss">
       <DependentUpon>DataSet2.xsd</DependentUpon>
     </None>
+    <Content Include="CMS\LoadImage.ashx" />
     <None Include="CMS\testing.pdf" />
     <None Include="DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>
