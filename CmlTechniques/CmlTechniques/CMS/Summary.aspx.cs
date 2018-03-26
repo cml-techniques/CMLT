@@ -26,7 +26,11 @@ namespace CmlTechniques.CMS
         public static DataTable _dtsummary;
         protected void Page_Load(object sender, EventArgs e)
         {
-                Session["Report"] = null;
+            //if(!IsPostBack)
+            //{
+            //    Session["Report"] = null;
+            //}
+               
         }
         void _ReadCookies()
         {
