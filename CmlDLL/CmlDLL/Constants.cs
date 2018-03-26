@@ -11,7 +11,7 @@ namespace Constants
         public static string[] recentProjects 
         { 
             get {
-                return new string[] { "123", "Traini", "Trial", "demo", "HMIM", "HMHS", "MOE", "11784", "AZC", "NCP", "MOE1", "PCD", "ARSD", "ABS", "12660", "DMRL", "KHUH", "KDT", "MON" };
+                return new string[] { "123", "Traini", "Trial", "demo", "HMIM", "HMHS", "MOE", "11784", "AZC", "NCP", "MOE1", "PCD", "ARSD", "ABS", "12660", "DMRL", "KHUH", "KDT", "MON", "SRH", "AFV" };
                 }
          }
         public static string[] PcdProjects   

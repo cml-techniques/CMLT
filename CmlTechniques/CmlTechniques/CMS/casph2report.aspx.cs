@@ -605,15 +605,18 @@ namespace CmlTechniques.CMS
                     //_row[1] = row.col2.ToString();
                     decimal _p1 = 0;
                     decimal _total = 0;
-                    int count = 0;
+                    decimal count = 0;
                     string _s = "";
                     var _result = from _data in _dtresult.AsEnumerable()
                                   where _data.Field<int>("Sys_id") == Convert.ToInt32(row.col1.ToString())
                                   select _data;
                     foreach (var _row in _result)
                     {
-                        _p1 += Convert.ToDecimal(_row["per_com1"]);
-                        count += Convert.ToInt32(IsNumeric(_row["devices1"]));
+                        if (Convert.ToDecimal(_row["per_com1"].ToString()) != -1)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com1"]);
+                            count += Convert.ToDecimal(_row["devices1"]);
+                        }
                     }
                     if (count != 0)
                         _total = Decimal.Round((_p1 / Convert.ToDecimal(count)) * 100);
