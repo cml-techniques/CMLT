@@ -79,6 +79,39 @@ namespace CmlTechniques.CMS
             _objcls.doc_id = Convert.ToInt32(lblid.Text);
             return _objbll.Get_DocStatus(_objcls, _objdb);
         }
+
+        private void HideComment(int mode)
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _objdb.DBName = "dbCML";
+            _clsuser _objcls = new _clsuser();
+            _objcls.uid = (string)Session["uid"];
+            _objcls.project_code = lblprjid.Text;
+            _objcls.mode = mode;
+            string _access = _objbll.Get_CMSAccess(_objcls, _objdb);
+            string _user = (string)Session["uid"];
+            if (_user.Contains("cmlgroup") != true)
+            {
+                if (_access != "Review/Comments")
+                {
+                    mydiv.Visible = false;
+                    cmdsave.Visible = false;
+                }
+                else
+                {
+                    mydiv.Visible = true;
+                    cmdsave.Visible = true;
+                }
+
+            }
+            else
+            {
+                mydiv.Visible = true;
+                cmdsave.Visible = true;
+            }
+        }
+
         private void load_document(string _mode)
         {
             //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + (string)Session["file"] + "');", true);
@@ -87,34 +120,8 @@ namespace CmlTechniques.CMS
             lbstatus.Text = "Document Name: " + _file;
             if (_mode == "MS")
             {
-                BLL_Dml _objbll = new BLL_Dml();
-                _database _objdb = new _database();
-                _objdb.DBName = "dbCML";
-                _clsuser _objcls = new _clsuser();
-                _objcls.uid = (string)Session["uid"];
-                _objcls.project_code = lblprjid.Text;
-                _objcls.mode = 1;
-                string _access = _objbll.Get_CMSAccess(_objcls, _objdb);
-                string _user = (string)Session["uid"];
-                if (_user.Contains("cmlgroup") != true)
-                {
-                    if (_access != "Review/Comments")
-                    {
-                        mydiv.Visible = false;
-                        cmdsave.Visible = false;
-                    }
-                    else
-                    {
-                        mydiv.Visible = true;
-                        cmdsave.Visible = true;
-                    }
 
-                }
-                else
-                {
-                    mydiv.Visible = true;
-                    cmdsave.Visible = true;
-                }
+                HideComment(1);
 
                 if (Get_Status() != "REVIEW")
                 {
@@ -129,6 +136,8 @@ namespace CmlTechniques.CMS
             }
             else if (_mode == "CP")
             {
+                HideComment(1);
+
                 lblhead.Text = "Commissioning Plan";
                 Session["type"] = "3";
                 btnlink.Visible = false;
