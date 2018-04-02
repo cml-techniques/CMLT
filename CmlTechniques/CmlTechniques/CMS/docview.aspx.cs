@@ -302,7 +302,7 @@ namespace CmlTechniques.CMS
             {
                 string url = "";
                 if (lblprjid.Text == "HMIM") url = "CMS2.aspx?mod=" + lblvmode.Text + "&PRJ=" + lblprjid.Text;
-                else url = "CMS.aspx?PRJ = " + lblvmode.Text;
+                else url = "CMS.aspx?PRJ =" + lblvmode.Text;
                 Response.Redirect(url);
 
             }
