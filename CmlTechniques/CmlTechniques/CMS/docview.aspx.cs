@@ -299,9 +299,16 @@ namespace CmlTechniques.CMS
                 return;
             }
             else
-                PRJ = lblvmode.Text;
+            {
+                string url = "";
+                if (lblprjid.Text == "HMIM") url = "CMS2.aspx?mod=" + lblvmode.Text + "&PRJ=" + lblprjid.Text;
+                else url = "CMS.aspx?PRJ = " + lblvmode.Text;
+                Response.Redirect(url);
 
-            Response.Redirect("CMS.aspx?PRJ=" + PRJ);
+            }
+               
+
+           
         }
         protected void cmdadd1_Click(object sender, EventArgs e)
         {

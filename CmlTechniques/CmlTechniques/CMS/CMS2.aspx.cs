@@ -34,12 +34,12 @@ namespace CmlTechniques.CMS
 
                 if (_prm.Substring(0, 2) == "1P")
                 {
-                     _mode = _prm.Substring(_prm.IndexOf("M_") + 2);
-                     _prj = _prm.Substring(_prm.IndexOf("P_") + 2, _prm.IndexOf("M_") - (_prm.IndexOf("P_") + 2));
+                    _mode = _prm.Substring(_prm.IndexOf("M_") + 2);
+                    _prj = _prm.Substring(_prm.IndexOf("P_") + 2, _prm.IndexOf("M_") - (_prm.IndexOf("P_") + 2));
 
                     if (_mode == "CP")
                     {
-                     
+
                         if (_mode == "CP")
                         {
                             _id = "2_M2_NCommissioning Plan_P" + _prj;
@@ -49,7 +49,7 @@ namespace CmlTechniques.CMS
 
                         }
                     }
-                    else if  (_mode == "SO")
+                    else if (_mode == "SO")
                     {
                         content.Attributes.Add("src", "so.aspx?PRJ=" + _prj + "&ACN=0");
                     }
@@ -60,7 +60,7 @@ namespace CmlTechniques.CMS
                     }
                     else
                     {
-                       _mode = _prm.Substring(_prm.IndexOf("M_") + 2, _prm.IndexOf("F_") - (_prm.IndexOf("M_") + 2));
+                        _mode = _prm.Substring(_prm.IndexOf("M_") + 2, _prm.IndexOf("F_") - (_prm.IndexOf("M_") + 2));
                         //string _mod = _prm.Substring(_prm.IndexOf("M_") + 2);
 
                         string _fol = _prm.Substring(_prm.IndexOf("F_") + 2, _prm.IndexOf("FI_") - (_prm.IndexOf("F_") + 2));
@@ -83,9 +83,9 @@ namespace CmlTechniques.CMS
                     }
 
 
-                        tree.Attributes.Add("src", "cmstree.aspx?PRJ=" + _prj + "&ID=" + _user);
-                        head.Attributes.Add("src", "../head1.aspx?mod=CMS&prj=" + _prj + "&auh=" + _user);
-                        menu.Attributes.Add("src", "cmsmenu.aspx?prj=" + _prj);
+                    tree.Attributes.Add("src", "cmstree.aspx?PRJ=" + _prj + "&ID=" + _user);
+                    head.Attributes.Add("src", "../head1.aspx?mod=CMS&prj=" + _prj + "&auh=" + _user);
+                    menu.Attributes.Add("src", "cmsmenu.aspx?prj=" + _prj);
 
 
 
@@ -108,6 +108,18 @@ namespace CmlTechniques.CMS
 
 
 
+                }
+                else if (_prm.Substring(0, 2) == "CP")
+                {
+                    _prj = Request.QueryString["prj"].ToString();
+
+                    tree.Attributes.Add("src", "cmstree.aspx?PRJ=" + _prj + "&ID=" + (string)Session["uid"]);
+
+                    head.Attributes.Add("src", "../head.aspx?id=CMS&prj=" + _prj);
+                    menu.Attributes.Add("src", "cmsmenu.aspx?prj=" + _prj);
+
+                    _id = "2_M2_NCommissioning Plan_P" + _prj;
+                    content.Attributes.Add("src", "cplans.aspx?id=" + _id);
                 }
                 else
                 {
