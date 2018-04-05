@@ -133,11 +133,11 @@ namespace CmlTechniques.CMS
             //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + count.ToString() + "');", true);
         }
         ReportDocument cryRpt = new ReportDocument();
-        protected void Page_Unload(object sender, EventArgs e)
-        {
-                cryRpt.Dispose();
-                cryRpt.Close();
-        }
+        //protected void Page_Unload(object sender, EventArgs e)
+        //{
+        //        cryRpt.Dispose();
+        //        cryRpt.Close();
+        //}
         private void Generate_Reports(string sch)
         {
 
