@@ -431,13 +431,29 @@ namespace CmlTechniques.CMS
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
             }
-            
+
             //CrystalReportViewer1.ParameterFieldInfo = paramFields; 
+            
+         
             CrystalReportViewer1.ReportSource = cryRpt;
             CrystalReportViewer1.DataBind();
+
+          
+
             //CrystalReportViewer1.RefreshReport();
             //CrystalReportViewer1.PageZoomFactor = 200;
             Session["Report"] = cryRpt;
+
+            _clsuser _cls = new _clsuser();
+            _cls.uid = (string)Session["uid"];
+            _cls.project_code = lblprj.Text;
+            _cls.mode = 2;
+            _objdb.DBName = "DBCML";
+            string _access = _objbll.Get_CMSAccess(_cls, _objdb);
+
+            if (_access == "Read Only")
+            { CrystalReportViewer1.HasExportButton = false; }
+
         }
         private DataTable GetData()
         {

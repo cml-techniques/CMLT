@@ -918,6 +918,24 @@ namespace CmlTechniques.CMS
             CrystalReportViewer1.ReportSource = cryRpt;
             CrystalReportViewer1.DataBind();
             Session["Report"] = cryRpt;
+
+           
+            if (GetAccessLevel() == "Read Only")
+            { CrystalReportViewer1.HasExportButton = false; }
+
+        }
+
+        private string GetAccessLevel()
+        {
+            BLL_Dml bl = new BLL_Dml();
+            _database db = new _database();
+            db.DBName = "dbCML";
+            _clsuser cl = new _clsuser();
+            cl.uid = (string)Session["uid"];
+            cl.project_code = lblprj.Text;
+            cl.mode = 2;
+            return bl.Get_CMSAccess(cl, db);
+           
         }
         private string Get_Facility_Name()
         {

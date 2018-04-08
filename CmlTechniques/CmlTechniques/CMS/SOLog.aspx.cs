@@ -425,7 +425,7 @@ namespace CmlTechniques.CMS
             if (lblNewProject.Text == "1")
                 Session["fbui"] = RadComboBoxBuilding.SelectedItem.Text;
             else
-                Session["fbui"] = "";
+                Session["fbui"] = "All";
 
             string _prm = "Reports.aspx?id=som1&idx=0&prj=" + lblprj.Text;
             ScriptManager.RegisterStartupScript(this, typeof(string), "Message", "window.open('" + _prm + "','','left=200,top=50,width=1024,height=600,menubar=1,toolbar=1,scrollbars=1,status=0,resizable=1');", true);
