@@ -134,7 +134,7 @@
             var data = new google.visualization.DataTable(chartData);
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Overall System Summary",
+                title: "Overall Summary for Planned Completion Date",
                 legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
                 series: { 0: { color: '#C98E33' }, 1: { color: '#C10843' } },
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
@@ -164,7 +164,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "Services",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -209,7 +209,7 @@
             var dataview4 = new google.visualization.DataView(data4);
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Electrical Systems",
+                title: "Electrical Summary",
                 legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#2CA736' }, 1: { color: '#800080' } },
@@ -236,7 +236,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "CAS Sheets",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -252,7 +252,7 @@
             var options2 = {
                 // backgroundColor: '#f1f1f1',
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Mechanical Systems",
+                title: "Mechanical Summary",
                 legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 9 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#D0EA11' }, 1: { color: '#1144EA' } },
@@ -279,7 +279,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "CAS Sheets",
                     textStyle: {
                         fontSize: 9,
                         bold: true,
@@ -295,7 +295,7 @@
             };
             var options4 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Fire Protection and Public Health Services",
+                title: "Fire Protection and Public Health Services Summary",
                 legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#3399ff' }, 1: { color: '#2F262F' } },
@@ -322,7 +322,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "CAS Sheets",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -508,7 +508,7 @@
             var data2 = new google.visualization.DataTable(chartData5);
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Fire & Voice Alarm Services",
+                title: "Fire & Voice Alarm Services Summary",
                 legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#E8396E' }, 1: { color: '#C0C0C0' } },
@@ -535,7 +535,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "Tests",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -550,7 +550,7 @@
             };
             var options2 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "BMS",
+                title: "BMS Summary",
                 legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 7000, easing: 'out' },
                 series: { 0: { color: '#FF5733' }, 1: { color: '#00FF00' } },
@@ -577,7 +577,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "Tests",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -657,7 +657,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "Weekly Dates",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -739,7 +739,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "Equipments",
                     textStyle: {
                         fontSize: 8,
                         bold: true
@@ -810,7 +810,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "",
+                    title: "Tests",
                     textStyle: {
                         fontSize: 8,
                         bold: true

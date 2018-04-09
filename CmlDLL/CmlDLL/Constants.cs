@@ -18,7 +18,7 @@ namespace Constants
         {
             get
             {
-                return new string[] {  "PCD", "ARSD", "AFV","AZCC"};
+                return new string[] {  "PCD", "ARSD", "AFV"};
             }
         }
 
