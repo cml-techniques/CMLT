@@ -16,10 +16,8 @@
     <script src="../Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-    <style>       
-@page {
-    margin-top: 0;
-}
+    <style type="text/css" media="print">
+    @page { margin: 0mm; }
     </style>
     <script> 
         var chartData; // holds chart data
@@ -151,7 +149,7 @@
             var data = new google.visualization.DataTable(chartData);
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Overall Summary",
+                title: "Overall System Summary",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 series: { 0: { color: '#C98E33' }},
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
@@ -181,10 +179,10 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Services",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
-                        bold: true
+                        bold: true,
                     },
                     titleTextStyle: {
                         fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
@@ -225,7 +223,7 @@
             var dataview4 = new google.visualization.DataView(data4);
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Electrical Summary",
+                title: "Electrical Systems",
                 legend: { position: 'none', maxLines: 1, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#800080' }},
@@ -252,7 +250,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "CAS Sheets",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -268,7 +266,7 @@
             var options2 = {
                 // backgroundColor: '#f1f1f1',
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Mechanical Summary",
+                title: "Mechanical Systems",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 9 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#D0EA11' }, 1: { color: '#1144EA' } },
@@ -295,7 +293,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "CAS Sheets",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true,
@@ -311,7 +309,7 @@
             };
             var options4 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Fire Protection and Public Health Services Summary",
+                title: "Fire Protection and Public Health Services",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#3399ff' }, 1: { color: '#2F262F' } },
@@ -338,7 +336,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "CAS Sheets",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -526,7 +524,7 @@
             var data2 = new google.visualization.DataTable(chartData5);
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Fire & Voice Alarm Services Summary",
+                title: "Fire & Voice Alarm Services",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#E8396E' } },
@@ -553,7 +551,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Tests",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -568,7 +566,7 @@
             };
             var options2 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "BMS Summary",
+                title: "BMS",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 7000, easing: 'out' },
                 series: { 0: { color: '#FF5733' }, 1: { color: '#00FF00' } },
@@ -595,7 +593,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Tests",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -763,7 +761,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Equipments",
+                    title: "",
                     textStyle: {
                         fontSize: 8,
                         bold: true
@@ -834,7 +832,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Tests",
+                    title: "",
                     textStyle: {
                         fontSize: 8,
                         bold: true
