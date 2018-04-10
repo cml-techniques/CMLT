@@ -3003,6 +3003,13 @@
     <Compile Include="CMS\Dashboard1.aspx.designer.cs">
       <DependentUpon>Dashboard1.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CMS\Dashboard1_print.aspx.cs">
+      <DependentUpon>Dashboard1_print.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CMS\Dashboard1_print.aspx.designer.cs">
+      <DependentUpon>Dashboard1_print.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CMS\DocumentLog.aspx.cs">
       <DependentUpon>DocumentLog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4570,6 +4577,7 @@
     <Content Include="Assets\js\sweetalert.min.js" />
     <Content Include="cmlhome.aspx" />
     <Content Include="CMS\Dashboard.aspx" />
+    <Content Include="CMS\Dashboard1_print.aspx" />
     <Content Include="createuser.aspx" />
     <Content Include="fileupload.aspx" />
     <Content Include="images\adobe_pdf_logo.jpg" />

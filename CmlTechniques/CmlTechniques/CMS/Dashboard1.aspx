@@ -17,7 +17,7 @@
     <script src="../Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
     <style type="text/css" media="print">
-    @page { margin: 0mm; }
+    @page { margin: 0mm; size: A3 landscape }
     </style>
     <script> 
         var chartData; // holds chart data
@@ -34,15 +34,9 @@
 
 
             $("#btnPrint").click(function (event) {
-                $(".sec-head").addClass('hide');
-                $(".print-head").removeClass('hide');
-                
-                window.print();
 
-
-                $(".sec-head").removeClass('hide');
-                $(".print-head").addClass('hide');
-
+                var _url = "Dashboard1_print.aspx?prj=" + $("#lblprj").text();;
+                window.open(_url);
 
             });
 
@@ -133,7 +127,7 @@
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Overall System Summary",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 10 } },
                 series: { 0: { color: '#C98E33' }, 1: { color: '#C10843' } },
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
                 animation: { startup: true, duration: 2000, easing: 'out' },
@@ -177,9 +171,9 @@
                 is3D: true
             };
             data.addColumn('string', 'Label');
-            data.addColumn('number', 'Planned Progress');
+            data.addColumn('number', 'Planned');
             data.addColumn({ type: 'string', role: 'style' });
-            data.addColumn('number', 'Actual Progress');
+            data.addColumn('number', 'Actual');
             data.addColumn({ type: 'string', role: 'style' });
 
 
@@ -208,7 +202,7 @@
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Electrical Systems",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#2CA736' }, 1: { color: '#800080' } },
                 vAxis: {
@@ -251,7 +245,7 @@
                 // backgroundColor: '#f1f1f1',
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Mechanical Systems",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 9 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 9 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#D0EA11' }, 1: { color: '#1144EA' } },
                 vAxis: {
@@ -294,7 +288,7 @@
             var options4 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Fire Protection and Public Health Services",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#3399ff' }, 1: { color: '#2F262F' } },
                 vAxis: {
@@ -334,21 +328,21 @@
                 }
             };
             data1.addColumn('string', 'Label');
-            data1.addColumn('number', 'Planned Progress')
+            data1.addColumn('number', 'Planned')
             data1.addColumn({ type: 'string', role: 'style' });
-            data1.addColumn('number', 'Actual Progress');
+            data1.addColumn('number', 'Actual');
             data1.addColumn({ type: 'string', role: 'style' });          
             data1.addColumn('number', 'ID');
             data2.addColumn('string', 'Label');
-            data2.addColumn('number', 'Planned Progress')
+            data2.addColumn('number', 'Planned')
             data2.addColumn({ type: 'string', role: 'style' });
-            data2.addColumn('number', 'Actual Progress');
+            data2.addColumn('number', 'Actual');
             data2.addColumn({ type: 'string', role: 'style' });         
             data2.addColumn('number', 'ID');
             data4.addColumn('string', 'Label');
-            data4.addColumn('number', 'Planned Progress')
+            data4.addColumn('number', 'Planned')
             data4.addColumn({ type: 'string', role: 'style' });
-            data4.addColumn('number', 'Actual Progress');
+            data4.addColumn('number', 'Actual');
             data4.addColumn({ type: 'string', role: 'style' });           
             data4.addColumn('number', 'ID');
 
@@ -507,7 +501,7 @@
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Fire & Voice Alarm Services",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#E8396E' }, 1: { color: '#C0C0C0' } },
                 vAxis: {
@@ -549,7 +543,7 @@
             var options2 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "BMS",
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 7000, easing: 'out' },
                 series: { 0: { color: '#FF5733' }, 1: { color: '#00FF00' } },
                 vAxis: {
@@ -590,14 +584,14 @@
             };
 
             data1.addColumn('string', 'Label');
-            data1.addColumn('number', 'Planned Progress');
+            data1.addColumn('number', 'Planned');
             data1.addColumn({ type: 'string', role: 'style' });
-            data1.addColumn('number', 'Actual Progress');
+            data1.addColumn('number', 'Actual');
             data1.addColumn({ type: 'string', role: 'style' });
             data2.addColumn('string', 'Label');
-            data2.addColumn('number', 'Planned Progress');
+            data2.addColumn('number', 'Planned');
             data2.addColumn({ type: 'string', role: 'style' });
-            data2.addColumn('number', 'Actual Progress');
+            data2.addColumn('number', 'Actual');
             data2.addColumn({ type: 'string', role: 'style' });
 
             for (var i = 0; i < chartData4.length; i++) {
@@ -629,7 +623,7 @@
                 title: "Executive Summary",
                 pointSize: 5,
                 pointShape: 'square',
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#003300' }, 1: { color: '#6600cc' } },
                 vAxis: {
@@ -670,8 +664,8 @@
                 interpolateNulls: true
             };
             data.addColumn('string', 'Label');
-            data.addColumn('number', 'Planned Progress');
-            data.addColumn('number', 'Actual Progress');
+            data.addColumn('number', 'Planned');
+            data.addColumn('number', 'Actual');
             for (var i = 0; i < chartData3.length; i++) {
                 data.addRow([chartData3[i].Label, chartData3[i].PlannedProgress, chartData3[i].ActualProgress]);
             }
@@ -708,7 +702,7 @@
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: label,
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 10 } },
                 colors: ['#ff6666'],
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
                 animation: { startup: true, duration: 2000, easing: 'out' },
@@ -756,7 +750,7 @@
                 is3D: true
             };
             data.addColumn('string', 'Label');
-            data.addColumn('number', 'Actual Progress');
+            data.addColumn('number', 'Actual');
             data.addColumn({ type: 'string', role: 'style' });
             if (detailData != null) {
                 for (var i = 0; i < detailData.length; i++) {
@@ -779,7 +773,7 @@
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: label,
-                legend: { position: 'right', maxLines: 3, textStyle: { fontSize: 10 } },
+                legend: { position: 'bottom', maxLines: 3, textStyle: { fontSize: 10 } },
                 colors: ['#ff6666'],
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
                 animation: { startup: true, duration: 2000, easing: 'out' },
@@ -827,7 +821,7 @@
                 is3D: true
             };
             data.addColumn('string', 'Label');
-            data.addColumn('number', 'Actual Progress');
+            data.addColumn('number', 'Actual');
             data.addColumn({ type: 'string', role: 'style' });
             if (detailData != null) {
                 for (var i = 0; i < detailData.length; i++) {
@@ -860,7 +854,7 @@
 </head>
 <body style="background-color: #f1f1f1">
     <div class="container-fluid">
-         <div class="row print-head">
+         <%--<div class="row print-head">
             <div class="col-lg-12">
                 <table class="full-width">
                     <tr>
@@ -882,7 +876,7 @@
                 </table>
 
              </div>
-             </div>
+             </div>--%>
          <div class="row sec-head">
             <div class="col-lg-11">
                   <p class="text-center font-weight-bold">

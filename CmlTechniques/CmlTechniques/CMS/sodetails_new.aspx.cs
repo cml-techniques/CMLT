@@ -19,7 +19,7 @@ namespace CmlTechniques.CMS
 {
     public partial class sodetails_new : System.Web.UI.Page
     {
-       
+        public bool isbuildingProject;  
         protected void Page_Load(object sender, EventArgs e)
         {
             _ReadCookies();
@@ -29,7 +29,10 @@ namespace CmlTechniques.CMS
                 string _id = Request.QueryString["id"].ToString();
                 lblid.Text = _id;
                 lblprjcode.Text = _prj;
-                lblNewProject.Text = (lblprjcode.Text == "HMIM" || lblprjcode.Text == "HMHS" || lblprjcode.Text == "AZC" || lblprjcode.Text == "123" || lblprjcode.Text == "demo") ? "1" : "0";
+
+                isbuildingProject = (Array.IndexOf(Constants.CMLTConstants.hasBuilding, lblprjcode.Text) > -1) ? true : false;
+
+                //lblNewProject.Text = (lblprjcode.Text == "HMIM" || lblprjcode.Text == "HMHS" || lblprjcode.Text == "AZC" || lblprjcode.Text == "123" || lblprjcode.Text == "demo") ? "1" : "0";
 
                 if (lblprjcode.Text == "HMIM" || lblprjcode.Text == "HMHS")
                 {
@@ -116,7 +119,7 @@ namespace CmlTechniques.CMS
                 lblsono.Text = _drow["so_no"].ToString();
                 lbluid.Text = _drow["uid"].ToString();
                 lblissued.Text = _drow["issued_to"].ToString();
-                if (lblNewProject.Text == "1")
+                if (isbuildingProject)
                 {
                     lblBuilding.Text = _drow["building"].ToString();
                     lblBuilding.Attributes.Add("buildid", _drow["build_id"].ToString());
@@ -838,7 +841,7 @@ namespace CmlTechniques.CMS
             {
                 trstatus.Visible = false;
             }
-            tdBuilding.Visible = (lblNewProject.Text == "1")?true:false;
+            tdBuilding.Visible = isbuildingProject;
         }
 
     }

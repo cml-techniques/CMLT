@@ -609,13 +609,26 @@ namespace CmlTechniques.CMS
                 {
                     byte[] _image = new byte[1000];
                     string _path = row1["photo"].ToString();
+                    FileStream fs;
+                    BinaryReader br;
+
                     if (File.Exists(Server.MapPath(_path)))
                     {
-                        FileStream fs = new FileStream(Server.MapPath(_path), FileMode.Open, FileAccess.Read);
-                        BinaryReader br = new BinaryReader(fs);
+                         fs = new FileStream(Server.MapPath(_path), FileMode.Open, FileAccess.Read);
+                         br = new BinaryReader(fs);
                         _image = br.ReadBytes((int)fs.Length);
                         br.Close();
                         fs.Close();
+                    }
+                    else
+                    {
+                        _path = "../SOIMG/default.jpg";
+                        fs = new FileStream(Server.MapPath(_path), FileMode.Open, FileAccess.Read);
+                        br = new BinaryReader(fs);
+                        _image = br.ReadBytes((int)fs.Length);
+                        br.Close();
+                        fs.Close();
+
                     }
                     _objcls.logo = _image;
                     _objbll.Generate_SOIMG(_objcls, _objdb);
