@@ -1,23 +1,34 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard1.aspx.cs" Inherits="CmlTechniques.CMS.Dashboard1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard1_print.aspx.cs" Inherits="CmlTechniques.CMS.Dashboard1_print" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-    <title>Google Charts</title>
+    <title>Dashboard Print</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="../Assets/css/fonts/bootstrap.css" rel="stylesheet" />
     <link href="../Assets/css/jquery-ui.min.css" rel="stylesheet" />
       <link href="../Assets/css/style1.css" rel="stylesheet" />
-     <link href="../Assets/css/Dashboard.css" rel="stylesheet" />
-
+    <link href="../Assets/css/Dashboard.css" rel="stylesheet" />
     <script src="../Assets/js/jquery.min.js"></script>
     <script src="../Assets/js/jquery-ui.min.js"></script>
     <script src="../Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
-    <style type="text/css" media="print">
+    <style type="text/css">
     @page { margin: 0mm; size: A3 landscape }
+   @media (min-width:770px) and (max-width: 1540px)
+   {
+    .chart {
+    min-height: 220px;
+}
+}
+@media (min-width: 1600px) {
+    .chart {
+    min-height: 250px;
+}
+}
+
     </style>
     <script> 
         var chartData; // holds chart data
@@ -33,15 +44,6 @@
         $(document).ready(function () {
 
 
-            $("#btnPrint").click(function (event) {
-
-                var _url = "Dashboard1_print.aspx?prj=" + $("#lblprj").text();;
-                window.open(_url);
-
-            });
-
-            $(".print-head").addClass('hide');
-            $(".top-line").addClass('hidden-print');
 
             getsrc();
 
@@ -50,7 +52,7 @@
             $('#loader8').hide();
             $('#loader9').hide();
             var xhr = $.ajax({
-                url: "Dashboard1.aspx/GetExecutiveData",
+                url: "Dashboard1_print.aspx/GetExecutiveData",
                 data: JSON.stringify({ prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
                 dataType: "json",
                 type: "POST",
@@ -65,7 +67,7 @@
                 xhr.abort();
             });
             var xhr1 = $.ajax({
-                url: "Dashboard1.aspx/GetChartData",
+                url: "Dashboard1_print.aspx/GetChartData",
                 data: JSON.stringify({ prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
                 dataType: "json",
                 type: "POST",
@@ -83,7 +85,7 @@
             });
 
             var xhr2 = $.ajax({
-                url: "Dashboard1.aspx/GetServiceData",
+                url: "Dashboard1_print.aspx/GetServiceData",
                 data: JSON.stringify({ prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
                 dataType: "json",
                 type: "POST",
@@ -99,12 +101,12 @@
             }).done(function() {
                 drawServiceChart(chartData1, chartData2);
                 $('#loader3').hide();
-                $('#loader4').hide();
+                $('#loader4').hide(); 
                 $('#loader10').hide();
             });
 
             var xhr3 = $.ajax({
-                url: "Dashboard1.aspx/GetCasDetails",
+                url: "Dashboard1_print.aspx/GetCasDetails",
                 data: JSON.stringify({ prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
                 dataType: "json",
                 type: "POST",
@@ -120,7 +122,12 @@
                 drawCassheetChart(chartData4, chartData5);
                 $('#loader5').hide();
                 $('#loader6').hide();
-            });
+                });
+
+
+ //Printfunction() 
+
+
         });
         function drawChart(chartData) {
             var data = new google.visualization.DataTable(chartData);
@@ -431,7 +438,7 @@
         }
         function modalOpen1(id1, label) {
             $.ajax({
-                url: "Dashboard1.aspx/GetModalDetails",
+                url: "Dashboard1_print.aspx/GetModalDetails",
                 data: JSON.stringify({ casid: id1, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML}),
                 dataType: "json",
                 type: "POST",
@@ -452,7 +459,7 @@
         }
         function modalOpen(id, label) {
             $.ajax({
-                url: "Dashboard1.aspx/GetModalDetails",
+                url: "Dashboard1_print.aspx/GetModalDetails",
                 data: JSON.stringify({ casid: id, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML}),
                 dataType: "json",
                 type: "POST",
@@ -476,7 +483,7 @@
         }
         function modalOpen2(id2, label) {
             $.ajax({
-                url: "Dashboard1.aspx/GetModalDetails",
+                url: "Dashboard1_print.aspx/GetModalDetails",
                 data: JSON.stringify({ casid: id2, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML}),
                 dataType: "json",
                 type: "POST",
@@ -676,13 +683,15 @@
             linechart.draw(data, options);
         }
         $(window).resize(function () {
+
             drawChart(chartData);
             drawServiceChart(chartData1, chartData2);
             drawExecutiveChart(chartData3);
             drawCassheetChart(chartData4, chartData5);
-            //drawDetailsChart(detailData, label);
-            //drawDetailsChart1(detailData, label);
+
         });
+
+
 //        $('modal-content').resizable({
 //            minHeight: 300,
 //            minWidth: 300
@@ -850,11 +859,29 @@
             $("#imglogo").attr("src", path);
 
         }
+        function Printfunction() {
+
+                    $(".sec-head").addClass('hide');
+
+                    window.print();
+
+
+                    $(".sec-head").removeClass('hide');
+        }
+        function interval() {
+            var a;
+            for (a = 0; a <= 10000; a++) {
+                if (a == 5000) {
+                    Printfunction();
+                }
+            }
+        }
     </script>
 </head>
 <body style="background-color: #f1f1f1">
+
     <div class="container-fluid">
-         <%--<div class="row print-head">
+         <div class="row print-head">
             <div class="col-lg-12">
                 <table class="full-width">
                     <tr>
@@ -876,16 +903,16 @@
                 </table>
 
              </div>
-             </div>--%>
+             </div>
          <div class="row sec-head">
             <div class="col-lg-11">
                   <p class="text-center font-weight-bold">
-                    <strong class="check-link"><asp:Label runat="server" ID="lblproject"></asp:Label><span> | Dashboard</span>
+                    <strong class="check-link"><asp:Label runat="server" ID="lblproject"></asp:Label>
                      </strong>
                    </p>
                 </div>
                  <div class="col-lg-1">     
-                <button type="button" id="btnPrint" class="btn btn-outline btn-default btn-primary">Print</button>
+                <button type="button" id="btnPrint" class="btn btn-outline btn-default btn-primary" onclick="Printfunction();">Print</button>
                 </div> 
              </div>
         <div class="row">
@@ -949,4 +976,4 @@
     </div>
 </body>
 </html>
-
+==
