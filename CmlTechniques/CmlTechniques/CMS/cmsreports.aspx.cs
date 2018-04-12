@@ -979,7 +979,7 @@ namespace CmlTechniques.CMS
             Session["sch"] = drcst.SelectedItem.Value;
             string _prm = "";
 
-            _prm = drcst.SelectedItem.Value + "_P" + lblprj.Text + "_D" + rdbuilding.SelectedValue.ToString();
+            _prm = drcst.SelectedItem.Value + "_P" + lblprj.Text + "_D" + rdbuilding_1.SelectedValue.ToString();
             Response.Redirect("Summary.aspx?id=1" + _prm);
 
         }
