@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard1.aspx.cs" Inherits="CmlTechniques.CMS.Dashboard1" %>
+﻿ <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard1.aspx.cs" Inherits="CmlTechniques.CMS.Dashboard1" %>
 
 <!DOCTYPE html>
 <html lang="en">

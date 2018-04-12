@@ -8,62 +8,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="../Assets/css/fonts/bootstrap.css" rel="stylesheet" />
+    <link href="../Assets/css/style1.css" rel="stylesheet" />
+    <link href="../Assets/css/Dashboard.css" rel="stylesheet" />
     <link href="../Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <script src="../Assets/js/jquery.min.js"></script>
     <script src="../Assets/js/jquery-ui.min.js"></script>
     <script src="../Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <style>
-        .chart {
-            width: 100%;
-            min-height: 350px;
-        }
 
-        .border-rad {
-            border: 5px solid white;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            box-shadow: 0 1px 4px 0 rgba(40,44,53,0.30);
-        }
-           [class^="col-md"], [class*=" col-md"], [class^="col-sm"], [class*=" col-sm"], [class^="col-xs"], [class*="col-xs"], [class^="col-lg"], [class*=" col-lg"] {
-            margin-top: 20px;
-            padding-right: 10px;
-            padding-left: 10px;
-        }
-
-        .loader {
-            position: absolute;
-            border: 10px solid #6699ff;
-            border-radius: 50%;
-            border-top: 10px solid #0516F0;
-            width: 50px;
-            height: 50px;
-            left: 45%;
-            top: 45%;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-        }
-
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+    <style type="text/css" media="print">
+    @page { margin: 0mm; }
     </style>
     <script> 
         var chartData; // holds chart data
@@ -76,7 +30,42 @@
         var detailData;
         google.load("visualization", "1", { packages: ['corechart'] });
         //fill chart data
-        $(document).ready(function() {
+        $(document).ready(function () {
+
+            $("#btnPrint").click(function (event) {
+                $(".sec-head").addClass('hide');
+                $(".print-head").removeClass('hide');
+
+                //$(".sum1").addClass('print-height'); 
+
+                //$("svg").attr('height','1000px'); 
+                //$("rect").attr('height', '1000px'); 
+
+                //$("svg").attr('width', '1000px');
+                //$("rect").attr('width', '1000px'); 
+
+
+
+
+               
+
+                window.print();
+
+                //$(".sec-head").removeClass('hidden-print');
+                //$(".print-head").addClass('hidden-print');
+
+                $(".sec-head").removeClass('hide');
+                $(".print-head").addClass('hide');
+
+                //$(".sum1").removeClass('print-height');   
+
+            });
+
+            $(".print-head").addClass('hide');
+             //$(".top-line").addClass('hidden-print');
+
+             getsrc();
+
             $('#loader7').hide();
             $('#loader8').hide();
             $('#loader9').hide();
@@ -151,13 +140,16 @@
                 drawCassheetChart(chartData4, chartData5);
                 $('#loader5').hide();
                 $('#loader6').hide();
-            });
+                });
+
+
+
         });
         function drawChart(chartData) {
             var data = new google.visualization.DataTable(chartData);
             var options = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Overall Summary",
+                title: "Overall System Summary",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 series: { 0: { color: '#C98E33' }},
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
@@ -187,10 +179,10 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Services",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
-                        bold: true
+                        bold: true,
                     },
                     titleTextStyle: {
                         fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
@@ -231,7 +223,7 @@
             var dataview4 = new google.visualization.DataView(data4);
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Electrical Summarys",
+                title: "Electrical Systems",
                 legend: { position: 'none', maxLines: 1, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#800080' }},
@@ -258,7 +250,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "CAS Sheets",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -274,7 +266,7 @@
             var options2 = {
                 // backgroundColor: '#f1f1f1',
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Mechanical Summary",
+                title: "Mechanical Systems",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 9 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#D0EA11' }, 1: { color: '#1144EA' } },
@@ -301,7 +293,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "CAS Sheets",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true,
@@ -317,7 +309,7 @@
             };
             var options4 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Fire Protection and Public Health Services Summary",
+                title: "Fire Protection and Public Health Services",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 series: { 0: { color: '#3399ff' }, 1: { color: '#2F262F' } },
@@ -344,7 +336,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "CAS Sheets",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -532,7 +524,7 @@
             var data2 = new google.visualization.DataTable(chartData5);
             var options1 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Fire & Voice Alarm Services Summary",
+                title: "Fire & Voice Alarm Services",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 5000, easing: 'out' },
                 series: { 0: { color: '#E8396E' } },
@@ -559,7 +551,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Tests",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -574,7 +566,7 @@
             };
             var options2 = {
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "BMS Summary",
+                title: "BMS",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 7000, easing: 'out' },
                 series: { 0: { color: '#FF5733' }, 1: { color: '#00FF00' } },
@@ -601,7 +593,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Tests",
+                    title: "",
                     textStyle: {
                         fontSize: 9,
                         bold: true
@@ -716,6 +708,11 @@
             //drawDetailsChart(detailData, label);
             //drawDetailsChart1(detailData, label);
         });
+
+
+
+
+
 //        $('modal-content').resizable({
 //            minHeight: 300,
 //            minWidth: 300
@@ -764,7 +761,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Equipments",
+                    title: "",
                     textStyle: {
                         fontSize: 8,
                         bold: true
@@ -835,7 +832,7 @@
                     format: '#\'%\''
                 },
                 hAxis: {
-                    title: "Tests",
+                    title: "",
                     textStyle: {
                         fontSize: 8,
                         bold: true
@@ -876,62 +873,83 @@
             var charts = document.getElementById("detailchart");
             charts.innerHTML = "";
         }
+        function getsrc() {
+
+            var path = 'LoadImage.ashx?id=' + $("#lblprj").text();;
+      
+        $("#imglogo").attr("src", path);
+
+        }
     </script>
 </head>
 <body style="background-color: #f1f1f1">
     <div class="container-fluid">
-        <div class="row-fluid">
-            <%--  <div class="col-md-3" style="margin-left: 20px;">
-                <img src="../images/123logo.jpg" style="width: 100px; height: 100px">
-            </div>--%>
-            <div class="col-lg-6 col-lg-offset-3">
-                <p class="text-center font-weight-bold">
-                    <strong><asp:Label runat="server" ID="lbl1"></asp:Label><span> | Dashboard</span>
-                        </strong>
-                </p>
-            </div>
+         <div class="row print-head">
+            <div class="col-lg-12">
+                <table class="full-width">
+                    <tr>
+                        <td class="col-width-100">
+  <img src='#' id="imglogo" class="col-height-100 col-width-100"/>  
+                        </td>
+                        <td  class="text-center">
+                            <ul>
+                                <li>
+                            <strong ><span class="cml-head">CML International (Dubai)</span> </strong>
+                                </li>
+                                <li>  <strong class="check-link"><asp:Label runat="server" ID="lblprojectprint" Text=""></asp:Label><span> | Dashboard</span> </strong></li>
+                            </ul>                    
+                        </td>
+                       <td class="col-width-100">
+                        <img src="../images/logo.JPG" class="col-height-100 col-width-100"/>  
+                        </td>
+                    </tr>
+                </table>
 
-            <%-- <div class="col-md-3 text-right">
-                <img src="../images/cmllogo_small.jpg" style="width: 100px; height: 100px" />
-            </div>--%>
-        </div>
-        <%--<div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-m-t">
-                <div id="chartdiv3" class="chart border-rad"></div>
-                <div id="loader1" class="loader"></div>
-            </div>
-        </div>--%>
+             </div>
+             </div>
+         <div class="row sec-head">
+            <div class="col-lg-11">
+                  <p class="text-center font-weight-bold">
+                    <strong class="check-link"><asp:Label runat="server" ID="lblproject"></asp:Label><span> | Dashboard</span>
+                     </strong>
+                   </p>
+                </div>
+                 <div class="col-lg-1">     
+                <button type="button" id="btnPrint" class="btn btn-outline btn-default btn-primary">Print</button>
+                </div> 
+             </div>
+
         <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-m-t box">
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-m-t box sum1">
                 <div id="chartdiv" class="chart border-rad" style="position: relative">
                     <div id="loader2" class="loader"></div>
                 </div>
-            </div>
-            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 col-m-t box">
+            </div> 
+            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 col-m-t box sum1">
                 <div id="chartdiv1" class="chart border-rad"></div>
                 <div id="loader3" class="loader"></div>
                 <div id="loader7" class="loader"></div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
+            <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 sum1">
                 <div id="chartdiv2" class="chart border-rad"></div>
                 <div id="loader4" class="loader"></div>
                 <div id="loader8" class="loader"></div>
             </div>
-            <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12">
+            <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 sum1">
                 <div id="chartdiv4" class="chart border-rad"></div>
                 <div id="loader5" class="loader"></div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 sum1">
                  <div id="chartdiv6" class="chart border-rad"></div>
                  <div id="loader9" class="loader"></div>
                 <div id="loader10" class="loader"></div>
                 <asp:Label ID="lblprj" runat="server" Text="Label" style="display:none"></asp:Label>
             </div>
-            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
+            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 sum1" style="margin-bottom: 20px;">
                 <div id="chartdiv5" class="chart border-rad"></div>
                 <div id="loader6" class="loader"></div>
             </div>
@@ -941,10 +959,6 @@
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
-                <%-- <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>--%>
                 <div class="modal-body">
                     <div id="detailchart" class="chart border-rad"></div>
                 </div>

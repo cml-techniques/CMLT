@@ -215,7 +215,7 @@
     {
     var mode=document.getElementById('<%=lblvmode.ClientID%>').innerHTML;
     var lblprjid=document.getElementById('<%=lblprjid.ClientID%>').innerHTML;
-    
+    var url = "";
     
     if (mode!='CP' && mode!='MS')
     {
@@ -223,12 +223,27 @@
     }
     else   if (lblprjid == "HMIM")
     {
-    //window.location.href='CMS2.aspx?PRJ='+lblprjid +"&mod=ms"; 
-     window.location.href="CMS2.aspx?mod=MS&PRJ=HMIM&id="+ getQueryStringValue("id")+ "&Div="+ getQueryStringValue("Div"); 
-    return;
+         if (mode == "MS")
+         {
+             url = "CMS2.aspx?mod=MS&PRJ=" + lblprjid +"&id="+getQueryStringValue("id")+ "&Div="+ getQueryStringValue("Div");
+         }
+         else
+         {
+             url = "CMS2.aspx?mod=" + mode + "&PRJ=" + lblprjid;
+         }
+         window.location.href = url;  
+     return;
      }
     else if (lblprjid == "ABS") {
-        window.location.href = "CMS.aspx?mod=MS&PRJ=HMIM&id=" + getQueryStringValue("id") + "&Div=" + getQueryStringValue("Div");
+        var url = "";
+        if (mode == "MS") {
+            url = "CMS.aspx?mod=MS&PRJ=" + lblprjid + "&id=" + getQueryStringValue("id") + "&Div=" + getQueryStringValue("Div");
+        }
+        else {
+            url = "CMS.aspx?mod=" + mode + "&PRJ=" + lblprjid;
+        }
+        //window.location.href = "CMS.aspx?mod=MS&PRJ=HMIM&id=" + getQueryStringValue("id") + "&Div=" + getQueryStringValue("Div");
+         window.location.href = url;
         return;
     }
      window.location.href='CMS.aspx?PRJ='+mode;    

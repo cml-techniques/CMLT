@@ -71,42 +71,9 @@
 	margin-right: 0px;
 	margin-bottom: 0px;
 	}
-	.style1
-        {
-            width: 307px;
-            color: #FFFFFF;
-            font-family: "Century Gothic";
-            /*font-family:Verdana;*/
-            font-size:small;
-            text-align: justify;
-            /*height: 150px;*/
-            padding:0 0 0 10px;
-            vertical-align:top;
-        }
-        .style2
-        {
-            width: 307px;
-            color: #999999;
-            font-family: "Century Gothic";
-            font-size:small;
-            /*font-family:Verdana;
-            font-size:11px;*/
-            padding:0 0 0 10px;
-            vertical-align:top;
-            text-align:left;
-        }
-        .style3
-        {
-            width: 307px;
-            color: #FFFFFF;
-            font-family: "Century Gothic";
-            font-size: small;
-            /*font-family:Verdana;
-            font-size:11px;*/
-            text-align: justify;
-            padding:0 0 0 10px;
-            vertical-align:baseline;
-            }
+	.style1        {            width: 307px;            color: #FFFFFF;            font-family: "Century Gothic";            /*font-family:Verdana;*/            font-size:small;            text-align: justify;            /*height: 150px;*/            padding:0 0 0 10px;            vertical-align:top;        }
+        .style2        {            width: 307px;            color: #999999;            font-family: "Century Gothic";            font-size:small;            /*font-family:Verdana;            font-size:11px;*/            padding:0 0 0 10px;            vertical-align:top;            text-align:left;        }
+        .style3        {            width: 307px;            color: #FFFFFF;            font-family: "Century Gothic";            font-size: small;            /*font-family:Verdana;            font-size:11px;*/            text-align: justify;            padding:0 0 0 10px;            vertical-align:baseline;            }
     </style>
     <script type="text/javascript">
         function call() {
@@ -263,12 +230,7 @@
             </div>
                               </td>  
                             <td class="style1">
-                            WELCOME TO <strong>CML TECHNIQUES</strong> WEB BASED DOCUMENTATION MANAGEMENT
-                            <p style="margin:5px 0 0 0">CML Techniques is a bespoke web based system developed using our expertise and 
-                                many years of experience, working with major clients to progressively collate, 
-                                review and integrate the complete suite of project record documentation as the 
-                                project develops. Typically the following documentation would be included</p>
-                                
+                            WELCOME TO <strong>CML TECHNIQUES</strong> WEB BASED DOCUMENTATION MANAGEMENT                            <p style="margin:5px 0 0 0">CML Techniques is a bespoke web based system developed using our expertise and                                 many years of experience, working with major clients to progressively collate,                                 review and integrate the complete suite of project record documentation as the                                 project develops. Typically the following documentation would be included</p>                                
                                 
                                 </td>
                            
