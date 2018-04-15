@@ -60,40 +60,12 @@ namespace CmlTechniques.CMS
             _objcas.sch = Convert.ToInt32(lblsch.Text);
             _objcas.prj_code = lblprj.Text;
             if (lblprj.Text == "AFV")
-                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+                _objcas.sys = Convert.ToInt32(lbldiv.Text);
             else
             _objcas.sys = 0;
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
         }
 
-        //private void Generate_Summary_Graph()
-        //{
-        //    BLL_Dml _objbll = new BLL_Dml();
-        //    _database _objdb = new _database();
-        //    _objdb.DBName = "DBCML";
-        //    _clscassheet _objcls = new _clscassheet();
-        //    _clsproject _objcls1 = new _clsproject();
-        //    _objcls1.prjcode = lblprj.Text;
-        //    _objbll.Update_RPTLogo(_objcls1, _objdb);
-        //    _objbll.Clear_CassummaryRpt(_objdb);
-        //    var _result = from _data in _dtsummary.AsEnumerable()
-        //                  select _data;
-        //    int count = 0;
-        //    foreach (var row in _result)
-        //    {
-        //        _objcls.sys_mon = row["SYS_NAME"].ToString();
-        //        _objcls.qty = row["QTY"].ToString();
-        //        _objcls.per_com1 = Convert.ToDecimal(row["PER_COMPLETED"].ToString());
-        //        _objcls.per_com2 = Convert.ToDecimal(row["PER_COMPLETED1"].ToString());
-        //        _objcls.per_com3 = Convert.ToDecimal(row["PER_COMPLETED2"].ToString());
-        //        _objcls.total = Convert.ToDecimal(row["TOTAL"].ToString());
-        //        _objcls.cate = row["CODE"].ToString();
-        //        _objcls.quantity = Convert.ToInt32(row["QTY"].ToString());
-        //        _objbll.Generate_CASSummary_PKG_RPT(_objcls, _objdb);
-
-        //        count += 1;
-        //    }
-        //}
         protected void btngenerate_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(drbuilding.SelectedItem.Text)) Session["zone"] = drbuilding.SelectedItem.Text;
@@ -138,11 +110,6 @@ namespace CmlTechniques.CMS
             _objbll.Generate_CAS_Graph_Summary(_objcls, _objdb);
         }
         ReportDocument cryRpt = new ReportDocument();
-        protected void Page_Unload(object sender, EventArgs e)
-        {
-                //cryRpt.Dispose();
-                //cryRpt.Close();
-        }
         private void Generate_Reports()
         {
             TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
@@ -201,9 +168,12 @@ namespace CmlTechniques.CMS
             {
                 lblsch.Text = Request.QueryString["Id"].ToString();
                 lblprj.Text = Request.QueryString["Prj"].ToString();
+                lbldiv.Text = "0";
 
+                if ((Request.QueryString["div"] != null)){
+                    lbldiv.Text = Request.QueryString["div"].ToString();
+                }
 
-                lbldiv.Text = Request.QueryString["Type"].ToString();
                 lblsch1.Text = lblsch.Text;
   
                 Load_Master();
@@ -219,9 +189,11 @@ namespace CmlTechniques.CMS
 
                Generate_Graph_Summary_New(lblsch.Text, "1");
                 Generate_Reports();
-                if (lbldiv.Text == "0") tdback.Visible = false;
-                   
-        }
+                //if (lbldiv.Text == "0") tdback.Visible = false;
+
+              if( Request.QueryString["Type"].ToString()=="0") tdback.Visible = false;
+
+            }
 
             else
             {
