@@ -60,19 +60,7 @@ namespace CmlTechniques.CMS
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "CreateGridHeader", "<script>CreateGridHeader('DataDiv', 'mymaster','HeaderDiv');</script>");
                 string _prm = Request.QueryString[0].ToString();
-                if (_prm.Contains("_D") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_D"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);
-                }
-                else if (_prm.Contains("_F") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_F"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_F") + 2);
-                    //Set_Title();
-                }
-                else
-                    lblprj.Text = _prm;
+                lblprj.Text = _prm;
                 Load_Master();
                 Session["filter"] = "no";
                 Session["zone"] = "All";
@@ -92,6 +80,8 @@ namespace CmlTechniques.CMS
 
                 Head_Merging();
                 _exp = false;
+
+                if (lblprj.Text == "AFV") Set_Title();
 
             }
         }
@@ -190,14 +180,27 @@ namespace CmlTechniques.CMS
             _clscassheet _objcas = new _clscassheet();
             _objcas.sch = 5;
             _objcas.prj_code = lblprj.Text;
-            if (lblprj.Text == "HMIM" || lblprj.Text == "14211")
-                _objcas.sys = Convert.ToInt32(lbldiv.Text);
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
             else
                 _objcas.sys = 0;
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
                 _dtresult = _dtMaster;
             _summary = _dtresult;
             _dtfilter = _dtresult;
+        }
+        private void Set_Title()
+        {
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+
         }
         private void Load_Details()
         {

@@ -60,19 +60,7 @@ namespace CmlTechniques.CMS
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "CreateGridHeader", "<script>CreateGridHeader('DataDiv', 'mymaster','HeaderDiv');</script>");
                 string _prm = Request.QueryString[0].ToString();
-                if (_prm.Contains("_D") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_D"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);
-                    Set_Title();
-                }
-                else if (_prm.Contains("_F") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_F"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_F") + 2);
-                    //Set_Title();
-                }
-                else
+
                     lblprj.Text = _prm;
                 Load_Master();
                 Session["filter"] = "no";
@@ -90,6 +78,7 @@ namespace CmlTechniques.CMS
                 _exp = false;
                 if (lblprj.Text != "HMIM")
                     weighting.Visible = false;
+                if (lblprj.Text == "AFV") Set_Title();
             }
         }
         private void Head_Merging()
@@ -99,12 +88,16 @@ namespace CmlTechniques.CMS
         }
         private void Set_Title()
         {
-            if (lbldiv.Text == "1")
-                lblhead.Text = "Wings - " + lblhead.Text;
-            else if (lbldiv.Text == "2")
-                lblhead.Text = "Main - " + lblhead.Text;
-            else if (lbldiv.Text == "3")
-                lblhead.Text = "Technical - " + lblhead.Text;
+            string _buildingName = "";  
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+
         }
         private void Load_Filtering_Elements()
         {

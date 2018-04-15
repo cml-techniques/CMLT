@@ -33,7 +33,7 @@ namespace CmlTechniques
                 string _prm = Request.QueryString[0].ToString();
                 //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + _prm + "');", true);
                 lblprj.Text = _prm.Substring(0, _prm.IndexOf("_S"));
-                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
+                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s" || lblprj.Text == "AFV")
                 {
                     Session["sch"] = _prm.Substring(_prm.IndexOf("_S") + 2, _prm.IndexOf("_D") - (_prm.IndexOf("_S") + 2));
                     lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);
@@ -78,6 +78,8 @@ namespace CmlTechniques
                 if (lblprj.Text != "123")
                     btnaddm.Visible = false;
                 _exp = false;
+
+                if (lblprj.Text == "AFV") Set_Title();
             }
         }
         protected void load_cas_sys()
@@ -115,6 +117,19 @@ namespace CmlTechniques
             drpackage.DataValueField = "_id";
             drpackage.DataBind();
             drpackage.Items.Insert(0, "--Package--");
+        }
+        private void Set_Title()
+        {
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(lbldiv.Text);
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+
         }
         protected void settings()
         {
@@ -1675,26 +1690,6 @@ namespace CmlTechniques
         }
         private void Load_Master()
         {
-            //if (lblprj.Text == "ASAO")
-            //{
-            //    var _dv = (DataView)Class1._OBJ_DATA_CAS1.Select();
-            //    DataTable _dtemp = _dv.ToTable();
-            //    IEnumerable<DataRow> _result = from _data in _dtemp.AsEnumerable()
-            //                                   where _data.Field<int>("Cas_Schedule") == Convert.ToInt32(lblsch.Text)
-            //                                   select _data;
-            //    if (_result.Any())
-            //    {
-            //        _dtMaster = _result.CopyToDataTable<DataRow>();
-            //        _dtresult = _dtMaster;
-            //    }
-            //    else
-            //    {
-            //        _dtMaster = null;
-            //        _dtresult = null;
-            //    }
-            //}
-            //else
-            //{
                 _dtMaster = new DataTable();
                 BLL_Dml _objbll = new BLL_Dml();
                 _database _objdb = new _database();
@@ -1702,7 +1697,7 @@ namespace CmlTechniques
                 _clscassheet _objcas = new _clscassheet();
                 _objcas.sch = Convert.ToInt32(lblsch.Text);
                 _objcas.prj_code = lblprj.Text;
-                if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS")
+                if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS" || lblprj.Text == "AFV")
                     _objcas.sys = Convert.ToInt32(lbldiv.Text);
                 else
                     _objcas.sys = 0;

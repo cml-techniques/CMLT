@@ -11,6 +11,7 @@ namespace CmlTechniques.CMS
 {
     public partial class cassheet_master : System.Web.UI.Page
     {
+        public bool isPcdProject;
         protected void Page_Load(object sender, EventArgs e)
         {
             _ReadCookies();
@@ -31,12 +32,16 @@ namespace CmlTechniques.CMS
                     lbldiv.Text = "0";
                 }
                 lblprj.Text = (string)Session["project"];
+             
                 _Create_Cookies();
                 //if ((string)Session["project"] == "123")
                 Permission();
 
+             
+
             }
-            
+            isPcdProject = (Array.IndexOf(Constants.CMLTConstants.PcdProjects, lblprj.Text) > -1) ? true : false;
+
         }
          private void Permission()
         {
@@ -65,7 +70,7 @@ namespace CmlTechniques.CMS
                 btnsum.Visible = false;
                 btnsum1.Visible = false;
             }
-            else if ((lblprj.Text == "PCD")||(lblprj.Text == "ARSD")||(lblprj.Text == "OPH" && (lblsch.Text == "2" || lblsch.Text == "5" || lblsch.Text == "8" || lblsch.Text == "17" || lblsch.Text == "10" || lblsch.Text == "6" || lblsch.Text == "21" || lblsch.Text == "9" || lblsch.Text == "4" || lblsch.Text == "7" || lblsch.Text == "18" || lblsch.Text == "19" || lblsch.Text == "20" || lblsch.Text == "15" || lblsch.Text == "21" || lblsch.Text == "13" || lblsch.Text == "11" || lblsch.Text == "12" || lblsch.Text == "26" || lblsch.Text == "22" || lblsch.Text == "27" || lblsch.Text == "25" || lblsch.Text == "16" || lblsch.Text == "24" || lblsch.Text == "28")))
+            else if ((isPcdProject)||(lblprj.Text == "OPH" && (lblsch.Text == "2" || lblsch.Text == "5" || lblsch.Text == "8" || lblsch.Text == "17" || lblsch.Text == "10" || lblsch.Text == "6" || lblsch.Text == "21" || lblsch.Text == "9" || lblsch.Text == "4" || lblsch.Text == "7" || lblsch.Text == "18" || lblsch.Text == "19" || lblsch.Text == "20" || lblsch.Text == "15" || lblsch.Text == "21" || lblsch.Text == "13" || lblsch.Text == "11" || lblsch.Text == "12" || lblsch.Text == "26" || lblsch.Text == "22" || lblsch.Text == "27" || lblsch.Text == "25" || lblsch.Text == "16" || lblsch.Text == "24" || lblsch.Text == "28")))
             {
                 btnsum1.Visible = true;
                 btnsum1.Text = "PROGRESS COMPARISON";
@@ -73,7 +78,7 @@ namespace CmlTechniques.CMS
             else if (lblprj.Text == "12761" && lblsch.Text == "25")
             {
                 //btnedit.Visible = false;
-                //btnsum.Visible = false;
+                //btnsum.Visible = false;caslv
                 //btnnew.Visible = false;
                 //btnrpt.Visible = false;
                 //btnsum1.Visible = false;
@@ -169,7 +174,10 @@ namespace CmlTechniques.CMS
                         else if (lblprj.Text == "OPH" && lblsch.Text == "20")
                             myframe1.Attributes.Add("src", "../CAS_DataEntry.aspx?id=" + _prm);
                         else
+                        {
+                            if (lblprj.Text == "AFV") _prm = _prm + "_D" + lbldiv.Text;
                             myframe1.Attributes.Add("src", "../Cassheet_DataEntry.aspx?id=" + _prm);
+                        }
                         //myframe1.Attributes.Add("src", "../CasDataEntry_New.aspx?id=" + _prm);
                     }
                 }
@@ -268,6 +276,7 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "../CAS_DataEntry.aspx?id=" + _prm);
                 else
                 {
+                    if (lblprj.Text=="AFV") _prm = _prm + "_D" + lbldiv.Text;
                     myframe1.Attributes.Add("src", "../Cassheet_DataEntry.aspx?id=" + _prm);
 
                 }
@@ -316,7 +325,7 @@ namespace CmlTechniques.CMS
                     }
                     else if (lblsch.Text == "33" && lblprj.Text != "11784")
                         myframe1.Attributes.Add("src", "Commissioning_Testing1.aspx?id=" + _prm);
-                    else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                    else if (isPcdProject)
                     {
                         if (lblprj.Text == "ARSD" && lblsch.Text == "16")
                         {
@@ -325,8 +334,9 @@ namespace CmlTechniques.CMS
                         }
                         else
                         {
-                            string _url = lblprj.Text + "&sch=" + lblsch.Text;
-                            myframe1.Attributes.Add("src", "CAS_Commissioning1.aspx?prj=" + _url);
+                            string _url = "prj="+lblprj.Text + "&sch=" + lblsch.Text;
+                            if (lblprj.Text == "AFV") _url = "prj="+ lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                            myframe1.Attributes.Add("src", "CAS_Commissioning1.aspx?" + _url);
 
                         }
                     }
@@ -338,20 +348,6 @@ namespace CmlTechniques.CMS
                         else
                             myframe1.Attributes.Add("src", "CAS_Commissioning1.aspx?prj=" + _url);
                     }
-                    //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    //{
-                    //    if (lblprj.Text == "ARSD" && lblsch.Text == "16")
-                    //    {
-                    //        string _url = lblprj.Text + "_S" + lblsch.Text;
-                    //        myframe1.Attributes.Add("src", "Commissiong_Testing.aspx?id=" + _prm);
-                    //    }
-                    //    else
-                    //    {
-                    //        string _url = lblprj.Text + "&sch=" + lblsch.Text;
-                    //        myframe1.Attributes.Add("src", "CAS_Commissioning1.aspx?prj=" + _url);
-
-                    //    }
-                    //}
                     else if (lblprj.Text == "OCEC" && lblsch.Text == "27")
                     {
                         string _url = lblprj.Text + "_S" + lblsch.Text;
@@ -373,10 +369,12 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "caslvreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "caslvreport1.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "caslvreport_pcd.aspx?id=" + lblprj.Text);
-                //else if (lblprj.Text == "ARSD")
-                //    myframe1.Attributes.Add("src", "caslvreport2.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "caslvreport_pcd.aspx?"+url);
+                }
                 else
                     myframe1.Attributes.Add("src", "caslvreport.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
                 //myframe1.Attributes.Add("src", "Reports.aspx?id=cas");
@@ -392,8 +390,12 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casmv1report.aspx?id=2_P" + lblprj.Text);
                 else if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
                     myframe1.Attributes.Add("src", "casmvreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casmvreport_pcd.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casmvreport_pcd.aspx?" +url);
+                }
                 else
                     myframe1.Attributes.Add("src", "casmvreport.aspx?id=" + lblprj.Text +"&sch="+ lblsch.Text);
             }
@@ -420,10 +422,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "castrans2report.aspx?id=" + lblprj.Text);
                 else if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
                     myframe1.Attributes.Add("src", "castransreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "castransreport_pcd.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "castransreport_pcd.aspx?" + url);
+                }
                 else
-                    myframe1.Attributes.Add("src", "castransreport.aspx?id=" + lblprj.Text +"&sch="+ lblsch.Text);
+                    myframe1.Attributes.Add("src", "castransreport.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
             }
             else if (lblsch.Text == "4" || (lblprj.Text == "11784" && lblsch.Text == "27"))
             {
@@ -431,8 +437,12 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casgen1report.aspx?id=" + lblprj.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casgenreport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casgenreport_pcd.aspx?id=" + lblprj.Text);  
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casgenreport_pcd.aspx?" + url);
+                }
                 else if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
                     myframe1.Attributes.Add("src", "casgenreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else
@@ -446,8 +456,12 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "caselpreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "caselpreport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "caselpreport_pcd.aspx?id=" + lblprj.Text);  
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "caselpreport_pcd.aspx?" + url);
+                }
                 else
                     myframe1.Attributes.Add("src", "caselpreport.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
             }
@@ -461,8 +475,12 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casemgreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casemgreport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casemgreport_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casemgreport_pcd.aspx?" + url);
+                }
                 else
                     myframe1.Attributes.Add("src", "casemgreport.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
             }
@@ -474,8 +492,12 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casmereport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casmereport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casmereport_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casmereport_pcd.aspx?" + url);
+                }
                 else
                     myframe1.Attributes.Add("src", "casmereport.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
             }
@@ -657,8 +679,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casfdreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casfdreport2.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casfdreport_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casfdreport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casfdreport_pcd.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "casfdreport.aspx?id=" + lblprj.Text+"&sch="+lblsch.Text);
             }
@@ -670,8 +698,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casfavareport2.aspx?id=10_P" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casfavareport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casfavareport_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casfavareport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casfavareport_pcd.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "casfavareport.aspx?id="+ lblsch.Text +"_P" + lblprj.Text);
             }
@@ -683,8 +717,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "caslcsreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "caslcsreport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "caslcsreport_pcd.aspx?id=" + lblprj.Text);  
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "caslcsreport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "caslcsreport_pcd.aspx?id=" + lblprj.Text);  
                 else
                     myframe1.Attributes.Add("src", "caslcsreport.aspx?id=" + lblprj.Text+ "&sch="+lblsch.Text);
             }
@@ -696,8 +736,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casscnreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casscnreport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casscnreport_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "caslcsreport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casscnreport_pcd.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "casscnreport.aspx?id=" + lblprj.Text+ "&sch="+lblsch.Text);
             }
@@ -709,8 +755,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "cascctvreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "cascctvreport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "cascctvreport_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "cascctvreport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "cascctvreport_pcd.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "cascctvreport.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
             }
@@ -724,8 +776,14 @@ namespace CmlTechniques.CMS
                 {
                     if (lblprj.Text == "OPH")
                         myframe1.Attributes.Add("src", "casph1report_oph.aspx?prj=" + lblprj.Text);
-                    else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                        myframe1.Attributes.Add("src", "casph1report_pcd.aspx?prj=" + lblprj.Text);
+                    else if (isPcdProject)
+                    {
+                        string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                        if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                        myframe1.Attributes.Add("src", "casph1report_pcd.aspx?" + url);
+                    }
+                    //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                    //    myframe1.Attributes.Add("src", "casph1report_pcd.aspx?prj=" + lblprj.Text);
                     else
                         myframe1.Attributes.Add("src", "casph1report.aspx?prj=" + lblprj.Text + "&div=0&sch="+lblsch.Text);
                 }
@@ -741,8 +799,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casph2report_MOE.aspx?prj=" + lblprj.Text + "&div=" + lbldiv.Text + "&sch=" + lblsch.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casph2report_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casph2report_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casph2report_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casph2report_pcd.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "casph2report.aspx?prj=" + lblprj.Text + "&div=" + lbldiv.Text + "&sch=" + lblsch.Text);
             }
@@ -754,8 +818,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casph3report.aspx?prj=" + lblprj.Text + "&div=" + lbldiv.Text + "&sch=19");
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casph3report_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casph3report_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casph3report_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casph3report_pcd.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "casph3report.aspx?prj=" + lblprj.Text + "&div=" + lbldiv.Text + "&sch="+lblsch.Text);
             }
@@ -769,8 +839,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casbmsreport_asao.aspx?id=20_P" + lblprj.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casbmsreport_oph.aspx?id=20_P" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casbmsreport_pcd.aspx?id=" + lblsch.Text +"&prj="+lblprj.Text);  
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casbmsreport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casbmsreport_pcd.aspx?id=" + lblsch.Text +"&prj="+lblprj.Text);  
                 else
                     myframe1.Attributes.Add("src", "casbmsreport.aspx?id="+lblsch.Text +"_P" + lblprj.Text);
             }
@@ -779,8 +855,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casflureport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casflureport_oph.aspx?prj=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casflureport_pcd.aspx?prj=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casflureport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casflureport_pcd.aspx?prj=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "casflureport.aspx?id=" + lblprj.Text+"&sch="+lblsch.Text);
             else if (lblsch.Text == "22" || (lblprj.Text == "11784" && lblsch.Text == "43"))
@@ -791,8 +873,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casacsreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casacsreport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casacsreport_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casacsreport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casacsreport_pcd.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "casacsreport.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
             }
@@ -802,8 +890,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "cas3Greport.aspx?id=" + lblprj.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casVESDAreport.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                    myframe1.Attributes.Add("src", "casgrmsreport_PCD.aspx?id=" + lblprj.Text); 
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casgrmsreport_PCD.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                //    myframe1.Attributes.Add("src", "casgrmsreport_PCD.aspx?id=" + lblprj.Text); 
                 else
                     myframe1.Attributes.Add("src", "casgrmsreport.aspx?id=" + lblprj.Text);
             }
@@ -813,8 +907,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "cas3jreport.aspx?id=" + lblprj.Text);
                 else if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
                     myframe1.Attributes.Add("src", "casavireport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD") 
-                    myframe1.Attributes.Add("src", "casavireport_pcd.aspx?id=" + lblprj.Text+ "&sch="+lblsch.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casavireport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD") 
+                //    myframe1.Attributes.Add("src", "casavireport_pcd.aspx?id=" + lblprj.Text+ "&sch="+lblsch.Text);
                 else
                     myframe1.Attributes.Add("src", "casavireport.aspx?id=" + lblprj.Text+ "&sch="+lblsch.Text);
             }
@@ -837,8 +937,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "caselvreport.aspx?id=" + lblprj.Text + "_D" + lbldiv.Text);
                 else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "caselvreport_oph.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "PCD")
-                    myframe1.Attributes.Add("src", "caselvreport_pcd.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "caselvreport_pcd.aspx?" + url);
+                }
+                //else if (lblprj.Text == "PCD")
+                //    myframe1.Attributes.Add("src", "caselvreport_pcd.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "caselvreport.aspx?id=" + lblprj.Text);
             }
@@ -850,8 +956,14 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "casph1report.aspx?prj=" + lblprj.Text + "&div=" + lbldiv.Text + "&sch=24");
                 else if (lblprj.Text == "12761")
                     myframe1.Attributes.Add("src", "CasFullScheduleReportCP.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD")
-                    myframe1.Attributes.Add("src", "casklereport_oph.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casklereport_oph.aspx?" + url);
+                }
+                //else if (lblprj.Text == "OPH" || lblprj.Text == "PCD")
+                //    myframe1.Attributes.Add("src", "casklereport_oph.aspx?id=" + lblprj.Text);
                 //else if (lblprj.Text == "11784" || lblprj.Text == "123")
                 //    myframe1.Attributes.Add("src", "cas_kit_report.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
                 else
@@ -868,7 +980,7 @@ namespace CmlTechniques.CMS
             {
                 if (lblprj.Text == "CCAD")
                     myframe1.Attributes.Add("src", "cas3Lreport.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casISTreport.aspx?id=" + lblprj.Text);
                 else
                     myframe1.Attributes.Add("src", "casacmreport.aspx?id=25_P" + lblprj.Text);
@@ -879,7 +991,7 @@ namespace CmlTechniques.CMS
                     myframe1.Attributes.Add("src", "cas5Areport.aspx?id=" + lblsch.Text + "_P" + lblprj.Text);
                 else if (lblprj.Text=="12761")
                     myframe1.Attributes.Add("src", "caslereport.aspx?id=27&prj=" + lblprj.Text);
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casPAVAreport.aspx?id=" + lblprj.Text);
               else if (lblprj.Text == "OCEC")
                       myframe1.Attributes.Add("src", "casHvtreport.aspx?id=27&prj=" + lblprj.Text);
@@ -899,7 +1011,7 @@ namespace CmlTechniques.CMS
             {
                 if (lblprj.Text == "CCAD")
                     myframe1.Attributes.Add("src", "cas3Mreport.aspx?id=" + lblprj.Text);
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+                else if (lblprj.Text == "OPH")
                     myframe1.Attributes.Add("src", "casldreport_oph.aspx?id=" + lblprj.Text);      
                 else
                     myframe1.Attributes.Add("src", "casccsreport.aspx?id=" + lblprj.Text);
@@ -908,8 +1020,14 @@ namespace CmlTechniques.CMS
             {
                 if (lblprj.Text == "CCAD")
                     myframe1.Attributes.Add("src", "cas5Breport.aspx?id=" + lblprj.Text);
-                else if ((lblprj.Text == "OPH" || lblprj.Text == "PCD" || lblprj.Text == "ARSD")&& lblsch.Text == "28")
+                else if ((lblprj.Text == "OPH"&& lblsch.Text == "28"))
                     myframe1.Attributes.Add("src", "casMVTreport.aspx?id=" + lblprj.Text);
+                else if (isPcdProject)
+                {
+                    string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                    if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "casMVTreport.aspx?" + url);
+                }
                 else
                     myframe1.Attributes.Add("src", "casfesreport.aspx?id=" + lblprj.Text);
             }
@@ -1018,8 +1136,14 @@ namespace CmlTechniques.CMS
             {
                 if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
                      myframe1.Attributes.Add("src", "Summary.aspx?id=0" + lblsch.Text + "_P" + lblprj.Text + "_D" + lbldiv.Text);
-                else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
-                      myframe1.Attributes.Add("src", "Summary_New.aspx?Id=" + lblsch.Text + "&Prj=" + lblprj.Text +"&Type=0");
+                else if (isPcdProject)
+                {
+                    string url = "Id=" + lblsch.Text + "&Prj=" + lblprj.Text + "&Type=0";
+                    if (lblprj.Text == "AFV") url = "Id=" + lblsch.Text + "&Prj=" + lblprj.Text + "&Type=0" + "&div=" + lbldiv.Text;
+                    myframe1.Attributes.Add("src", "Summary_New.aspx?" + url);
+                }
+                //else if (isPcdProject)
+                //      myframe1.Attributes.Add("src", "Summary_New.aspx?Id=" + lblsch.Text + "&Prj=" + lblprj.Text +"&Type=0");
                 else  if (!(lblprj.Text == "12761" && lblsch.Text == "23"))
                      myframe1.Attributes.Add("src", "Summary.aspx?id=0" + lblsch.Text + "_P" + lblprj.Text);
             }
@@ -1047,10 +1171,16 @@ namespace CmlTechniques.CMS
             {
                 myframe1.Attributes.Add("src", "ReportsNew.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
             }
-            else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+            else if (isPcdProject)
             {
-                myframe1.Attributes.Add("src", "pcdComparison.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
+                string url = "id=" + lblprj.Text + "&sch=" + lblsch.Text;
+                if (lblprj.Text == "AFV") url = "id=" + lblprj.Text + "&sch=" + lblsch.Text + "&div=" + lbldiv.Text;
+                myframe1.Attributes.Add("src", "pcdComparison.aspx?" + url);
             }
+            //else if (lblprj.Text == "PCD" || lblprj.Text == "ARSD")
+            //{
+            //    myframe1.Attributes.Add("src", "pcdComparison.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);
+            //}
         }
 
         protected void btninput_Click(object sender, EventArgs e)

@@ -30,6 +30,12 @@
 }
 
     </style>
+      <style type="text/css" media="print">
+    .sec-head
+    {
+        display:none;
+    }
+       </style>
     <script> 
         var chartData; // holds chart data
         var chartData1;
@@ -40,13 +46,22 @@
         var chartData6;
         var detailData;
         google.load("visualization", "1", { packages: ['corechart'] });
-        //fill chart data
+
+        var intervalId = null;
+        var varCounter = 0;
+        var varName = function () {
+            if (varCounter <= 10) {
+                varCounter++;
+            } else {
+                clearInterval(intervalId);
+                Printfunction();
+            }
+        };
         $(document).ready(function () {
 
-
+            intervalId = setInterval(varName, 700);
 
             getsrc();
-
 
             $('#loader7').hide();
             $('#loader8').hide();
@@ -867,14 +882,6 @@
 
 
                     $(".sec-head").removeClass('hide');
-        }
-        function interval() {
-            var a;
-            for (a = 0; a <= 10000; a++) {
-                if (a == 5000) {
-                    Printfunction();
-                }
-            }
         }
     </script>
 </head>

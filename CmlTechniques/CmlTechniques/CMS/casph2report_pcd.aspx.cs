@@ -28,7 +28,7 @@ namespace CmlTechniques.CMS
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "CreateGridHeader", "<script>CreateGridHeader('DataDiv', 'mymaster','HeaderDiv');</script>");
                 string _prm = Request.QueryString[0].ToString();
-                    lblprj.Text = _prm;
+                lblprj.Text = _prm;
                 Load_Master();
                 
                 Session["filter"] = "no";
@@ -45,9 +45,23 @@ namespace CmlTechniques.CMS
                 Head_Merging();
                 drfed.Style.Add("display", "none");
                 btnzero.Style.Add("display", "none");
+
+                if (lblprj.Text == "AFV") Set_Title();
             }
         }
-      
+        private void Set_Title()
+        {
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+        }
+
         private void Load_Filtering_Elements()
         {
             drbuilding.Items.Clear();
@@ -108,6 +122,7 @@ namespace CmlTechniques.CMS
             drflevel.SelectedValue = (string)Session["flvl"];
             drfed.SelectedValue = (string)Session["fed"];
         }
+
         private void Load_Master()
         {
             BLL_Dml _objbll = new BLL_Dml();
@@ -117,7 +132,10 @@ namespace CmlTechniques.CMS
             _objcas.sch = 18;
             _objcas.prj_code = lblprj.Text;
 
-           _objcas.sys = 0;
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+            else
+                _objcas.sys = 0;
 
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
             _dtresult = _dtMaster;

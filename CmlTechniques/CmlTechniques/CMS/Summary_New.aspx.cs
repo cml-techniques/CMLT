@@ -59,7 +59,10 @@ namespace CmlTechniques.CMS
             _clscassheet _objcas = new _clscassheet();
             _objcas.sch = Convert.ToInt32(lblsch.Text);
             _objcas.prj_code = lblprj.Text;
-             _objcas.sys = 0;
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+            else
+            _objcas.sys = 0;
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
         }
 

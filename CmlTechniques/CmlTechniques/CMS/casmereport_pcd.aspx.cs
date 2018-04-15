@@ -75,20 +75,22 @@ namespace CmlTechniques.CMS
 
                 Generate_Summary();
                
-                if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
-                    lblhead.Text = "CAS M9 Fuel Systems Commissioning Activity Schedule";
-                Head_Merging(); 
+                Head_Merging();
 
+                if (lblprj.Text == "AFV") Set_Title();
             }
         }
         private void Set_Title()
         {
-            if (lbldiv.Text == "1")
-                lblhead.Text = "Wings - " + lblhead.Text;
-            else if (lbldiv.Text == "2")
-                lblhead.Text = "Main - " + lblhead.Text;
-            else if (lbldiv.Text == "3")
-                lblhead.Text = "Technical - " + lblhead.Text;
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
         }
         private void Load_Filtering_Elements()
         {
@@ -185,7 +187,13 @@ namespace CmlTechniques.CMS
             _clscassheet _objcas = new _clscassheet();
             _objcas.sch = 8;
             _objcas.prj_code = lblprj.Text;
-            _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
+
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+            else
+                _objcas.sys = 0;
+
+               _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
 
             _dtresult = _dtMaster;
             _dtfilter = _dtresult;

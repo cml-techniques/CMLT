@@ -27,20 +27,7 @@ namespace CmlTechniques.CMS
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "CreateGridHeader", "<script>CreateGridHeader('DataDiv', 'mymaster','HeaderDiv');</script>");
                 string _prm = Request.QueryString[0].ToString();
-                if (_prm.Contains("_D") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_D"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);
-                    Set_Title();
-                }
-                else if (_prm.Contains("_F") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_F"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_F") + 2);
-
-                }
-                else
-                    lblprj.Text = _prm;
+                lblprj.Text = _prm;
                 Load_Master();
                 Session["filter"] = "no";
                 Session["zone"] = "All";
@@ -58,17 +45,23 @@ namespace CmlTechniques.CMS
                 drfed.Style.Add("display", "none");   
                 td_icom1.Visible = false;
                 td_icom2.Visible = false;
-                Generate_Summary();            
+                Generate_Summary();
+
+
+                if (lblprj.Text == "AFV") Set_Title();
             }
         }
         private void Set_Title()
         {
-            if (lbldiv.Text == "1")
-                lbltitle.Text = "Wings - " + lbltitle.Text;
-            else if (lbldiv.Text == "2")
-                lbltitle.Text = "Main - " + lbltitle.Text;
-            else if (lbldiv.Text == "3")
-                lbltitle.Text = "Technical - " + lbltitle.Text;
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lbltitle.Text = _buildingName + " - " + lbltitle.Text;
         }
         private void Load_Filtering_Elements()
         {
@@ -152,33 +145,13 @@ namespace CmlTechniques.CMS
             _objcas.sch = 9;
             _objcas.prj_code = lblprj.Text;
 
-            if (lblprj.Text == "14211")
-                _objcas.sys = Convert.ToInt32(lbldiv.Text);
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+            else
+                _objcas.sys = 0;
 
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
-            if (lblprj.Text == "11736" || lblprj.Text == "Traini")
-            {
-                if (lbldiv.Text == "1")
-                {
-                    var _result = _dtMaster.Select("b_z ='PMCW' OR b_z ='PMPW' OR b_z ='PMVW'");
-                    _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
-                }
-                else if (lbldiv.Text == "2")
-                {
-                    var _result = _dtMaster.Select("b_z LIKE 'PMMB%' OR b_z='PMMV' OR b_z='PMST' OR b_z='PPP3' OR b_z='PPP4' OR b_z='PMMU' OR b_z='PMDW' ");
-                    _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
-                }
-                else if (lbldiv.Text == "3")
-                {
-                    var _result = _dtMaster.Select("b_z ='PSEC' OR b_z='PMWT' OR b_z='PSWB' OR b_z='PSGC' OR b_z='Energy Centre' OR b_z='PSGS'");
-                    _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
-                }
-                else if (lbldiv.Text == "4")
-                    _dtresult = null;
-
-            }
-            else
-                _dtresult = _dtMaster;
+            _dtresult = _dtMaster;
             _summary = _dtresult;
             _dtfilter = _dtresult;
         }

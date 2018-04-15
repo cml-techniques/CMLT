@@ -64,13 +64,7 @@ namespace CmlTechniques.CMS
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "CreateGridHeader", "<script>CreateGridHeader('DataDiv', 'mymaster','HeaderDiv');</script>");
                 string _prm = Request.QueryString[0].ToString();
-                if (_prm.Contains("_D") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_D"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);
-                }
-                else
-                    lblprj.Text = _prm;
+                lblprj.Text = _prm;
                 Load_Master();
                 Session["filter"] = "no";
                 Session["zone"] = "All";
@@ -87,8 +81,23 @@ namespace CmlTechniques.CMS
 
                 btnzero.Style.Add("display", "none");
 
+                if (lblprj.Text == "AFV") Set_Title();
+
                 //Load_Summary();
             }
+        }
+        private void Set_Title()
+        {
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+
         }
         private void Load_Filtering_Elements()
         {
@@ -171,7 +180,12 @@ namespace CmlTechniques.CMS
             _clscassheet _objcas = new _clscassheet();
             _objcas.sch = 4;
             _objcas.prj_code = lblprj.Text;
-            _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
+
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+            else
+                _objcas.sys = 0;
+               _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
             _dtresult = _dtMaster;
             _summary = _dtresult;
             _dtfilter = _dtresult;

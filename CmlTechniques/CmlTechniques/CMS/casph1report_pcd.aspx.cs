@@ -65,9 +65,22 @@ namespace CmlTechniques.CMS
 
                 Generate_Summary();
                 Head_Merging();
+
+                if (lblprj.Text == "AFV") Set_Title();
             }
         }
-        
+        private void Set_Title()
+        {
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+        }
         private void Load_Filtering_Elements()
         {
             drbuilding.Items.Clear();
@@ -150,6 +163,10 @@ namespace CmlTechniques.CMS
             _objcas.sch = 17;
             _objcas.prj_code = lblprj.Text;
 
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+            else
+                _objcas.sys = 0;
 
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
 

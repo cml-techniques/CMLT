@@ -31,7 +31,7 @@ namespace CmlTechniques.CMS
                 lbluid.Text = (string)Session["uid"];
                 lblprj.Text = _prm.Substring(0, _prm.IndexOf("_S"));
                 tdiv.Visible = false; ddiv.Visible = false; odiv.Visible = false;
-                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
+                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s" || lblprj.Text == "AFV")
                 {
                     lblsch.Text = _prm.Substring(_prm.IndexOf("_S") + 2, _prm.IndexOf("_D") - (_prm.IndexOf("_S") + 2));
                     lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);

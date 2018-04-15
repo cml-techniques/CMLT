@@ -40,9 +40,22 @@ namespace CmlTechniques.CMS
                 Generate_Summary();
                 drfed.Style.Add("display", "none");
                 lblhead.Text = "CAS ELV1 Fire Alarm & Voice Evacuation Commissioning Activity Schedule";
+
+                if (lblprj.Text == "AFV") Set_Title();
             }
         }
+        private void Set_Title()
+        {
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
 
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+        }
         private void Load_TestNames()
         {
             BLL_Dml _objbll = new BLL_Dml();
@@ -133,6 +146,12 @@ namespace CmlTechniques.CMS
             _clscassheet _objcas = new _clscassheet();
             _objcas.sch = 10;
             _objcas.prj_code = lblprj.Text;
+
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+            else
+                _objcas.sys = 0;
+
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
 
             _dtresult = _dtMaster;

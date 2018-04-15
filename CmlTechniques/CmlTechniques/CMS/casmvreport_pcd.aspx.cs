@@ -59,20 +59,7 @@ namespace CmlTechniques.CMS
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "CreateGridHeader", "<script>CreateGridHeader('DataDiv', 'mymaster','HeaderDiv');</script>");
                 string _prm = Request.QueryString[0].ToString();
-                if (_prm.Contains("_D") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_D"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);
-                    Set_Title();
-                }
-                else if (_prm.Contains("_F") == true)
-                {
-                    lblprj.Text = _prm.Substring(0, _prm.IndexOf("_F"));
-                    lbldiv.Text = _prm.Substring(_prm.IndexOf("_F") + 2);
-                    //Set_Title();
-                }
-                else
-                    lblprj.Text = _prm;
+                lblprj.Text = _prm;
                 //Populate_view();
                 Load_Master();
                 Session["filter"] = "no";
@@ -93,6 +80,8 @@ namespace CmlTechniques.CMS
                 if (lblprj.Text != "HMIM")
                     weighing.Visible = false;
 
+                if (lblprj.Text == "AFV") Set_Title();
+
 
                 //Session["Sum_QtyPlanned1"] = ""; Session["Sum_QtyPlanned2"] = "";
                 //Session["Sum_PerPlanned1"] = ""; Session["Sum_PerPlanned2"] = "";
@@ -103,12 +92,16 @@ namespace CmlTechniques.CMS
         }
         private void Set_Title()
         {
-            if (lbldiv.Text == "1")
-                lblhead.Text = "Wings - " + lblhead.Text;
-            else if (lbldiv.Text == "2")
-                lblhead.Text = "Main - " + lblhead.Text;
-            else if (lbldiv.Text == "3")
-                lblhead.Text = "Technical - " + lblhead.Text;
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(Request.QueryString["div"].ToString());
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+
         }
         private void Head_Merging()
         {
@@ -194,10 +187,12 @@ namespace CmlTechniques.CMS
             _database _objdb = new _database();
             _objdb.DBName = "DB_" + lblprj.Text;
             _clscassheet _objcas = new _clscassheet();
-
-                _objcas.sch = Convert.ToInt32(Request.QueryString["sch"].ToString());
+           _objcas.sch = Convert.ToInt32(Request.QueryString["sch"].ToString());
             _objcas.prj_code = lblprj.Text;
 
+            if (lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"].ToString());
+            else
                 _objcas.sys = 0;
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
                 _dtresult = _dtMaster;
