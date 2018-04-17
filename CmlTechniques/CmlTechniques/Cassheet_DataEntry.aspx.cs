@@ -33,12 +33,12 @@ namespace CmlTechniques
                 string _prm = Request.QueryString[0].ToString();
                 //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + _prm + "');", true);
                 lblprj.Text = _prm.Substring(0, _prm.IndexOf("_S"));
-                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
+                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s" || lblprj.Text == "AFV")
                 {
                     Session["sch"] = _prm.Substring(_prm.IndexOf("_S") + 2, _prm.IndexOf("_D") - (_prm.IndexOf("_S") + 2));
                     lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);
                 }
-                else if (lblprj.Text == "HMIM" || lblprj.Text=="14211" || lblprj.Text=="HMHS")
+                else if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS")
                 {
                     Session["sch"] = _prm.Substring(_prm.IndexOf("_S") + 2, _prm.IndexOf("_F") - (_prm.IndexOf("_S") + 2));
                     lbldiv.Text = _prm.Substring(_prm.IndexOf("_F") + 2);
@@ -46,7 +46,7 @@ namespace CmlTechniques
                 else
                     Session["sch"] = _prm.Substring(_prm.IndexOf("_S") + 2);
                 lblsch.Text = (string)Session["sch"];
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                 {
                     if (lblsch.Text == "30" || lblsch.Text == "31" || lblsch.Text == "32" || lblsch.Text == "33" || lblsch.Text == "34" || lblsch.Text == "35" || lblsch.Text == "36" || lblsch.Text == "37" || lblsch.Text == "38" || lblsch.Text == "39" || lblsch.Text == "40")
                         Session["sch"] = "9";
@@ -58,7 +58,7 @@ namespace CmlTechniques
                         Session["sch"] = "28";
                     else if (lblsch.Text == "103" || lblsch.Text == "104" || lblsch.Text == "105" || lblsch.Text == "106" || lblsch.Text == "109" || lblsch.Text == "110" || lblsch.Text == "111")
                         Session["sch"] = "27";
-                    else if (lblsch.Text == "112" || lblsch.Text == "113" || lblsch.Text == "114" || lblsch.Text == "115" || lblsch.Text == "116" )
+                    else if (lblsch.Text == "112" || lblsch.Text == "113" || lblsch.Text == "114" || lblsch.Text == "115" || lblsch.Text == "116")
                         Session["sch"] = "112";
                 }
                 settings();
@@ -78,6 +78,8 @@ namespace CmlTechniques
                 if (lblprj.Text != "123")
                     btnaddm.Visible = false;
                 _exp = false;
+
+                if (lblprj.Text == "AFV") Set_Title();
             }
         }
         protected void load_cas_sys()
@@ -86,11 +88,11 @@ namespace CmlTechniques
             _database _objdb = new _database();
             _objdb.DBName = "DB_" + lblprj.Text;
             _clscassheet _objcls = new _clscassheet();
-            if ((string)Session["sch"] == "112" )
+            if ((string)Session["sch"] == "112")
                 _objcls.sch = Convert.ToInt32(lblsch.Text);
             else
                 _objcls.sch = Convert.ToInt32((string)Session["sch"]);
-            if (lblprj.Text == "CCAD" )
+            if (lblprj.Text == "CCAD")
             {
                 if ((string)Session["sch"] == "17" || (lblprj.Text == "11784" && (string)Session["sch"] == "38"))
                     _objcls.sch = Convert.ToInt32(lblsch.Text);
@@ -101,7 +103,7 @@ namespace CmlTechniques
             _dt1.Columns.Add("_name");
             var _List = from o in _dt0.AsEnumerable()
                         where o.Field<string>(3) == lblprj.Text
-                        select o; 
+                        select o;
 
             foreach (var row in _List)
             {
@@ -116,9 +118,22 @@ namespace CmlTechniques
             drpackage.DataBind();
             drpackage.Items.Insert(0, "--Package--");
         }
+        private void Set_Title()
+        {
+            string _buildingName = "";
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clscassheet _objcls = new _clscassheet();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _objcls.sch = Convert.ToInt32(lbldiv.Text);
+            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
+
+            lblhead.Text = _buildingName + " - " + lblhead.Text;
+
+        }
         protected void settings()
         {
-            if ((string)Session["sch"] == "5" || (string)Session["sch"] == "1" ||( (string)Session["sch"]=="44" && lblprj.Text!="11784") || (lblprj.Text == "11784" && (string)Session["sch"] == "28"))
+            if ((string)Session["sch"] == "5" || (string)Session["sch"] == "1" || ((string)Session["sch"] == "44" && lblprj.Text != "11784") || (lblprj.Text == "11784" && (string)Session["sch"] == "28"))
             {
                 lbnum.Text = "NO.OF CIRCUITS";
                 lbl1.Text = "PROVIDES POWER TO";
@@ -126,24 +141,24 @@ namespace CmlTechniques
                 lbl3.Text = "FED FROM";
                 if (lblprj.Text == "CCAD")
                 {
-                    if((string)Session["sch"]=="5")
+                    if ((string)Session["sch"] == "5")
                         lblhead.Text = "6.1.5 - LV Electrical Distribution (415V) Commissioning Activity Schedule";
-                    else if((string)Session["sch"]=="44")
+                    else if ((string)Session["sch"] == "44")
                         lblhead.Text = "6.1.7 - Un-Interruptible Power Supplies/ Battery System Commissioning Activity Schedule";
                     lbl2.Text = "SUBSTATION NUMBER";
                     td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
                 }
                 else
                 {
-                    if  (lblprj.Text == "11784" && (string)Session["sch"] == "28")
+                    if (lblprj.Text == "11784" && (string)Session["sch"] == "28")
                     {
-                         lblhead.Text = "CAS E4 Electrical Services. LV Commissioning Activity Schedule - Marketing Suite";
+                        lblhead.Text = "CAS E4 Electrical Services. LV Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS E4 Electrical Services. LV Commissioning Activity Schedule";
+                        lblhead.Text = "CAS E4 Electrical Services. LV Commissioning Activity Schedule";
                     td_2.Visible = false; td_lbl2.Visible = false; td_txtdes.Visible = false; td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
                 }
-                
+
             }
             else if ((string)Session["sch"] == "2" || (lblprj.Text == "11784" && (string)Session["sch"] == "25"))
             {
@@ -171,16 +186,16 @@ namespace CmlTechniques
                     lblhead.Text = "CAS E1 Electrical Services. HV-MV Switchgear & RMU Commissioning Activity Schedule";
                     td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
                 }
-                 else
-                 {
-                     if (lblprj.Text == "11784" && (string)Session["sch"] == "25")
-                     {
-                         lblhead.Text = "CAS E1 Electrical Services. HV-MV Switchgear & RMU Commissioning Activity Schedule - Marketing Suite";
-                     }
-                     else
-                     lblhead.Text = "CAS E1 Electrical Services. HV-MV Switchgear & RMU Commissioning Activity Schedule";
-                     td_3.Visible = false; td_lbnum.Visible = false; td_txtnum.Visible = false; td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
-                 }
+                else
+                {
+                    if (lblprj.Text == "11784" && (string)Session["sch"] == "25")
+                    {
+                        lblhead.Text = "CAS E1 Electrical Services. HV-MV Switchgear & RMU Commissioning Activity Schedule - Marketing Suite";
+                    }
+                    else
+                        lblhead.Text = "CAS E1 Electrical Services. HV-MV Switchgear & RMU Commissioning Activity Schedule";
+                    td_3.Visible = false; td_lbnum.Visible = false; td_txtnum.Visible = false; td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
+                }
             }
             else if ((string)Session["sch"] == "121" || (string)Session["sch"] == "119" || (string)Session["sch"] == "118")
             {
@@ -231,7 +246,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS E2 Electrical Services. HV & MV Transformers Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS E2 Electrical Services. HV & MV Transformers Commissioning Activity Schedule";
+                        lblhead.Text = "CAS E2 Electrical Services. HV & MV Transformers Commissioning Activity Schedule";
                     txtnoof.Visible = false;
                     td_3.Visible = false; td_lbnum.Visible = false; td_txtnum.Visible = false;
                 }
@@ -246,7 +261,7 @@ namespace CmlTechniques
                 td_2.Visible = false; td_3.Visible = false; td_lbl2.Visible = false; td_lbnum.Visible = false; td_txtdes.Visible = false; td_txtnum.Visible = false; td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
                 if (lblprj.Text == "CCAD")
                     lblhead.Text = "6.1.4.2 - Generator Commissioning Activity Schedule";
-                else if  (lblprj.Text == "11784" && (string)Session["sch"] == "27")
+                else if (lblprj.Text == "11784" && (string)Session["sch"] == "27")
                 {
                     lblhead.Text = "CAS E5 Electrical Services. Generator Commissioning Activity Schedule - Marketing Suite";
                 }
@@ -268,7 +283,7 @@ namespace CmlTechniques
                     lblhead.Text = "6.1.1 - Earthing and Lightning Protection Commissioning Activity Schedule";
                     lbl1.Text = "PROVIDES EARTHING TO";
                 }
-                     else if  (lblprj.Text == "11784" && (string)Session["sch"] == "29")
+                else if (lblprj.Text == "11784" && (string)Session["sch"] == "29")
                 {
                     lblhead.Text = "CAS E3 Electrical Services. Earthing & Lightning Protection Commissioning Activity Schedule - Marketing Suite";
                 }
@@ -301,12 +316,12 @@ namespace CmlTechniques
                 else
                 {
                     drfed.Style.Add("display", "none");
-                 if  (lblprj.Text == "11784" && (string)Session["sch"] == "30")
-                {
-                    lblhead.Text = "CAS E6 Electrical Services. Emergency Lighting Commissioning Activity Schedule - Marketing Suite";
-                }
-                else
-                    lblhead.Text = "CAS E6 Electrical Services. Emergency Lighting Commissioning Activity Schedule";
+                    if (lblprj.Text == "11784" && (string)Session["sch"] == "30")
+                    {
+                        lblhead.Text = "CAS E6 Electrical Services. Emergency Lighting Commissioning Activity Schedule - Marketing Suite";
+                    }
+                    else
+                        lblhead.Text = "CAS E6 Electrical Services. Emergency Lighting Commissioning Activity Schedule";
                     td_2.Visible = false; td_lbl2.Visible = false; td_txtdes.Visible = false; td_1.Visible = false; td_txtfed.Visible = false; td_lbl3.Visible = false; td_lbl1.Visible = false; td_txtppt.Visible = false; td_0.Visible = false; td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
                 }
             }
@@ -399,12 +414,12 @@ namespace CmlTechniques
                 }
                 else
                 {
-                    if(lblprj.Text == "11784" && (string)Session["sch"] == "31")
+                    if (lblprj.Text == "11784" && (string)Session["sch"] == "31")
                     {
                         lblhead.Text = "CAS M1 Mechanical Services Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS M1 Mechanical Services Commissioning Activity Schedule";
+                        lblhead.Text = "CAS M1 Mechanical Services Commissioning Activity Schedule";
                     td_0.Visible = false; td_txtnum.Visible = false; td_lbnum.Visible = false; td_lbl1.Visible = false; td_txtppt.Visible = false; td_3.Visible = false; td_lbl2.Visible = false; td_txtdes.Visible = false; td_2.Visible = false;
                 }
 
@@ -457,7 +472,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS MISC2 - Kitchen & Laundry Equipments Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS MISC2 - Kitchen & Laundry Equipments Commissioning Activity Schedule";
+                        lblhead.Text = "CAS MISC2 - Kitchen & Laundry Equipments Commissioning Activity Schedule";
                     td_0.Visible = false; td_txtnum.Visible = false; td_lbnum.Visible = false; txtnoof.Visible = false;
                     td_lbl2.Visible = false; td_txtdes.Visible = false; td_2.Visible = false; td_3.Visible = false;
                 }
@@ -528,7 +543,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule";
+                        lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule";
                     td_txtnum.Visible = false; td_lbnum.Visible = false; td_3.Visible = false;
                 }
 
@@ -703,15 +718,15 @@ namespace CmlTechniques
                 }
                 else
                 {
-                   
+
                     if (lblprj.Text == "11784" && (string)Session["sch"] == "32")
                     {
                         lblhead.Text = "CAS M3 Fusible Link Fire Dampers & MSFD Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS M3 Fusible Link Fire Dampers & MSFD Commissioning Activity Schedule";
-                    td_0.Visible = false; td_txtnum.Visible = false; td_lbnum.Visible = false; 
-                    td_lbl1.Visible = false; td_txtppt.Visible = false;                     
+                        lblhead.Text = "CAS M3 Fusible Link Fire Dampers & MSFD Commissioning Activity Schedule";
+                    td_0.Visible = false; td_txtnum.Visible = false; td_lbnum.Visible = false;
+                    td_lbl1.Visible = false; td_txtppt.Visible = false;
                     td_1.Visible = false; td_lbl2.Visible = false; td_txtdes.Visible = false; td_2.Visible = false;
 
                     if (lblprj.Text != "NBO")
@@ -753,12 +768,12 @@ namespace CmlTechniques
                 }
                 else
                 {
-                 if  (lblprj.Text == "11784" && (string)Session["sch"] == "33")
-                {
-                    lblhead.Text = "CAS ELV1 Fire Alarm & Voice Evacuation Commissioning Activity Schedule - Marketing Suite";
-                }
-                else
-                    lblhead.Text = "CAS ELV1 Fire Alarm & Voice Evacuation Commissioning Activity Schedule";
+                    if (lblprj.Text == "11784" && (string)Session["sch"] == "33")
+                    {
+                        lblhead.Text = "CAS ELV1 Fire Alarm & Voice Evacuation Commissioning Activity Schedule - Marketing Suite";
+                    }
+                    else
+                        lblhead.Text = "CAS ELV1 Fire Alarm & Voice Evacuation Commissioning Activity Schedule";
                     td_lbl1.Visible = false; td_txtppt.Visible = false; td_0.Visible = false;
                     td_lbl3.Visible = false; td_txtfed.Visible = false; td_1.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false; td_lbldes.Visible = false;
                 }
@@ -802,7 +817,7 @@ namespace CmlTechniques
                     td_lbl3.Visible = false; td_txtfed.Visible = false; td_1.Visible = false; td_lbl1.Visible = false; td_txtppt.Visible = false; td_0.Visible = false; td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
                 }
             }
-            else if ((string)Session["sch"] == "11" ||(lblprj.Text == "11784" && (string)Session["sch"] == "34"))
+            else if ((string)Session["sch"] == "11" || (lblprj.Text == "11784" && (string)Session["sch"] == "34"))
             {
                 lbloc.Text = "AREA SERVED";
                 lbl2.Text = "NO.OF CIRCUITS";
@@ -835,7 +850,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS ELV5 Lighting Control System Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS ELV5 Lighting Control System Commissioning Activity Schedule";
+                        lblhead.Text = "CAS ELV5 Lighting Control System Commissioning Activity Schedule";
 
                     td_lbl3.Visible = false;
                     td_txtfed.Visible = false;
@@ -843,7 +858,7 @@ namespace CmlTechniques
                 }
 
             }
-            else if ((string)Session["sch"] == "12" ||(lblprj.Text == "11784" && (string)Session["sch"] == "35"))
+            else if ((string)Session["sch"] == "12" || (lblprj.Text == "11784" && (string)Session["sch"] == "35"))
             {
                 lbl1.Text = "";
                 lbl2.Text = "";
@@ -882,7 +897,7 @@ namespace CmlTechniques
 
                 }
             }
-            else if ((string)Session["sch"] == "13" ||(lblprj.Text == "11784" && (string)Session["sch"] == "36"))
+            else if ((string)Session["sch"] == "13" || (lblprj.Text == "11784" && (string)Session["sch"] == "36"))
             {
 
 
@@ -912,7 +927,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS ELV3 Closed Circuit Television Commissioning Activity Schedule - Marketing Suite ";
                     }
                     else
-                    lblhead.Text = "CAS ELV3 Closed Circuit Television Commissioning Activity Schedule";
+                        lblhead.Text = "CAS ELV3 Closed Circuit Television Commissioning Activity Schedule";
                     lbloc.Text = "SYSTEMS MONITORED";
                     td_lbl3.Visible = false;
                     td_txtfed.Visible = false;
@@ -935,7 +950,7 @@ namespace CmlTechniques
 
 
             }
-            else if ((string)Session["sch"] == "14" ||(lblprj.Text == "11784" && (string)Session["sch"] == "37"))
+            else if ((string)Session["sch"] == "14" || (lblprj.Text == "11784" && (string)Session["sch"] == "37"))
             {
 
                 drfed.Style.Add("display", "none");
@@ -965,10 +980,10 @@ namespace CmlTechniques
                 {
                     if (lblprj.Text == "11784" && (string)Session["sch"] == "37")
                     {
-                         lblhead.Text = "CAS ELV8 Audio-Visual Intercom Commissioning Activity Schedule - Marketing Suite";
+                        lblhead.Text = "CAS ELV8 Audio-Visual Intercom Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS ELV8 Audio-Visual Intercom Commissioning Activity Schedule";
+                        lblhead.Text = "CAS ELV8 Audio-Visual Intercom Commissioning Activity Schedule";
                     lbnum.Text = "NO.OF PANELS"; drloc.Style.Add("display", "none");
                     td_lbl0.Visible = false;
                     td_txtloc.Visible = false;
@@ -1070,7 +1085,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS ELV9 - Car Park Management System Commissioning Activity Schedule";
                     }
                     else
-                    lblhead.Text = "CAS ELV9 - ELV System Commissioning Activity Schedule";
+                        lblhead.Text = "CAS ELV9 - ELV System Commissioning Activity Schedule";
                     lbnum.Text = "NO.OF DEVICES REQ'D CALIBRATION";
                     lbl1.Text = "SYSTEM CONTROLLED/ MONITORED";
                     lbl2.Text = "NO.OF POINTS";
@@ -1089,7 +1104,7 @@ namespace CmlTechniques
                     lblhead.Text = "CAS PH2 Fire Protection Services  Commissioning Activity Schedule - Marketing Suite";
                 }
                 else
-                lblhead.Text = "CAS PH2 Fire Protection Services  Commissioning Activity Schedule";
+                    lblhead.Text = "CAS PH2 Fire Protection Services  Commissioning Activity Schedule";
                 td_0.Visible = false; td_lbl1.Visible = false; td_txtppt.Visible = false; td_txtfed.Visible = false; td_lbl3.Visible = false; td_1.Visible = false; td0.Visible = false; td_txtloc.Visible = false; td_lbl0.Visible = false; td_lbl2.Visible = false; td_txtdes.Visible = false; td_2.Visible = false;
             }
             else if ((string)Session["sch"] == "29")
@@ -1141,12 +1156,12 @@ namespace CmlTechniques
                 }
                 else
                 {
-                    if(lblprj.Text == "11784" && (string)Session["sch"] == "40")
+                    if (lblprj.Text == "11784" && (string)Session["sch"] == "40")
                     {
                         lblhead.Text = "CAS PH3 Fire Extinguishing Systems Commissioning Activity Schedule  - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS PH3 Fire Extinguishing Systems Commissioning Activity Schedule";
+                        lblhead.Text = "CAS PH3 Fire Extinguishing Systems Commissioning Activity Schedule";
                     td_3.Visible = false; td_lbnum.Visible = false; td_txtnum.Visible = false; td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
 
                 }
@@ -1217,7 +1232,7 @@ namespace CmlTechniques
                 }
 
             }
-            else if ((string)Session["sch"] == "20" ||(lblprj.Text == "11784" && (string)Session["sch"] == "41"))
+            else if ((string)Session["sch"] == "20" || (lblprj.Text == "11784" && (string)Session["sch"] == "41"))
             {
                 lbl1.Text = "NO.OF POINTS";
                 lbl2.Text = "NO.OF DEVICES REQUIRED CALIBRATION";
@@ -1238,7 +1253,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS ELV2 Building Management System Commissioning Activity Schedule - Marketing Suite ";
                     }
                     else
-                    lblhead.Text = "CAS ELV2 Building Management System Commissioning Activity Schedule";
+                        lblhead.Text = "CAS ELV2 Building Management System Commissioning Activity Schedule";
                 }
                 td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
             }
@@ -1290,7 +1305,7 @@ namespace CmlTechniques
                 txtpprovideto.Visible = false;
                 if (lblprj.Text == "ASAO")
                     lblhead.Text = "CAS M4 Flushing Commissioning Activity Schedule";
-                else if (lblprj.Text == "11784" || lblsch.Text=="42")
+                else if (lblprj.Text == "11784" || lblsch.Text == "42")
                     lblhead.Text = "CAS M4 Flushing Commissioning Activity Schedule  - Marketing Suite";
                 else
                     lblhead.Text = "CAS M2 Flushing Commissioning Activity Schedule";
@@ -1332,7 +1347,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS ELV4 Access Control System Commissioning Activity Schedule - Marketing Suite";
                     }
                     else
-                    lblhead.Text = "CAS ELV4 Access Control System Commissioning Activity Schedule";
+                        lblhead.Text = "CAS ELV4 Access Control System Commissioning Activity Schedule";
                     lbloc.Text = "SYSTEMS MONITORED";
                     lbnum.Text = "NO.OF ACCESS CONTROLLED DOORS";
                     td_lbl3.Visible = false;
@@ -1366,7 +1381,7 @@ namespace CmlTechniques
                 }
                 else if (lblprj.Text == "11784" || lblprj.Text == "MOE")
                 {
-                    if ( (string)Session["sch"] == "44")
+                    if ((string)Session["sch"] == "44")
                     {
                         lblhead.Text = "CAS MISC1  Lift & Conveying Systems Commissioning Activity Schedule - Marketing Suite";
                     }
@@ -1375,7 +1390,7 @@ namespace CmlTechniques
                         lblhead.Text = "CAS MISC1 - Horizontal & Vertical Transportation Systems Commissioning Activity Schedule";
                     }
                     else
-                    lblhead.Text = "CAS MISC1  Lift & Conveying Systems Commissioning Activity Schedule";
+                        lblhead.Text = "CAS MISC1  Lift & Conveying Systems Commissioning Activity Schedule";
                     td_3.Visible = false; td_lbnum.Visible = false; td_txtnum.Visible = false;
                     td_0.Visible = false; td_lbl1.Visible = false; td_txtppt.Visible = false;
                 }
@@ -1520,7 +1535,7 @@ namespace CmlTechniques
                 td_txtdes.Visible = false;
                 td_2.Visible = false;
             }
-            else if ((string)Session["sch"] == "37" && lblprj.Text!="11784")
+            else if ((string)Session["sch"] == "37" && lblprj.Text != "11784")
             {
                 if (lblprj.Text == "CCAD")
                 {
@@ -1633,46 +1648,44 @@ namespace CmlTechniques
                 td_2.Visible = false;
             }
 
+            //Added to get the CAS header for Fountain View Project
+            if (lblprj.Text == "AFV")
+            {
+                BLL_Dml _objbll = new BLL_Dml();
+                _database _objdb = new _database();
+                _objdb.DBName = "DB_" + lblprj.Text;
+                _clscassheet _objcls = new _clscassheet();
+                _objcls.sch = Convert.ToInt32((string)Session["sch"]);
+                lblhead.Text = _objbll.LoadCASHeader(_objcls, _objdb);
 
-            ////Added to get the CAS header for Fountain View Project
-            //if (lblprj.Text == "AFV")
-            //{
-            //    BLL_Dml _objbll = new BLL_Dml();
-            //    _database _objdb = new _database();
-            //    _objdb.DBName = "DB_" + lblprj.Text;
-            //    _clscassheet _objcls = new _clscassheet();
-            //    _objcls.sch = Convert.ToInt32((string)Session["sch"]);
-            //    lblhead.Text = _objbll.LoadCASHeader(_objcls, _objdb);
+                //if (lblhead.Text.Contains("MISC2") || lblhead.Text.Contains("MISC3") || lblhead.Text.Contains("MISC4") || lblhead.Text.Contains("MISC5") || lblhead.Text.Contains("MISC6"))
+                //{
 
-            //    if (lblhead.Text.Contains("MISC2") || lblhead.Text.Contains("MISC3") || lblhead.Text.Contains("MISC4") || lblhead.Text.Contains("MISC5") || lblhead.Text.Contains("MISC6"))
-            //    {
+                //    td_0.Visible = false; td_lbl0.Visible = true;
+                //    td_txtnum.Visible = false; td_lbnum.Visible = false; txtnoof.Visible = false;
+                //    td_lbl2.Visible = false; td_txtdes.Visible = false; td_txtppt.Visible = false;
+                //    td_3.Visible = false; td_2.Visible = false;
+                //    td_lbl1.Visible = false;
+                //    td_txtloc.Visible = true;
+                //    td_lbldes.Visible = true; td_txtdescr.Visible = true; tddes.Visible = true;
 
-            //        td_0.Visible = false; td_lbl0.Visible = true;
-            //        td_txtnum.Visible = false; td_lbnum.Visible = false; txtnoof.Visible = false;
-            //        td_lbl2.Visible = false; td_txtdes.Visible = false; td_txtppt.Visible = false;
-            //        td_3.Visible = false; td_2.Visible = false;
-            //        td_lbl1.Visible = false;
-            //        td_txtloc.Visible = true;
-            //        td_lbldes.Visible = true; td_txtdescr.Visible = true; tddes.Visible = true;
+                //    lbl1.Text = "";
 
-            //        lbl1.Text = "";
-
-            //        if (lblhead.Text.Contains("MISC2") || lblhead.Text.Contains("MISC3") || lblhead.Text.Contains("MISC5"))
-            //        {
-            //            td_1.Visible = true;
-            //            td_txtfed.Visible = true; td_lbl3.Visible = true;
-            //            lbl3.Text = "FED FROM";
-            //        }
-            //        else
-            //        {
-            //            td_1.Visible = false;
-            //            td_txtfed.Visible = false; td_lbl3.Visible = false;
-            //            lbl3.Text = "";
-            //            lbdes.Text = "ROOM NO.";
-            //        }
-            //    }
-            //}
-
+                //    if (lblhead.Text.Contains("MISC2") || lblhead.Text.Contains("MISC3") || lblhead.Text.Contains("MISC5"))
+                //    {
+                //        td_1.Visible = true;
+                //        td_txtfed.Visible = true; td_lbl3.Visible = true;
+                //        lbl3.Text = "FED FROM";
+                //    }
+                //    else
+                //    {
+                //        td_1.Visible = false;
+                //        td_txtfed.Visible = false; td_lbl3.Visible = false;
+                //        lbl3.Text = "";
+                //        lbdes.Text = "ROOM NO.";
+                //    }
+                //}
+            }
         }
         void _ReadCookies()
         {
@@ -1715,65 +1728,45 @@ namespace CmlTechniques
         }
         private void Load_Master()
         {
-            //if (lblprj.Text == "ASAO")
-            //{
-            //    var _dv = (DataView)Class1._OBJ_DATA_CAS1.Select();
-            //    DataTable _dtemp = _dv.ToTable();
-            //    IEnumerable<DataRow> _result = from _data in _dtemp.AsEnumerable()
-            //                                   where _data.Field<int>("Cas_Schedule") == Convert.ToInt32(lblsch.Text)
-            //                                   select _data;
-            //    if (_result.Any())
-            //    {
-            //        _dtMaster = _result.CopyToDataTable<DataRow>();
-            //        _dtresult = _dtMaster;
-            //    }
-            //    else
-            //    {
-            //        _dtMaster = null;
-            //        _dtresult = null;
-            //    }
-            //}
-            //else
-            //{
-                _dtMaster = new DataTable();
-                BLL_Dml _objbll = new BLL_Dml();
-                _database _objdb = new _database();
-                _objdb.DBName = "DB_" + lblprj.Text;
-                _clscassheet _objcas = new _clscassheet();
-                _objcas.sch = Convert.ToInt32(lblsch.Text);
-                _objcas.prj_code = lblprj.Text;
-                if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS")
-                    _objcas.sys = Convert.ToInt32(lbldiv.Text);
-                else
-                    _objcas.sys = 0;
-                _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
+            _dtMaster = new DataTable();
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _objdb.DBName = "DB_" + lblprj.Text;
+            _clscassheet _objcas = new _clscassheet();
+            _objcas.sch = Convert.ToInt32(lblsch.Text);
+            _objcas.prj_code = lblprj.Text;
+            if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS" || lblprj.Text == "AFV")
+                _objcas.sys = Convert.ToInt32(lbldiv.Text);
+            else
+                _objcas.sys = 0;
+            _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
 
-                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
+            if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
+            {
+                if (lbldiv.Text == "1")
                 {
-                    if (lbldiv.Text == "1")
-                    {
-                        var _result = _dtMaster.Select("b_z ='PMCW' OR b_z ='PMPW' OR b_z ='PMVW'");
-                        _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
-                    }
-                    else if (lbldiv.Text == "2")
-                    {
-                        var _result = _dtMaster.Select("b_z LIKE 'PMMB%' OR b_z='PMMV' OR b_z='PMST' OR b_z='PPP3' OR b_z='PPP4' OR b_z='PMMU' OR b_z='PMDW' ");
-                        _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
-                    }
-                    else if (lbldiv.Text == "3")
-                    {
-                        var _result = _dtMaster.Select("b_z ='PSEC' OR b_z='PMWT' OR b_z='PSWB' OR b_z='PSGC' OR b_z='Energy Centre' OR b_z='PSGS' OR b_z='PPTB'");
-                        _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
-                    }
-                    else if (lbldiv.Text == "4")
-                        _dtresult = null;
-                   
+                    var _result = _dtMaster.Select("b_z ='PMCW' OR b_z ='PMPW' OR b_z ='PMVW'");
+                    _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
                 }
-                else
-                    _dtresult = _dtMaster;
+                else if (lbldiv.Text == "2")
+                {
+                    var _result = _dtMaster.Select("b_z LIKE 'PMMB%' OR b_z='PMMV' OR b_z='PMST' OR b_z='PPP3' OR b_z='PPP4' OR b_z='PMMU' OR b_z='PMDW' ");
+                    _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
+                }
+                else if (lbldiv.Text == "3")
+                {
+                    var _result = _dtMaster.Select("b_z ='PSEC' OR b_z='PMWT' OR b_z='PSWB' OR b_z='PSGC' OR b_z='Energy Centre' OR b_z='PSGS' OR b_z='PPTB'");
+                    _dtresult = _result.Any() ? _result.CopyToDataTable() : _dtMaster.Clone();
+                }
+                else if (lbldiv.Text == "4")
+                    _dtresult = null;
+
+            }
+            else
+                _dtresult = _dtMaster;
             //}
 
-            
+
         }
         private void Load_InitialData()
         {
@@ -1793,7 +1786,7 @@ namespace CmlTechniques
             mymaster.DataSource = _dtable;
             mymaster.DataBind();
             Load_Filtering_Elements();
-            
+
         }
         protected void mymaster_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -1830,7 +1823,7 @@ namespace CmlTechniques
             {
                 GridView _mydetails = (GridView)mymaster.Rows[i].FindControl("mydetails");
                 Button _btn = (Button)mymaster.Rows[i].FindControl("Button1");
-               _mydetails.Visible = false;
+                _mydetails.Visible = false;
                 //_mydetails.Style.Add("display", "none");
                 _btn.Text = "+";
             }
@@ -1882,11 +1875,11 @@ namespace CmlTechniques
             GridView _mydetails = (GridView)gvRow.FindControl("mydetails");
             int _idx = Convert.ToInt32(e.CommandArgument);
             GridViewRow _srow = _mydetails.Rows[_idx];
-           // _mydetails.Rows[_idx].Style.Add("background-color", "yellow");
+            // _mydetails.Rows[_idx].Style.Add("background-color", "yellow");
             //int index = gvRow.RowIndex;
             TableCell _item1 = _srow.Cells[13];
             TableCell _item2 = _srow.Cells[14];
-           // TableCell _item3 = _srow.Cells[2];
+            // TableCell _item3 = _srow.Cells[2];
             //string _file = _item.Text;
             //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + _file + "');", true);
             Session["casid"] = _item1.Text;
@@ -1894,7 +1887,7 @@ namespace CmlTechniques
             Session["idx"] = _idx.ToString();
             btnDummy_ModalPopupExtender.Show();
             arrange_edit();
-            
+
         }
         protected void arrange_edit()
         {
@@ -1934,7 +1927,7 @@ namespace CmlTechniques
 
             if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || (string)Session["sch"] == "44" || (lblprj.Text == "11784" && (string)Session["sch"] == "28"))
             {
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                 {
                     lb2.Text = lbl2.Text;
                 }
@@ -1970,9 +1963,9 @@ namespace CmlTechniques
                     lb4.Visible = false; uplb4.Visible = false; tr0.Visible = false;
                 }
             }
-            else if ((string)Session["sch"] == "3"  || (string)Session["sch"] == "120" || (lblprj.Text == "11784" && (string)Session["sch"] == "26"))
+            else if ((string)Session["sch"] == "3" || (string)Session["sch"] == "120" || (lblprj.Text == "11784" && (string)Session["sch"] == "26"))
             {
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                 {
                     lb4.Text = lbnum.Text;
                 }
@@ -2029,12 +2022,12 @@ namespace CmlTechniques
                 else
                 {
                     lb2.Visible = false; uplb2.Visible = false;
-                   
+
                 }
             }
             else if ((string)Session["sch"] == "8" || (string)Session["sch"] == "51" || (string)Session["sch"] == "52" || (string)Session["sch"] == "53" || (string)Session["sch"] == "54" || (string)Session["sch"] == "55" || (string)Session["sch"] == "56" || (string)Session["sch"] == "57" || (string)Session["sch"] == "58" || (string)Session["sch"] == "59" || (string)Session["sch"] == "60" || (string)Session["sch"] == "62" || (string)Session["sch"] == "61" || (string)Session["sch"] == "63" || (string)Session["sch"] == "64" || (string)Session["sch"] == "65" || (string)Session["sch"] == "66" || (string)Session["sch"] == "67" || (string)Session["sch"] == "68" || (string)Session["sch"] == "69" || (string)Session["sch"] == "70" || (string)Session["sch"] == "71" || (string)Session["sch"] == "72" || (string)Session["sch"] == "73" || (string)Session["sch"] == "74" || (string)Session["sch"] == "75" || (string)Session["sch"] == "76" || (string)Session["sch"] == "77" || (string)Session["sch"] == "78" || (string)Session["sch"] == "79" || (string)Session["sch"] == "80" || (string)Session["sch"] == "81" || (string)Session["sch"] == "82" || (string)Session["sch"] == "83" || (string)Session["sch"] == "84" || (lblprj.Text == "11784" && (string)Session["sch"] == "31"))
             {
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                 {
                     lb4.Text = lbnum.Text; tr3.Visible = false; tr4.Visible = false; lb3.Text = lbl3.Text;
                 }
@@ -2044,14 +2037,14 @@ namespace CmlTechniques
                 }
             }
             else if ((string)Session["sch"] == "41" && lblprj.Text == "123")
-            {                
+            {
                 tr5.Visible = false;
                 lb3.Text = lbl3.Text;
                 tr3.Visible = false; tr4.Visible = false;
             }
             else if ((string)Session["sch"] == "24" || (lblprj.Text == "11784" && (string)Session["sch"] == "45"))
             {
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                 {
                     lb4.Text = lbnum.Text; tr0.Visible = false;
                 }
@@ -2064,7 +2057,7 @@ namespace CmlTechniques
             }
             else if ((string)Session["sch"] == "25")
             {
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                 {
                     lb4.Text = lbnum.Text; tr0.Visible = false; tr2.Visible = false;
                 }
@@ -2081,7 +2074,7 @@ namespace CmlTechniques
             }
             else if ((string)Session["sch"] == "17" || (lblprj.Text == "11784" && (string)Session["sch"] == "38"))
             {
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                 {
                     lb4.Text = lbnum.Text;
                 }
@@ -2140,7 +2133,7 @@ namespace CmlTechniques
                 if (lblprj.Text == "CCAD")
                 {
                     lb1.Text = lbl1.Text;
-                    tr2.Visible = false; 
+                    tr2.Visible = false;
                 }
                 else if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS")
                 {
@@ -2174,7 +2167,7 @@ namespace CmlTechniques
                 tr0.Visible = false;
 
             }
-            else if ((string)Session["sch"] == "14" ||(lblprj.Text == "11784" && (string)Session["sch"] == "37"))
+            else if ((string)Session["sch"] == "14" || (lblprj.Text == "11784" && (string)Session["sch"] == "37"))
             {
                 lb4.Text = lbnum.Text;
                 tr2.Visible = false; tr3.Visible = false; tr0.Visible = false; tr4.Visible = false;
@@ -2224,7 +2217,7 @@ namespace CmlTechniques
                 }
                 lb3.Text = lbl3.Text;
                 lb4.Text = lbnum.Text;
-                if(lblprj.Text!="ASAO")
+                if (lblprj.Text != "ASAO")
                     tr0.Visible = false;
             }
             else if ((string)Session["sch"] == "23" || (lblprj.Text == "11784" && (string)Session["sch"] == "44"))
@@ -2328,7 +2321,7 @@ namespace CmlTechniques
                 tr3.Visible = false; tr4.Visible = false; tr0.Visible = false;
 
             }
-            else if ((string)Session["sch"] == "22" ||(lblprj.Text == "11784" && (string)Session["sch"] == "43"))
+            else if ((string)Session["sch"] == "22" || (lblprj.Text == "11784" && (string)Session["sch"] == "43"))
             {
                 if (lblprj.Text == "CCAD")
                 {
@@ -2347,7 +2340,7 @@ namespace CmlTechniques
                 tr3.Visible = false; tr4.Visible = false; tr0.Visible = false;
 
             }
-            else if ((string)Session["sch"] == "11" ||(lblprj.Text == "11784" && (string)Session["sch"] == "34"))
+            else if ((string)Session["sch"] == "11" || (lblprj.Text == "11784" && (string)Session["sch"] == "34"))
             {
                 lblloc.Text = lbloc.Text;
                 lb4.Text = lbnum.Text;
@@ -2364,7 +2357,7 @@ namespace CmlTechniques
                 }
 
             }
-            else if ((string)Session["sch"] == "20" ||(lblprj.Text == "11784" && (string)Session["sch"] == "41"))
+            else if ((string)Session["sch"] == "20" || (lblprj.Text == "11784" && (string)Session["sch"] == "41"))
             {
                 if (lblprj.Text == "CCAD")
                 {
@@ -2450,7 +2443,7 @@ namespace CmlTechniques
                 //lb4.Text = lbnum.Text;
                 //lb1.Visible = false; uplb1.Visible = false; lb3.Visible = false; uplb3.Visible = false;
                 //tr0.Visible = false;
-              
+
                 //    lb2.Visible = false; uplb2.Visible = false;
 
                 //}
@@ -2468,7 +2461,7 @@ namespace CmlTechniques
             }
             else if ((string)Session["sch"] == "31")
             {
-              if (lblprj.Text == "14211")
+                if (lblprj.Text == "14211")
                 {
                     tr4.Visible = false; tr3.Visible = false;
                     lb1.Text = lbl1.Text;
@@ -2481,7 +2474,7 @@ namespace CmlTechniques
                 if (lblprj.Text == "14211")
                 {
                     lb4.Text = lbnum.Text;
-                    lb1.Visible = false; uplb1.Visible = false; 
+                    lb1.Visible = false; uplb1.Visible = false;
                     tr0.Visible = false;
 
                     lb2.Text = "CONNECTED TO";
@@ -2489,13 +2482,13 @@ namespace CmlTechniques
 
                 }
             }
-            
+
         }
         protected void mydetails_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             e.Row.Cells[13].Visible = false;
             e.Row.Cells[14].Visible = false;
-            
+
             //e.Row.Cells[0].Enabled = false;
             //if (e.Row.Cells[1].Text != "") return;
             //if (e.Row.Cells[0].Text != "")
@@ -2503,7 +2496,7 @@ namespace CmlTechniques
             e.Row.Cells[1].Text = (e.Row.DataItemIndex + 1).ToString();
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                
+
                 //e.Row.Cells[7].Attributes.Add("style", "word-break:break-all;word-wrap:break-word");
                 //e.Row.Cells[8].Attributes.Add("style", "word-break:break-all;word-wrap:break-word");
                 //e.Row.Cells[9].Attributes.Add("style", "word-break:break-all;word-wrap:break-word");
@@ -2516,16 +2509,16 @@ namespace CmlTechniques
             }
             //if (txtnoof.Visible == false)
             //    e.Row.Cells[11].Text = "";
-            if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || ((string)Session["sch"] == "44" && lblprj.Text!="11784") || (lblprj.Text == "11784" && (string)Session["sch"] == "28"))
+            if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || ((string)Session["sch"] == "44" && lblprj.Text != "11784") || (lblprj.Text == "11784" && (string)Session["sch"] == "28"))
             {
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                     e.Row.Cells[7].Visible = false;
                 else
                 {
                     e.Row.Cells[11].Visible = false; e.Row.Cells[7].Visible = false;
                 }
             }
-            else if ((string)Session["sch"] == "4" || ((string)Session["sch"] == "37" && lblprj.Text!="11784")|| (lblprj.Text == "11784" && (string)Session["sch"] == "27"))
+            else if ((string)Session["sch"] == "4" || ((string)Session["sch"] == "37" && lblprj.Text != "11784") || (lblprj.Text == "11784" && (string)Session["sch"] == "27"))
             {
                 if (lblprj.Text == "14211" && (string)Session["sch"] == "37")
                 {
@@ -2536,18 +2529,18 @@ namespace CmlTechniques
                     e.Row.Cells[11].Visible = false; e.Row.Cells[12].Visible = false; e.Row.Cells[7].Visible = false;
                 }
             }
-                else if ((string)Session["sch"] == "2" || (lblprj.Text == "11784" && (string)Session["sch"] == "25"))
+            else if ((string)Session["sch"] == "2" || (lblprj.Text == "11784" && (string)Session["sch"] == "25"))
             {
                 if (lblprj.Text == "CCAD" || lblprj.Text == "HMIM")
                     e.Row.Cells[7].Visible = false;
-                else 
+                else
                 {
                     e.Row.Cells[12].Visible = false; e.Row.Cells[7].Visible = false;
                 }
             }
             else if ((string)Session["sch"] == "121" || (string)Session["sch"] == "119" || (string)Session["sch"] == "118")
             {
-                if (lblprj.Text == "CCAD" )
+                if (lblprj.Text == "CCAD")
                     e.Row.Cells[7].Visible = false;
                 else
                 {
@@ -2556,7 +2549,7 @@ namespace CmlTechniques
             }
             else if ((string)Session["sch"] == "3" || (string)Session["sch"] == "120" || (lblprj.Text == "11784" && (string)Session["sch"] == "26"))
             {
-                if (lblprj.Text != "CCAD" )
+                if (lblprj.Text != "CCAD")
                     e.Row.Cells[12].Visible = false;
                 e.Row.Cells[7].Visible = false;
             }
@@ -2566,10 +2559,10 @@ namespace CmlTechniques
             }
             else if ((string)Session["sch"] == "7" || (lblprj.Text == "11784" && (string)Session["sch"] == "30"))
             {
-                if (lblprj.Text != "CCAD" )
+                if (lblprj.Text != "CCAD")
                 {
-                    if(lblprj.Text!="ASAO")
-                        e.Row.Cells[11].Visible = false; 
+                    if (lblprj.Text != "ASAO")
+                        e.Row.Cells[11].Visible = false;
                     e.Row.Cells[10].Visible = false; e.Row.Cells[9].Visible = false;
                 }
                 e.Row.Cells[7].Visible = false;
@@ -2586,8 +2579,8 @@ namespace CmlTechniques
             }
             else if ((string)Session["sch"] == "41" && lblprj.Text == "123")
             {
-               e.Row.Cells[12].Visible = false;
-              e.Row.Cells[10].Visible = false; e.Row.Cells[11].Visible = false;
+                e.Row.Cells[12].Visible = false;
+                e.Row.Cells[10].Visible = false; e.Row.Cells[11].Visible = false;
             }
             else if ((string)Session["sch"] == "24" || (lblprj.Text == "11784" && (string)Session["sch"] == "45") || (lblprj.Text == "MOE" && (string)Session["sch"] == "32"))
             {
@@ -2697,11 +2690,11 @@ namespace CmlTechniques
                 }
                 e.Row.Cells[10].Visible = false; e.Row.Cells[11].Visible = false;
             }
-            else if (((string)Session["sch"] == "28" || (string)Session["sch"] == "34" || (string)Session["sch"] == "35" || (string)Session["sch"] == "36") && lblprj.Text!="11784")
+            else if (((string)Session["sch"] == "28" || (string)Session["sch"] == "34" || (string)Session["sch"] == "35" || (string)Session["sch"] == "36") && lblprj.Text != "11784")
             {
                 if (lblprj.Text == "CCAD")
                 { e.Row.Cells[11].Visible = false; e.Row.Cells[12].Visible = false; }
-                else if ((string)Session["sch"] == "28" && (lblprj.Text == "HMIM" || lblprj.Text=="HMHS"))
+                else if ((string)Session["sch"] == "28" && (lblprj.Text == "HMIM" || lblprj.Text == "HMHS"))
                 {
                     e.Row.Cells[7].Visible = false;
                     e.Row.Cells[10].Visible = false;
@@ -2762,7 +2755,7 @@ namespace CmlTechniques
                 }
             }
 
-            else if ((string)Session["sch"] == "20" ||(lblprj.Text == "11784" && (string)Session["sch"] == "41"))
+            else if ((string)Session["sch"] == "20" || (lblprj.Text == "11784" && (string)Session["sch"] == "41"))
             {
                 e.Row.Cells[7].Visible = false;
                 if (lblprj.Text == "CCAD")
@@ -2798,7 +2791,7 @@ namespace CmlTechniques
                 }
                 e.Row.Cells[10].Visible = false; e.Row.Cells[7].Visible = false; e.Row.Cells[11].Visible = false;
             }
-            else if ((string)Session["sch"] == "11" ||(lblprj.Text == "11784" && (string)Session["sch"] == "34"))
+            else if ((string)Session["sch"] == "11" || (lblprj.Text == "11784" && (string)Session["sch"] == "34"))
             {
                 e.Row.Cells[10].Visible = false; e.Row.Cells[7].Visible = false;
                 if (lblprj.Text == "CCAD")
@@ -2812,7 +2805,7 @@ namespace CmlTechniques
                 }
 
             }
-            else if ((string)Session["sch"] == "12" ||(lblprj.Text == "11784" && (string)Session["sch"] == "35"))
+            else if ((string)Session["sch"] == "12" || (lblprj.Text == "11784" && (string)Session["sch"] == "35"))
             {
                 e.Row.Cells[11].Visible = false; e.Row.Cells[7].Visible = false;
 
@@ -2840,7 +2833,7 @@ namespace CmlTechniques
                     e.Row.Cells[7].Visible = false; e.Row.Cells[11].Visible = false;
                 }
             }
-            else if ((string)Session["sch"] == "14" ||(lblprj.Text == "11784" && (string)Session["sch"] == "37"))
+            else if ((string)Session["sch"] == "14" || (lblprj.Text == "11784" && (string)Session["sch"] == "37"))
             {
                 if (lblprj.Text != "CCAD")
                 {
@@ -2901,7 +2894,7 @@ namespace CmlTechniques
             }
 
         }
-        private void Filtering(string _el1, string _el2, string _el3, string _el4,string _el5,string _el6)
+        private void Filtering(string _el1, string _el2, string _el3, string _el4, string _el5, string _el6)
         {
             if (_el1 == "") _el1 = "All";
             if (_el2 == "") _el2 = "All";
@@ -2926,11 +2919,11 @@ namespace CmlTechniques
             _dtresult.Columns.Add("Sys_name", typeof(string));
             _dtresult.Columns.Add("Sys_id", typeof(int));
             _dtresult.Columns.Add("Des", typeof(string));
-                   
 
-           var _filter = from o in _dtfilter.AsEnumerable()
-                      where (_el1 == "All" || o.Field<string>("B_Z") == _el1) && (_el2 == "All" || o.Field<string>("Cat") == _el2) && (_el3 == "All" || o.Field<string>("F_lvl") == _el3) && (_el4 == "All" || o.Field<string>("F_from") == _el4) && (_el5 == "All" || o.Field<string>("Loc") == _el5) && (_el6 == "All" || o.Field<string>("Des") == _el6)
-                      select o;
+
+            var _filter = from o in _dtfilter.AsEnumerable()
+                          where (_el1 == "All" || o.Field<string>("B_Z") == _el1) && (_el2 == "All" || o.Field<string>("Cat") == _el2) && (_el3 == "All" || o.Field<string>("F_lvl") == _el3) && (_el4 == "All" || o.Field<string>("F_from") == _el4) && (_el5 == "All" || o.Field<string>("Loc") == _el5) && (_el6 == "All" || o.Field<string>("Des") == _el6)
+                          select o;
 
             foreach (var row in _filter)
             {
@@ -2987,7 +2980,7 @@ namespace CmlTechniques
         }
         private void Get_Position()
         {
-           
+
             string Sys_Id = drpackage.SelectedItem.Value.Substring(0, drpackage.SelectedItem.Value.IndexOf("_C"));
             BLL_Dml _objbll = new BLL_Dml();
             _database _objdb = new _database();
@@ -3037,30 +3030,30 @@ namespace CmlTechniques
                 ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Select Floor Level');", true);
                 return;
             }
-            if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || (string)Session["sch"] == "7" || ((string)Session["sch"] == "39" && lblprj.Text == "14211") || (string)Session["sch"] == "21" || (string)Session["sch"] == "13" || (string)Session["sch"] == "22" || (string)Session["sch"] == "12" || (string)Session["sch"] == "15" || (string)Session["sch"] == "14" || (lblprj.Text == "11784" && ((string)Session["sch"] == "28") || (string)Session["sch"] == "30" || (string)Session["sch"] == "36") || (string)Session["sch"] == "43" || (string)Session["sch"] == "35" || (string)Session["sch"] == "37" || (lblprj.Text == "11784" && ((string)Session["sch"] == "42" ||(string)Session["sch"] == "39" )))
-            {                
+            if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || (string)Session["sch"] == "7" || ((string)Session["sch"] == "39" && lblprj.Text == "14211") || (string)Session["sch"] == "21" || (string)Session["sch"] == "13" || (string)Session["sch"] == "22" || (string)Session["sch"] == "12" || (string)Session["sch"] == "15" || (string)Session["sch"] == "14" || (lblprj.Text == "11784" && ((string)Session["sch"] == "28") || (string)Session["sch"] == "30" || (string)Session["sch"] == "36") || (string)Session["sch"] == "43" || (string)Session["sch"] == "35" || (string)Session["sch"] == "37" || (lblprj.Text == "11784" && ((string)Session["sch"] == "42" || (string)Session["sch"] == "39")))
+            {
                 if (IsNumeric(txtnoof.Text) == false)
                 {
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Invalid ' + '"+ lbnum.Text +"');", true);
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Invalid ' + '" + lbnum.Text + "');", true);
                     return;
                 }
             }
             else if (lblsch.Text == "18")
+            {
+                if (IsNumeric(txtnoof.Text) == true)
                 {
-                    if (IsNumeric(txtnoof.Text) == true)
+                    if (IsGreaterThanZero(txtnoof.Text) == false)
                     {
-                        if (IsGreaterThanZero(txtnoof.Text) == false)
-                        {
-                            ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Value must be greater than zero.');", true);
-                            return;
-                        }
-                    } 
-                    if (IsNumeric(txtnoof.Text) == false)
-                    {
-                        ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Invalid ' + '" + lbnum.Text + "');", true);
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Value must be greater than zero.');", true);
                         return;
-                    }                
+                    }
                 }
+                if (IsNumeric(txtnoof.Text) == false)
+                {
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Invalid ' + '" + lbnum.Text + "');", true);
+                    return;
+                }
+            }
             else if ((string)Session["sch"] == "11" || (lblprj.Text == "11784" && (string)Session["sch"] == "34"))
             {
                 if (IsNumeric(txtnoof.Text) == false)
@@ -3205,13 +3198,13 @@ namespace CmlTechniques
         }
         private bool CheckContain(DropDownList _dlist, string _value)
         {
-            foreach(ListItem _lst in _dlist.Items)
+            foreach (ListItem _lst in _dlist.Items)
             {
                 if (string.Compare(_lst.Value, _value) == 0) return true;
             }
             return false;
         }
-        
+
         protected void btnupdate_Click(object sender, EventArgs e)
         {
             if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || (string)Session["sch"] == "7" || (string)Session["sch"] == "18" || (string)Session["sch"] == "21" || (string)Session["sch"] == "20" || (string)Session["sch"] == "13" || (string)Session["sch"] == "22" || (string)Session["sch"] == "11" || (string)Session["sch"] == "12" || (string)Session["sch"] == "15" || (string)Session["sch"] == "14" || (lblprj.Text == "11784" && (string)Session["sch"] == "28" || (string)Session["sch"] == "30") || (string)Session["sch"] == "41" || (string)Session["sch"] == "36" || (string)Session["sch"] == "43" || (string)Session["sch"] == "34" || (string)Session["sch"] == "35" || (string)Session["sch"] == "37" || (lblprj.Text == "11784" && ((string)Session["sch"] == "42" || (string)Session["sch"] == "39")))
@@ -3222,9 +3215,9 @@ namespace CmlTechniques
                     return;
                 }
             }
-            if ((string)Session["sch"] == "20" ||(lblprj.Text == "11784" && (string)Session["sch"] == "41"))
+            if ((string)Session["sch"] == "20" || (lblprj.Text == "11784" && (string)Session["sch"] == "41"))
             {
-                if (lblprj.Text != "CCAD" )
+                if (lblprj.Text != "CCAD")
                 {
                     if (IsNumeric(uplb1.Text) == false)
                     {
@@ -3244,11 +3237,11 @@ namespace CmlTechniques
                     return;
                 }
             }
-            else if ((string)Session["sch"] == "11" ||(lblprj.Text == "11784" && (string)Session["sch"] == "34"))
+            else if ((string)Session["sch"] == "11" || (lblprj.Text == "11784" && (string)Session["sch"] == "34"))
             {
                 if (IsNumeric(uplb2.Text) == false)
                 {
-                    if (lblprj.Text != "CCAD" )
+                    if (lblprj.Text != "CCAD")
                     {
                         ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Invalid ' + '" + lb2.Text + "');", true);
                         return;
@@ -3273,12 +3266,12 @@ namespace CmlTechniques
         }
         private void Edit_Inidata()
         {
-            if ((string)Session["sch"] == "21" || (string)Session["sch"] == "9" || (string)Session["sch"] == "17" || (string)Session["sch"] == "18" || (string)Session["sch"] == "24" || ((string)Session["sch"] == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && ((string)Session["sch"] == "32" || (string)Session["sch"] == "42" || (string)Session["sch"] == "38" || (string)Session["sch"] == "39") || (string)Session["sch"]=="45"))
+            if ((string)Session["sch"] == "21" || (string)Session["sch"] == "9" || (string)Session["sch"] == "17" || (string)Session["sch"] == "18" || (string)Session["sch"] == "24" || ((string)Session["sch"] == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && ((string)Session["sch"] == "32" || (string)Session["sch"] == "42" || (string)Session["sch"] == "38" || (string)Session["sch"] == "39") || (string)Session["sch"] == "45"))
             {
                 uplb2.Text = updescr.Text;
             }
-            if((string)Session["sch"]=="8")
-                if(lblprj.Text!="CCAD")
+            if ((string)Session["sch"] == "8")
+                if (lblprj.Text != "CCAD")
                     uplb2.Text = updescr.Text;
             BLL_Dml _objbll = new BLL_Dml();
             _database _objdb = new _database();
@@ -3302,7 +3295,7 @@ namespace CmlTechniques
             _objcas.dev1 = uplb4.Text;
             _objcas.dev2 = uplb2.Text;
             _objcas.dev3 = "0";
-            if ((string)Session["sch"] == "20" ||(lblprj.Text == "11784" && (string)Session["sch"] == "41"))
+            if ((string)Session["sch"] == "20" || (lblprj.Text == "11784" && (string)Session["sch"] == "41"))
             {
                 _objcas.dev2 = uplb2.Text;
                 _objcas.dev3 = uplb1.Text;
@@ -3358,12 +3351,12 @@ namespace CmlTechniques
         protected void add_initial_data()
         {
             //if (IsNullvalidation() == true) return;
-            if ((string)Session["sch"] == "21" || (string)Session["sch"] == "9" || (string)Session["sch"] == "17" || (string)Session["sch"] == "18" || (string)Session["sch"] == "24" || ((string)Session["sch"] == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && ((string)Session["sch"] == "32") || (string)Session["sch"] == "42" || (string)Session["sch"] == "38"||  (string)Session["sch"] == "39") || (string)Session["sch"]=="45")
+            if ((string)Session["sch"] == "21" || (string)Session["sch"] == "9" || (string)Session["sch"] == "17" || (string)Session["sch"] == "18" || (string)Session["sch"] == "24" || ((string)Session["sch"] == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && ((string)Session["sch"] == "32") || (string)Session["sch"] == "42" || (string)Session["sch"] == "38" || (string)Session["sch"] == "39") || (string)Session["sch"] == "45")
             {
                 txtdesc.Text = txtdes.Text;
             }
             if ((string)Session["sch"] == "8" || (lblprj.Text == "11784" && (string)Session["sch"] == "31"))
-                if (lblprj.Text != "CCAD" )
+                if (lblprj.Text != "CCAD")
                     txtdesc.Text = txtdes.Text;
             string _sys = drpackage.SelectedItem.Value.Substring(0, drpackage.SelectedItem.Value.IndexOf("_C"));
             BLL_Dml _objbll = new BLL_Dml();
@@ -3396,7 +3389,7 @@ namespace CmlTechniques
             //    _objcas.dev3 = "0";
             _objcas.dev2 = txtdesc.Text;
             _objcas.dev3 = txtpprovideto.Text;
-            if ((string)Session["sch"] == "20" ||(lblprj.Text == "11784" && (string)Session["sch"] == "41"))
+            if ((string)Session["sch"] == "20" || (lblprj.Text == "11784" && (string)Session["sch"] == "41"))
             {
                 _objcas.dev2 = txtdesc.Text;
                 _objcas.dev3 = txtpprovideto.Text;
@@ -3416,8 +3409,8 @@ namespace CmlTechniques
             Get_Position();
             Get_SeqNo();
 
-         
-            
+
+
         }
         static bool IsNumeric(object Expression)
         {
@@ -3453,7 +3446,7 @@ namespace CmlTechniques
                 return true;
             }
             return false;
-            
+
         }
         protected void drloc_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -3547,7 +3540,7 @@ namespace CmlTechniques
                         Session["idx"] = j.ToString();
                     }
                 }
-                
+
             }
             if (count == 0) ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Select Row');", true);
             else if (count > 1)
@@ -3620,7 +3613,7 @@ namespace CmlTechniques
             CheckBox checkbox = (CheckBox)sender;
             GridViewRow row = (GridViewRow)checkbox.NamingContainer;
             GridView _details = (GridView)row.FindControl("mydetails");
-            
+
             if (checkbox.Checked == true)
             {
                 for (int j = 0; j <= _details.Rows.Count - 1; j++)
@@ -3715,20 +3708,20 @@ namespace CmlTechniques
         protected void btnimport_Click(object sender, EventArgs e)
         {
 
-             string _url="";
-             if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS")
-             {
-                 _url = "CMS/Import.aspx?id=" + (string)Session["sch"] + "&prj=" + lblprj.Text + "&sec=" + lbldiv.Text;
-             }
-             else
-             {
-                 if ((string)Session["sch"] == "112")
-                     _url = "CMS/Import.aspx?id=" + lblsch.Text + "&prj=" + lblprj.Text + "&sec=0";
-                 else
-                     _url = "CMS/Import.aspx?id=" + (string)Session["sch"] + "&prj=" + lblprj.Text + "&sec=0";
-             }
-            
-            ScriptManager.RegisterStartupScript(this, typeof(string), "Message", "window.open('"+ _url +"','','left=300,top=200,width=500,height=400,menubar=0,toolbar=0,scrollbars=1,status=0,resizable=0');", true);
+            string _url = "";
+            if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS")
+            {
+                _url = "CMS/Import.aspx?id=" + (string)Session["sch"] + "&prj=" + lblprj.Text + "&sec=" + lbldiv.Text;
+            }
+            else
+            {
+                if ((string)Session["sch"] == "112")
+                    _url = "CMS/Import.aspx?id=" + lblsch.Text + "&prj=" + lblprj.Text + "&sec=0";
+                else
+                    _url = "CMS/Import.aspx?id=" + (string)Session["sch"] + "&prj=" + lblprj.Text + "&sec=0";
+            }
+
+            ScriptManager.RegisterStartupScript(this, typeof(string), "Message", "window.open('" + _url + "','','left=300,top=200,width=500,height=400,menubar=0,toolbar=0,scrollbars=1,status=0,resizable=0');", true);
         }
         protected void btnrefresh_Click(object sender, ImageClickEventArgs e)
         {
