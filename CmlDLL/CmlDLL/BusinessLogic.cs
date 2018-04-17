@@ -277,6 +277,10 @@ namespace BusinessLogic
         {
             return _objDLL.Load_cas_sys("load_cms_cas_sys", _obj,_objdb);
         }
+        public string LoadCASHeader(_clscassheet _obj, _database _objdb)
+        {
+            return _objDLL.LoadCASHeader("LoadCASHeader", _obj, _objdb);
+        }
         public DataTable Load_cas_building(_database _objdb)
         {
             return _objDLL.load_master("Load_Buildingzones", _objdb);

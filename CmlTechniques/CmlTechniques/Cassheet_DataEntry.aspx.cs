@@ -33,7 +33,7 @@ namespace CmlTechniques
                 string _prm = Request.QueryString[0].ToString();
                 //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + _prm + "');", true);
                 lblprj.Text = _prm.Substring(0, _prm.IndexOf("_S"));
-                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s" || lblprj.Text == "AFV")
+                if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s")
                 {
                     Session["sch"] = _prm.Substring(_prm.IndexOf("_S") + 2, _prm.IndexOf("_D") - (_prm.IndexOf("_S") + 2));
                     lbldiv.Text = _prm.Substring(_prm.IndexOf("_D") + 2);
@@ -78,8 +78,6 @@ namespace CmlTechniques
                 if (lblprj.Text != "123")
                     btnaddm.Visible = false;
                 _exp = false;
-
-                if (lblprj.Text == "AFV") Set_Title();
             }
         }
         protected void load_cas_sys()
@@ -117,19 +115,6 @@ namespace CmlTechniques
             drpackage.DataValueField = "_id";
             drpackage.DataBind();
             drpackage.Items.Insert(0, "--Package--");
-        }
-        private void Set_Title()
-        {
-            string _buildingName = "";
-            BLL_Dml _objbll = new BLL_Dml();
-            _database _objdb = new _database();
-            _clscassheet _objcls = new _clscassheet();
-            _objdb.DBName = "DB_" + lblprj.Text;
-            _objcls.sch = Convert.ToInt32(lbldiv.Text);
-            _buildingName = _objbll.Get_Building_Name(_objcls, _objdb);
-
-            lblhead.Text = _buildingName + " - " + lblhead.Text;
-
         }
         protected void settings()
         {
@@ -1648,6 +1633,46 @@ namespace CmlTechniques
                 td_2.Visible = false;
             }
 
+
+            ////Added to get the CAS header for Fountain View Project
+            //if (lblprj.Text == "AFV")
+            //{
+            //    BLL_Dml _objbll = new BLL_Dml();
+            //    _database _objdb = new _database();
+            //    _objdb.DBName = "DB_" + lblprj.Text;
+            //    _clscassheet _objcls = new _clscassheet();
+            //    _objcls.sch = Convert.ToInt32((string)Session["sch"]);
+            //    lblhead.Text = _objbll.LoadCASHeader(_objcls, _objdb);
+
+            //    if (lblhead.Text.Contains("MISC2") || lblhead.Text.Contains("MISC3") || lblhead.Text.Contains("MISC4") || lblhead.Text.Contains("MISC5") || lblhead.Text.Contains("MISC6"))
+            //    {
+
+            //        td_0.Visible = false; td_lbl0.Visible = true;
+            //        td_txtnum.Visible = false; td_lbnum.Visible = false; txtnoof.Visible = false;
+            //        td_lbl2.Visible = false; td_txtdes.Visible = false; td_txtppt.Visible = false;
+            //        td_3.Visible = false; td_2.Visible = false;
+            //        td_lbl1.Visible = false;
+            //        td_txtloc.Visible = true;
+            //        td_lbldes.Visible = true; td_txtdescr.Visible = true; tddes.Visible = true;
+
+            //        lbl1.Text = "";
+
+            //        if (lblhead.Text.Contains("MISC2") || lblhead.Text.Contains("MISC3") || lblhead.Text.Contains("MISC5"))
+            //        {
+            //            td_1.Visible = true;
+            //            td_txtfed.Visible = true; td_lbl3.Visible = true;
+            //            lbl3.Text = "FED FROM";
+            //        }
+            //        else
+            //        {
+            //            td_1.Visible = false;
+            //            td_txtfed.Visible = false; td_lbl3.Visible = false;
+            //            lbl3.Text = "";
+            //            lbdes.Text = "ROOM NO.";
+            //        }
+            //    }
+            //}
+
         }
         void _ReadCookies()
         {
@@ -1690,6 +1715,26 @@ namespace CmlTechniques
         }
         private void Load_Master()
         {
+            //if (lblprj.Text == "ASAO")
+            //{
+            //    var _dv = (DataView)Class1._OBJ_DATA_CAS1.Select();
+            //    DataTable _dtemp = _dv.ToTable();
+            //    IEnumerable<DataRow> _result = from _data in _dtemp.AsEnumerable()
+            //                                   where _data.Field<int>("Cas_Schedule") == Convert.ToInt32(lblsch.Text)
+            //                                   select _data;
+            //    if (_result.Any())
+            //    {
+            //        _dtMaster = _result.CopyToDataTable<DataRow>();
+            //        _dtresult = _dtMaster;
+            //    }
+            //    else
+            //    {
+            //        _dtMaster = null;
+            //        _dtresult = null;
+            //    }
+            //}
+            //else
+            //{
                 _dtMaster = new DataTable();
                 BLL_Dml _objbll = new BLL_Dml();
                 _database _objdb = new _database();
@@ -1697,7 +1742,7 @@ namespace CmlTechniques
                 _clscassheet _objcas = new _clscassheet();
                 _objcas.sch = Convert.ToInt32(lblsch.Text);
                 _objcas.prj_code = lblprj.Text;
-                if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS" || lblprj.Text == "AFV")
+                if (lblprj.Text == "HMIM" || lblprj.Text == "14211" || lblprj.Text == "HMHS")
                     _objcas.sys = Convert.ToInt32(lbldiv.Text);
                 else
                     _objcas.sys = 0;

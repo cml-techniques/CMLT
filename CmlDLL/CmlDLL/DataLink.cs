@@ -17,7 +17,7 @@ namespace DataLinkLibrary
         {
             _database _objdb = new _database();
 
-            string _query = "server=" + Constants.CMLTConstants.serverName + ";uid=" + Constants.CMLTConstants.dbUserName + ";pwd=" + Constants.CMLTConstants.dbPassword + ";database=" + DB + ";Connection Timeout=600;Pooling=true;Min Pool Size=0;Max Pool Size=500;";
+            string _query = "server=" + Constants.CMLTConstants.serverName + ";uid=" + Constants.CMLTConstants.dbUserName + ";pwd=" + Constants.CMLTConstants.dbPassword + ";database=" + DB + ";Connection Timeout=360000;Pooling=true;Min Pool Size=0;Max Pool Size=500;";
           
 
             Sqlcon = new SqlConnection(_query);
@@ -607,6 +607,24 @@ namespace DataLinkLibrary
             DataTable _dtable = new DataTable();
             _dta.Fill(_dtable);
             return _dtable;
+        }
+        public string LoadCASHeader(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@sch", _obj.sch);
+            _dta = new SqlDataAdapter(_cmd);
+            _cmd.Parameters.Add("@cas_name", SqlDbType.VarChar, 200);
+            _cmd.Parameters["@cas_name"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                    return _cmd.Parameters["@cas_name"].Value.ToString();
+            }
+            catch
+            {
+                throw;
+            }
         }
         public void add_cas_main(string _sp, _clscassheet _obj, _database _objdb)
         {
