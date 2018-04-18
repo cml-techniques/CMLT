@@ -5951,7 +5951,7 @@
             </div>
         </div>
     </asp:Panel>
-    <asp:Panel ID="pnlPopup16" runat="server" Width="900px" Height="265px" Style="padding: 15px;
+    <asp:Panel ID="pnlPopup16" runat="server" Width="900px" Style="padding: 15px;
         display: none" BackColor="White">
         <div>
             <asp:UpdatePanel ID="UpdatePanel23" runat="server">

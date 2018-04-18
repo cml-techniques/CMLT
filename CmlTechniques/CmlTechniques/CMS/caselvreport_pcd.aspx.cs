@@ -46,6 +46,23 @@ namespace CmlTechniques.CMS
                 drfed.Style.Add("display", "none");
                 btnzero.Style.Add("display", "none");
                 //Load_Summary();
+                SetTitle();
+            }
+        }
+        private void SetTitle()
+        {
+            if (lblprj.Text == "AFV")
+            {
+                BLL_Dml _objbll = new BLL_Dml();
+                _database _objdb = new _database();
+                _objdb.DBName = "DB_" + lblprj.Text;
+                _clscassheet _objcls = new _clscassheet();
+                _objcls.sch = 0;
+                if (Request.QueryString["sch"] != null)
+                {
+                    _objcls.sch = Convert.ToInt32(Request.QueryString["sch"]);
+                }                
+                lbltitle.Text = _objbll.LoadCASHeader(_objcls, _objdb);
             }
         }
         private void Load_TestNames()
@@ -137,6 +154,10 @@ namespace CmlTechniques.CMS
             _objdb.DBName = "DB_" + lblprj.Text;
             _clscassheet _objcas = new _clscassheet();
             _objcas.sch = 16;
+            if (lblprj.Text == "AFV" && Request.QueryString["div"] != null)
+            {
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"]);
+            }
             _objcas.prj_code = lblprj.Text;
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
             _dtresult = _dtMaster;

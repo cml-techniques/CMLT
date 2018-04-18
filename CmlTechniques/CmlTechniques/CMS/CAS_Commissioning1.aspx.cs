@@ -342,7 +342,16 @@ namespace CmlTechniques.CMS
                 td0.Visible = false;
 
             }
-        }
+            if (lblprj.Text == "AFV")
+            {
+                BLL_Dml _objbll = new BLL_Dml();
+                _database _objdb = new _database();
+                _objdb.DBName = "DB_" + lblprj.Text;
+                _clscassheet _objcls = new _clscassheet();
+                _objcls.sch = Convert.ToInt32((string)Session["sch"]);
+                lblhead.Text = _objbll.LoadCASHeader(_objcls, _objdb);
+            }
+            }
         void _ReadCookies()
         {
             if (Request.Browser.Cookies)

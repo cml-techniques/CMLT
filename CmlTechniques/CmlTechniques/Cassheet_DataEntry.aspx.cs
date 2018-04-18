@@ -1086,9 +1086,18 @@ namespace CmlTechniques
                     }
                     else
                         lblhead.Text = "CAS ELV9 - ELV System Commissioning Activity Schedule";
+
                     lbnum.Text = "NO.OF DEVICES REQ'D CALIBRATION";
                     lbl1.Text = "SYSTEM CONTROLLED/ MONITORED";
                     lbl2.Text = "NO.OF POINTS";
+
+                    if (lblprj.Text == "AFV")
+                    {
+                        lbnum.Text = "";
+                        lbl1.Text = "Connected Devices / Equipment";
+                        lbl2.Text = "NO.OF  Equipment / Devices";
+                        td_lbnum.Visible = false; td_txtnum.Visible = false;td_3.Visible = false;
+                    }
                 }
                 td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
             }
@@ -2846,6 +2855,10 @@ namespace CmlTechniques
             {
                 if (lblprj.Text == "CCAD")
                     e.Row.Cells[11].Visible = false;
+                else if (lblprj.Text == "AFV")
+                {
+                    e.Row.Cells[12].Visible = false;
+                }
                 e.Row.Cells[7].Visible = false;
             }
             else if ((string)Session["sch"] == "26")

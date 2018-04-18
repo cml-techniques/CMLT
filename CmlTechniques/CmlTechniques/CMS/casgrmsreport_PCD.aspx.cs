@@ -152,6 +152,10 @@ namespace CmlTechniques.CMS
             _clscassheet _objcas = new _clscassheet();
             _objcas.sch = 15;
             _objcas.prj_code = lblprj.Text;
+            if (Request.QueryString["div"] != null)
+            {
+                _objcas.sys = Convert.ToInt32(Request.QueryString["div"]);
+            }
             _dtMaster = _objbll.Load_casMain_Edit(_objcas, _objdb);
             _dtresult = _dtMaster;
             _dtfilter = _dtresult;
