@@ -1089,6 +1089,7 @@ namespace CmlTechniques.CMS
                 lblzero.Text = _prm.Substring(_prm.IndexOf("_Z") + 2);
                 lblprj.Text = _prj;
                 lblsch.Text = _sch;
+                isPcdProject = (Array.IndexOf(Constants.CMLTConstants.PcdProjects, lblprj.Text) > -1) ? true : false;
                 Generate_Reports(_sch);
 
                 //Insert_ReportData();
