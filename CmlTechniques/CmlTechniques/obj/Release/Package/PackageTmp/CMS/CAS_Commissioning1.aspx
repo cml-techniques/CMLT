@@ -6657,7 +6657,7 @@
         PopupControlID="pnlPopup25a" BackgroundCssClass="modal">
     </asp:ModalPopupExtender>
 
- <asp:Panel ID="pnlPopup16a" runat="server" Width="835px" Height="240px" Style="padding: 15px;
+ <asp:Panel ID="pnlPopup16a" runat="server" Width="835px" Style="padding: 15px;
         display: table" BackColor="White">
         <div>
             <asp:UpdatePanel ID="UpdatePanel32" runat="server">

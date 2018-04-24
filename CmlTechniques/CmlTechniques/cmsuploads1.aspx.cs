@@ -37,9 +37,13 @@ namespace CmlTechniques.CMS
                     if (_path.Contains("Method Statement"))
                     {
                         lblmod.Text = _path.Substring(0, _path.IndexOf(" >"));
-                        lbldiv.Text = Request.QueryString[1].ToString();
+                        if (Request.QueryString["Div"] != null)
+                        {
+                            lbldiv.Text = Request.QueryString[1].ToString();
+                            Session["Fold_cms"] = lbldiv.Text;
+                        }
                         Session["mod_name"] = lblmod.Text;
-                        Session["Fold_cms"] = lbldiv.Text;
+
                     }
                     else if (_path == "Commissioning Plan" || _path == "Commissioning Reports" || _path == "Commissioning Report")
                     {
@@ -213,7 +217,13 @@ namespace CmlTechniques.CMS
                 if ((string)Session["mod_name"] == "Commissioning Plan" || (string)Session["mod_name"] == "Commissioning Report" || (string)Session["mod_name"] == "Commissioning Reports")
                     Response.Redirect("CMS/cmsdoclist.aspx?" + Request.QueryString.ToString());
                 else if ((string)Session["mod_name"] == "Method Statement")
-                    Response.Redirect("CMS/methodstatements1.aspx?" + Request.QueryString.ToString());
+                {
+                    if (Request.QueryString["Div"] != null)
+                    {
+                        Response.Redirect("CMS/methodstatements1.aspx?" + Request.QueryString.ToString());
+                    }
+                    else Response.Redirect("CMS/methodstatements.aspx?" + Request.QueryString.ToString());
+                }
                 else if ((string)Session["mod_name"] == "Minutes")
                     Response.Redirect("cmsminutes.aspx?" + Request.QueryString.ToString());
                 else if ((string)Session["mod_name"] == "Programmes")

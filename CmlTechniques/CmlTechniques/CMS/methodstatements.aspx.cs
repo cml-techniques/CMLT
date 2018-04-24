@@ -43,11 +43,27 @@ namespace CmlTechniques.CMS
                 Load_doc();
                 Load_doc_pre();
 
+                Permission();
+
                 //if ((string)Session["group"] != "ADMIN GROUP" && (string)Session["group"] != "SYS.ADMIN GROUP")
                 //{
                 //    tdDelete.Visible = false;
                 //    tdgrid1.Visible = false;
                 //}
+            }
+        }
+        private void Permission()
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clsuser _objcls = new _clsuser();
+            _objdb.DBName = "dbCML";
+            _objcls.uid = (string)Session["uid"];
+            _objcls.project_code = lblprj.Text;
+            string _access = _objbll.Get_User_cmsAccess(_objcls, _objdb);
+            if (_access != "Admin")
+            {
+                btnuploadnew.Enabled = false;
             }
         }
         void _Create_Cookies()
@@ -310,6 +326,11 @@ namespace CmlTechniques.CMS
                 if (_cmnt.Text.Length == 1)
                     _cmnt.Text = "0" + _cmnt.Text;
             }
+        }
+
+        protected void btnuploadnew_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, typeof(string), "close", "parent.callcms('" + Request.QueryString.ToString() + "'," + 39 + ");", true);
         }
     }
 }
