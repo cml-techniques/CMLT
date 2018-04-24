@@ -372,7 +372,13 @@ namespace CmlTechniques.CMS
 
             btnDummy_ModalPopupExtender2.Hide();
             if ((string)Session["mod_name"] == "Method Statement")
-                Response.Redirect("CMS/methodstatements1.aspx?" + Request.QueryString.ToString());
+            {
+                if (Request.QueryString["Div"] != null)
+                {
+                    Response.Redirect("CMS/methodstatements1.aspx?" + Request.QueryString.ToString());
+                }
+                else Response.Redirect("CMS/methodstatements.aspx?" + Request.QueryString.ToString());
+            }
             else if ((string)Session["mod_name"] == "Commissioning Plan" || (string)Session["mod_name"] == "Commissioning Report" || (string)Session["mod_name"] == "Commissioning Reports")
                 Response.Redirect("CMS/cmsdoclist.aspx?" + Request.QueryString.ToString());
             else if ((string)Session["mod_name"] == "Minutes")
@@ -391,7 +397,13 @@ namespace CmlTechniques.CMS
         {
             btnDummy_ModalPopupExtender2.Hide();
             if ((string)Session["mod_name"] == "Method Statement")
-                Response.Redirect("CMS/methodstatements1.aspx?" + Request.QueryString.ToString());
+            {
+                if (Request.QueryString["Div"] != null)
+                {
+                    Response.Redirect("CMS/methodstatements1.aspx?" + Request.QueryString.ToString());
+                }
+                else Response.Redirect("CMS/methodstatements.aspx?" + Request.QueryString.ToString());
+        }
             else if ((string)Session["mod_name"] == "Commissioning Plan" || (string)Session["mod_name"] == "Commissioning Report" || (string)Session["mod_name"] == "Commissioning Reports")
                 Response.Redirect("CMS/cmsdoclist.aspx?" + Request.QueryString.ToString());
             else if ((string)Session["mod_name"] == "Minutes")
