@@ -6599,7 +6599,7 @@ namespace CmlTechniques.CMS
                               select _data;
                 BLL_Dml _objbll = new BLL_Dml();
                 _database _objdb = new _database();
-                _objdb.DBName = "DB_14211";
+                _objdb.DBName = "DB_" + lblprj.Text;
                 _clscassheet _objcas = new _clscassheet();
                 _objcas.sch = 10;
                 DataTable _dtnames = _objbll.Load_CasTestNames(_objcas, _objdb);
@@ -6619,7 +6619,7 @@ namespace CmlTechniques.CMS
                     {
 
                         _result = from _data in _dtresult.AsEnumerable()
-                                  where _data.Field<string>("Cat") == "FAL" || _data.Field<string>("Cat") == "FARP" || _data.Field<string>("Cat") == "VAC" || _data.Field<string>("Cat") == "CKT" || _data.Field<string>("Cat") == "MIC" || _data.Field<string>("Cat") == "FTU"
+                                  where _data.Field<string>("Cat") == "FAL" || _data.Field<string>("Cat") == "FARP" || _data.Field<string>("Cat") == "VAC" || _data.Field<string>("Cat") == "CKT" || _data.Field<string>("Cat") == "MIC" || _data.Field<string>("Cat") == "FTU" 
                                   select _data;
                         foreach (var _row in _result)
                         {
@@ -6632,7 +6632,7 @@ namespace CmlTechniques.CMS
                     else if (row[0].ToString() == "Device/Address Test")
                     {
                         _result = from _data in _dtresult.AsEnumerable()
-                                  where _data.Field<string>("Cat") == "FAL" || _data.Field<string>("Cat") == "MIC" || _data.Field<string>("Cat") == "FARP"
+                                  where _data.Field<string>("Cat") == "FAL" || _data.Field<string>("Cat") == "MIC" || _data.Field<string>("Cat") == "FARP" || _data.Field<string>("Cat") == "CKT"
                                   select _data;
                         foreach (var _row in _result)
                         {

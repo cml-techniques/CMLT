@@ -1609,7 +1609,7 @@ namespace CmlTechniques.CMS
                     else if (row[0].ToString() == "Device/Address Test")
                     {
                         _result = from _data in _dtresult.AsEnumerable()
-                                  where _data.Field<string>("Cat") == "FAL" || _data.Field<string>("Cat") == "MIC" || _data.Field<string>("Cat") == "FARP"
+                                  where _data.Field<string>("Cat") == "FAL" || _data.Field<string>("Cat") == "MIC" || _data.Field<string>("Cat") == "FARP" || _data.Field<string>("Cat") == "CKT"
                                   select _data;
                         foreach (var _row in _result)
                         {
