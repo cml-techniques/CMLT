@@ -442,7 +442,7 @@ namespace CmlTechniques.CMS
                 case "7": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD") Summary7_1(); else if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1") { Summary_7_1(); } else Summary7(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "demo" || lblprj.Text == "11784") Building_Summary(7); else Building7(); } break; }
                 case "8": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD") Summary8_1(); else Summary8(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "demo" || lblprj.Text == "11784") Building_Summary(8); else Building8(); } break; }
                 case "9": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD") Summary9_1(); else Summary9(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "demo" || lblprj.Text == "11784") Building_Summary(9); else Building9(); } break; }
-                case "10": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary10_1_1(); else if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1") Summary10_2(); else if (lblprj.Text == "11736")Summary10_11736(); else if (lblprj.Text == "14211")Summary10_14211(); else if (lblprj.Text == "HMIM")Summary10_HMIM(); else Summary10(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "14211" || lblprj.Text == "demo" || lblprj.Text == "BCC1" || lblprj.Text == "11784") Building_Summary(10); else Building10(); } break; }
+                case "10": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD") Summary10_1_1(); else if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1") Summary10_2(); else if (lblprj.Text == "11736") Summary10_11736(); else if (lblprj.Text == "14211") Summary10_14211(); else if (lblprj.Text == "HMIM") Summary10_HMIM(); else if (lblprj.Text == "SRH") Summary10_SRH(); else Summary10(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "14211" || lblprj.Text == "demo" || lblprj.Text == "BCC1" || lblprj.Text == "11784") Building_Summary(10); else Building10(); } break; }
                 case "11": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary20_1(); else if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1") Summary11_1(); else Summary11(); } else if (drtype.SelectedItem.Value == "2")if (lblprj.Text == "14211" || lblprj.Text == "demo" || lblprj.Text == "11784") Building_Summary(11); else Building11(); break; }
                 case "12": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary12_1(); else if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")Summary12_2(); else if (lblprj.Text == "MOE")Summary12_moe(); else if (lblprj.Text == "14211")Summary12_14211(); else Summary12_OPH(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "MOE" || lblprj.Text == "demo" || lblprj.Text == "BCC1" || lblprj.Text == "11784") Building12_moe(); else Building12(); } break; }
                 case "13": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary20_1(); else if (lblprj.Text == "14211")Summary13_14211(); else Summary13(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "14211" || lblprj.Text == "11784") Building_Summary(13); else Building13(); } break; }
@@ -6565,6 +6565,193 @@ namespace CmlTechniques.CMS
                         _drow[1] = "0";
                         _drow[2] = "0";
                     }
+
+                    _drow[3] = "0";
+                    _drow[4] = decimal.Round(_weighting, 0).ToString();
+                    _drow[5] = _total.ToString();
+                    _drow[6] = row[0].ToString();
+                    if (Convert.ToDecimal(_drow[1].ToString()) > 0)
+                        _dtsummary.Rows.Add(_drow);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + ex.Message + "');", true);
+            }
+        }
+        private void Summary10_SRH()    
+        {
+            try
+            {
+                _dtsummary = new DataTable();
+                _dtsummary.Columns.Add("SYS_NAME", typeof(string));
+                _dtsummary.Columns.Add("QTY", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED1", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED2", typeof(string));
+                _dtsummary.Columns.Add("TOTAL", typeof(string));
+                _dtsummary.Columns.Add("CODE", typeof(string));
+                decimal _p1 = 0;
+                decimal _devices = 0;
+                decimal _total = 0;
+                //decimal _count = 0;
+                var _result = from _data in _dtresult.AsEnumerable()
+                              select _data;
+                BLL_Dml _objbll = new BLL_Dml();
+                _database _objdb = new _database();
+                _objdb.DBName = "DB_14211";
+                _clscassheet _objcas = new _clscassheet();
+                _objcas.sch = 10;
+                DataTable _dtnames = _objbll.Load_CasTestNames(_objcas, _objdb);
+                var TestNames = from _data in _dtnames.AsEnumerable()
+                                select _data;
+                foreach (var row in TestNames)
+                {
+                    _total = 0;
+                    DataRow _drow = _dtsummary.NewRow();
+                    _drow[0] = row[0].ToString();
+                    _devices = 0;
+                    _p1 = 0;
+                    int idx = 0;
+                    decimal _qty = 0;
+                    decimal _weighting = 0;
+                    if (row[0].ToString() == "Circuit IR Test")
+                    {
+
+                        _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<string>("Cat") == "FAL" || _data.Field<string>("Cat") == "FARP" || _data.Field<string>("Cat") == "VAC" || _data.Field<string>("Cat") == "CKT" || _data.Field<string>("Cat") == "MIC" || _data.Field<string>("Cat") == "FTU"
+                                  select _data;
+                        foreach (var _row in _result)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com1"].ToString());
+                            _devices += 1;
+                        }
+                        _drow[1] = Decimal.Round(_devices).ToString();
+                        _drow[2] = Decimal.Round(_p1).ToString();
+                    }
+                    else if (row[0].ToString() == "Device/Address Test")
+                    {
+                        _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<string>("Cat") == "FAL" || _data.Field<string>("Cat") == "MIC" || _data.Field<string>("Cat") == "FARP"
+                                  select _data;
+                        foreach (var _row in _result)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com2"].ToString());
+                            if (IsNumeric(_row["devices2"].ToString()) == true)
+                                _devices += Convert.ToInt32(_row["devices2"].ToString());
+                        }
+                        _drow[1] = Decimal.Round(_devices).ToString();
+                        _drow[2] = Decimal.Round(_p1).ToString();
+                    }
+                    else if (row[0].ToString() == "Sound Level Test")
+                    {
+                        _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<string>("Cat") == "VAC"
+                                  select _data;
+                        foreach (var _row in _result)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com4"].ToString());
+                            if (IsNumeric(_row["devices2"].ToString()) == true)
+                                _devices += Convert.ToInt32(_row["devices2"].ToString());
+                        }
+                        _drow[1] = Decimal.Round(_devices).ToString();
+                        _drow[2] = Decimal.Round(_p1).ToString();
+                    }
+                    else if (row[0].ToString() == "Interface Test")
+                    {
+                        _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<string>("Cat") == "FAL"
+                                  select _data;
+                        foreach (var _row in _result)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com3"].ToString());
+                            if (IsNumeric(_row["devices1"].ToString()) == true)
+                                _devices += Convert.ToInt32(_row["devices1"].ToString());
+                        }
+                        _drow[1] = Decimal.Round(_devices).ToString();
+                        _drow[2] = Decimal.Round(_p1).ToString();
+
+                    }
+                    else if (row[0].ToString() == "Fire Telephone Test")
+                    {
+                        _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<string>("Cat") == "FTU"
+                                  select _data;
+                        foreach (var _row in _result)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com2"].ToString());
+                            if (IsNumeric(_row["devices2"].ToString()) == true)
+                                _devices += Convert.ToInt32(_row["devices2"].ToString());
+                        }
+                        _drow[1] = Decimal.Round(_devices).ToString();
+                        _drow[2] = Decimal.Round(_p1).ToString();
+
+                    }
+                    else if (row[0].ToString() == "Battery Autonomy Test")
+                    {
+
+                        _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<string>("Cat") == "FACP" || _data.Field<string>("Cat") == "PAVA"
+                                  select _data;
+                        int _panel = 0;
+                        foreach (var _row in _result)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com5"].ToString());
+                            _panel += 1;
+                        }
+                        _drow[1] = Decimal.Round(_panel).ToString();
+                        _drow[2] = Decimal.Round(_p1).ToString();
+
+                    }
+                    else if (row[0].ToString() == "Graphic Test")
+                    {
+
+                        _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<string>("Cat") == "FACP" || _data.Field<string>("Cat") == "FARP" || _data.Field<string>("Cat") == "PAVA"
+                                  select _data;
+                        int _panel = 0;
+                        foreach (var _row in _result)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com6"].ToString());
+                            _panel += 1;
+
+                        }
+                        _drow[1] = Decimal.Round(_panel).ToString();
+                        _drow[2] = Decimal.Round(_p1).ToString();
+
+                    }
+                    else if (row[0].ToString() == "Cause Effect Test")
+                    {
+
+                        _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<string>("Cat") == "FACP" || _data.Field<string>("Cat") == "FARP" || _data.Field<string>("Cat") == "PAVA"
+                                  select _data;
+                        int _panel = 0;
+                        foreach (var _row in _result)
+                        {
+                            _p1 += Convert.ToDecimal(_row["per_com7"].ToString());
+                            _panel += 1;
+                        }
+                        _drow[1] = Decimal.Round(_panel).ToString();
+                        _drow[2] = Decimal.Round(_p1).ToString();
+
+                    }
+                    else
+                    {
+                        _drow[1] = "0";
+                        _drow[2] = "0";
+                    }
+
+                    if (_drow[1].ToString() != "0")
+                    {
+                        _total = ((Convert.ToDecimal(_drow[2].ToString()) / Convert.ToDecimal(_drow[1].ToString()) * 100));
+                    }
+                    else
+                        _total = 0;
+
+                    if (_total >= 99 && _total <= 100)
+                        _total = 99;
+                    else _total = decimal.Round(_total);
 
                     _drow[3] = "0";
                     _drow[4] = decimal.Round(_weighting, 0).ToString();
