@@ -20,6 +20,7 @@ namespace CmlTechniques.CMS
         public static DataTable _dtMaster;
         public static DataTable _dtfilter;
         public static DataTable _dtresult;
+        public bool isElvdateProject;   
         protected void Page_Load(object sender, EventArgs e)
         {
             _ReadCookies();
@@ -31,6 +32,9 @@ namespace CmlTechniques.CMS
                 lbluid.Text = (string)Session["uid"];
                 lblprj.Text = _prm.Substring(0, _prm.IndexOf("_S"));
                 tdiv.Visible = false; ddiv.Visible = false; odiv.Visible = false;
+
+                isElvdateProject = (Array.IndexOf(Constants.CMLTConstants.ElvDateProjects, lblprj.Text) > -1) ? true : false;
+
                 if (lblprj.Text == "11736" || lblprj.Text == "Traini" || lblprj.Text == "11736s" || lblprj.Text == "AFV")
                 {
                     lblsch.Text = _prm.Substring(_prm.IndexOf("_S") + 2, _prm.IndexOf("_D") - (_prm.IndexOf("_S") + 2));
@@ -46,8 +50,11 @@ namespace CmlTechniques.CMS
                 else
                 {
                     lblsch.Text = _prm.Substring(_prm.IndexOf("_S") + 2);
-                    CalendarExtender236.Enabled = false;
+                    //CalendarExtender236.Enabled = false;
                 }
+
+                if (!isElvdateProject) { CalendarExtender_10ccit.Enabled = false; }
+
                 settings();
                 Load_Master();
                 Session["filter"] = "no";
@@ -63,6 +70,7 @@ namespace CmlTechniques.CMS
 
                 // _exp = false;
             }
+            isElvdateProject = (Array.IndexOf(Constants.CMLTConstants.ElvDateProjects, lblprj.Text) > -1) ? true : false;
         }
         protected void settings()
         {
@@ -1972,10 +1980,9 @@ namespace CmlTechniques.CMS
             }
             else if (lblsch.Text == "10" || (lblprj.Text == "11784" && lblsch.Text == "33"))
             {
-                if (lblprj.Text == "14211")
+                if (isElvdateProject)
                 {
-                    if (DateValidation(_10ccit.Text) == true)
-                        _percentage = 1;
+                    if (DateValidation(_10ccit.Text) == true)_percentage = 1;
                 }
                 else
                 {

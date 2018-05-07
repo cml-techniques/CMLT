@@ -79,7 +79,9 @@
     <asp:Label ID="lblprj" runat="server" Text="" Style="display: none"></asp:Label>
     <div id="doc_list">
         <div class="title">
-            <asp:Label ID="phead" runat="server" Font-Bold="True" Font-Size="Small"></asp:Label>
+              <div style="float:left">   <asp:Label ID="phead" runat="server" Font-Bold="True" Font-Size="Small"></asp:Label></div>
+          <div style="float:right"><asp:Button ID="btnuploadnew" runat="server" Text="Upload New" OnClick="btnuploadnew_Click" /></div>
+           
         </div>
         <div class="info">
             <asp:Label ID="lbltitle" runat="server" Text="Latest Version of the Method Statement"></asp:Label>

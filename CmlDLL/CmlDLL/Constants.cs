@@ -21,6 +21,13 @@ namespace Constants
                 return new string[] {  "PCD", "ARSD", "AFV","AZCC"};
             }
         }
+        public static string[] ElvDateProjects      
+        {
+            get
+            {
+                return new string[] { "14221", "HMIM", "SRH"};
+            }
+        }
 
         //Project List for loading sodetails_new.aspx
         public static string[] hasBuilding
