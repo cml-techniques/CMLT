@@ -21,6 +21,8 @@ namespace CmlTechniques.CMS
             if (!IsPostBack)
             {
                 lblprj.Text = Request.QueryString["prj"].ToString();
+
+
                 Get_ProjectDetails();
             }
         }
@@ -34,14 +36,22 @@ namespace CmlTechniques.CMS
             _objcls.project_code = lblprj.Text;
             DataTable dt= _objbll.Get_ProjectInformation(_objcls, _objdb);
 
+            string _location = "";
+
             foreach(DataRow dr in dt.Rows)
             {
                 lblproject.Text = dr["prj_name"].ToString();
-                lblprojectprint.Text = dr["prj_name"].ToString();
+                //lblprojectprint.Text = dr["prj_name"].ToString();
+                _location= dr["Location"].ToString();
 
             }
+
+            //if ( string.IsNullOrEmpty(_location)) lblcmlhead.Text = "CML International LLC";
+            //else lblcmlhead.Text = "CML International (" + _location + ") LLC";
+
+
         }
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public static List<ChartDetails> GetChartData(string prj)
         {
             BLL_Dml _objbll = new BLL_Dml();
@@ -59,6 +69,7 @@ namespace CmlTechniques.CMS
             DataSet ds = _objbll.GetDashBoardSummary(_objcls, _objdb);
             List<ChartDetails> dataList = new List<ChartDetails>();
             int count = ds.Tables.Count;
+            HttpContext.Current.Session["GetChartData"] = ds.Tables[count - 1];
             foreach (DataRow dr in ds.Tables[count - 1].Rows)
             {
                 ChartDetails details = new ChartDetails   
@@ -71,7 +82,7 @@ namespace CmlTechniques.CMS
             }
             return dataList;
         }
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public static List<List<ServiceDetails>> GetServiceData(string prj)
         {
             BLL_Dml _objbll = new BLL_Dml();
@@ -114,66 +125,25 @@ namespace CmlTechniques.CMS
                         datalist4.Add(serdetails);
                 }
                 if (i == 1)
+                {
                     nestedlist.Add(datalist1);
+                    HttpContext.Current.Session["GetServiceData_1"] = _dt1.Tables[count - 1];
+                }
                 else if (i == 2)
+                {
                     nestedlist.Add(datalist2);
+                    HttpContext.Current.Session["GetServiceData_2"] = _dt1.Tables[count - 1];
+                }
                 else if (i == 4)
+                {
                     nestedlist.Add(datalist4);
+                    HttpContext.Current.Session["GetServiceData_3"] = _dt1.Tables[count - 1];
+                }
             }
             return nestedlist;
         }
-        //[WebMethod]
-        //public static List<ExecutiveDetails> GetExecutiveData(string prj)
-        //{
-        //    BLL_Dml _objbll = new BLL_Dml();
 
-        //    _database _objdb = new _database
-        //    {
-        //        DBName = "DB_" + prj
-        //    };
-        //    List<ExecutiveDetails> datalist3 = new List<ExecutiveDetails>();
-        //    if (prj == "PCD")
-        //    {
-        //        DataTable dsresult = _objbll.load_dashboarddummy(_objdb);
-        //        foreach (DataRow dr in dsresult.Rows)  //Tables[count - 1]
-        //        {
-        //            ExecutiveDetails execdetails = new ExecutiveDetails
-        //            {
-        //                Label = dr["CAS_NAME"].ToString(),
-        //                ActualProgress = ((dr["PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["PROGRESS"]),
-        //                PlannedProgress = ((dr["P_PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["P_PROGRESS"])
-        //            };
-        //            datalist3.Add(execdetails);
-        //        }
-        //    }
-
-        //    else if (prj == "ARSD")
-        //    {
-        //        _clscassheet _objcls = new _clscassheet();
-        //        _objcls.mode = 1;
-        //        var todaysdate = DateTime.Today;
-        //        string from = DateTime.Today.AddMonths(-3).ToString("dd/MM/yyyy");
-        //        string to = DateTime.Today.AddMonths(2).ToString("dd/MM/yyyy");
-        //        _objcls.dtastart = DateTime.ParseExact(from, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-        //        _objcls.dtpstart = DateTime.ParseExact(to, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-        //        _objcls.cate = "Overall";
-        //        DataSet dsresult = _objbll.Get_Total_Executive_Summary_DashBoard(_objcls, _objdb);
-        //        int count = dsresult.Tables.Count;
-        //        foreach (DataRow dr in dsresult.Tables[count - 1].Rows)
-        //        {
-        //            ExecutiveDetails execdetails = new ExecutiveDetails
-        //            {
-        //                Label = dr["CAS_NAME"].ToString(),
-        //                ActualProgress = ((dr["PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["PROGRESS"]),
-        //                PlannedProgress = ((dr["P_PROGRESS"]) == DBNull.Value) ? (decimal?)null : Convert.ToDecimal(dr["P_PROGRESS"])
-        //            };
-        //            datalist3.Add(execdetails);
-        //        }
-        //    }
-        //    return datalist3;
-        //}
-
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public static List<List<ChartDetails>> GetCasDetails(string prj)
         {
             BLL_Dml _objbll = new BLL_Dml();
@@ -210,13 +180,19 @@ namespace CmlTechniques.CMS
                         datalist2.Add(casdetails);
                 }
                 if (i == 10)
+                {
                     nestedlist.Add(datalist1);
+                    HttpContext.Current.Session["GetCasDetails_1"] = _dt1.Tables[0];
+                }
                 else if (i == 20)
+                {
                     nestedlist.Add(datalist2);
+                    HttpContext.Current.Session["GetCasDetails_2"] = _dt1.Tables[0];
+                }
             }
             return nestedlist;
         }
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public static List<CasSheetDetails> GetModalDetails(int casid, string prj)
         {
             BLL_Dml _objbll = new BLL_Dml();

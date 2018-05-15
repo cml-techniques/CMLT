@@ -3010,6 +3010,13 @@
     <Compile Include="CMS\Dashboard1_print.aspx.designer.cs">
       <DependentUpon>Dashboard1_print.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CMS\Dashboard_Print.aspx.cs">
+      <DependentUpon>Dashboard_Print.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CMS\Dashboard_Print.aspx.designer.cs">
+      <DependentUpon>Dashboard_Print.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CMS\DocumentLog.aspx.cs">
       <DependentUpon>DocumentLog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4578,6 +4585,7 @@
     <Content Include="cmlhome.aspx" />
     <Content Include="CMS\Dashboard.aspx" />
     <Content Include="CMS\Dashboard1_print.aspx" />
+    <Content Include="CMS\Dashboard_Print.aspx" />
     <Content Include="createuser.aspx" />
     <Content Include="fileupload.aspx" />
     <Content Include="images\adobe_pdf_logo.jpg" />

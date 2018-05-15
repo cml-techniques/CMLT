@@ -3547,15 +3547,16 @@
                     </tr>
                     <tr >
                         <td width="200PX" >
-                            CABLE CONTINUITY/IR TESTED</td>
+                            CABLE CONTINUITY/IR TESTED1</td>
                         <td class="tdstyle1">N/A
                             <input id="chk_10ccit" type="checkbox" style="vertical-align:middle" runat="server"  onclick="_checked('chk_10ccit','_10ccit')"/>
                             </td>
                         <td width="75PX" >
                             <asp:TextBox ID="_10ccit" runat="server" Width="75px"></asp:TextBox>
-                            <asp:CalendarExtender ID="CalendarExtender236" runat="server" 
-                        ClearTime="true" TargetControlID="_10ccit"
-                        Format="dd/MM/yyyy" ></asp:CalendarExtender>
+                              <asp:CalendarExtender ID="CalendarExtender_10ccit" runat="server" 
+                                ClearTime="true" Format="dd/MM/yyyy" PopupButtonID="_10ccit" 
+                                TargetControlID="_10ccit">
+                            </asp:CalendarExtender>
                         </td>
                         <td width="200PX" >
                             NO.OF DEVICES TESTED</td>
