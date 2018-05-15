@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-    <title>Google Charts</title>
+    <title>Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="../Assets/css/fonts/bootstrap.css" rel="stylesheet" />
@@ -17,7 +17,9 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <style type="text/css" media="print">
-    @page { margin: 0mm; }
+        @page {
+            margin: 0mm;
+        }
     </style>
     <script> 
         var chartData; // holds chart data
@@ -32,39 +34,15 @@
         //fill chart data
         $(document).ready(function () {
 
+
+
             $("#btnPrint").click(function (event) {
-                $(".sec-head").addClass('hide');
-                $(".print-head").removeClass('hide');
 
-                //$(".sum1").addClass('print-height'); 
-
-                //$("svg").attr('height','1000px'); 
-                //$("rect").attr('height', '1000px'); 
-
-                //$("svg").attr('width', '1000px');
-                //$("rect").attr('width', '1000px'); 
-
-
-
-
-               
-
-                window.print();
-
-                //$(".sec-head").removeClass('hidden-print');
-                //$(".print-head").addClass('hidden-print');
-
-                $(".sec-head").removeClass('hide');
-                $(".print-head").addClass('hide');
-
-                //$(".sum1").removeClass('print-height');   
+                var _url = "Dashboard_Print.aspx?prj=" + $("#lblprj").text();;
+                window.open(_url);
 
             });
 
-            $(".print-head").addClass('hide');
-             //$(".top-line").addClass('hidden-print');
-
-             getsrc();
 
             $('#loader7').hide();
             $('#loader8').hide();
@@ -90,13 +68,13 @@
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
-                success: function(data) {
+                success: function (data) {
                     chartData = data.d;
                 },
-                error: function() {
+                error: function () {
                     xhr1.abort();
                 }
-            }).done(function() {
+            }).done(function () {
                 //after complete data load
                 drawChart(chartData);
                 $('#loader2').hide();
@@ -108,15 +86,15 @@
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
-                success: function(data) {
+                success: function (data) {
                     chartData1 = data.d[0];
                     chartData2 = data.d[1];
                     chartData6 = data.d[2];
                 },
-                error: function(data) {
+                error: function (data) {
                     xhr2.abort();
                 }
-            }).done(function() {
+            }).done(function () {
                 drawServiceChart(chartData1, chartData2);
                 $('#loader3').hide();
                 $('#loader4').hide();
@@ -129,18 +107,18 @@
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
-                success: function(data) {
+                success: function (data) {
                     chartData4 = data.d[0];
                     chartData5 = data.d[1];
                 },
-                error: function(data) {
+                error: function (data) {
                     xhr3.abort();
                 }
-            }).done(function() {
+            }).done(function () {
                 drawCassheetChart(chartData4, chartData5);
                 $('#loader5').hide();
                 $('#loader6').hide();
-                });
+            });
 
 
 
@@ -151,7 +129,7 @@
                 fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                 title: "Overall System Summary",
                 legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-                series: { 0: { color: '#C98E33' }},
+                series: { 0: { color: '#C98E33' } },
                 //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
                 animation: { startup: true, duration: 2000, easing: 'out' },
                 vAxis: {
@@ -226,7 +204,7 @@
                 title: "Electrical Systems",
                 legend: { position: 'none', maxLines: 1, textStyle: { fontSize: 10 } },
                 animation: { startup: true, duration: 2000, easing: 'out' },
-                series: { 0: { color: '#800080' }},
+                series: { 0: { color: '#800080' } },
                 vAxis: {
                     title: "Progress %",
                     viewWindowMode: 'maximized',
@@ -353,40 +331,40 @@
             //data1.addColumn('number', 'Planned Progress')
             //data1.addColumn({ type: 'string', role: 'style' });
             data1.addColumn('number', 'Actual Progress');
-            data1.addColumn({ type: 'string', role: 'style' });          
+            data1.addColumn({ type: 'string', role: 'style' });
             data1.addColumn('number', 'ID');
 
             data2.addColumn('string', 'Label');
             //data2.addColumn('number', 'Planned Progress')
             //data2.addColumn({ type: 'string', role: 'style' });
             data2.addColumn('number', 'Actual Progress');
-            data2.addColumn({ type: 'string', role: 'style' });         
+            data2.addColumn({ type: 'string', role: 'style' });
             data2.addColumn('number', 'ID');
             data4.addColumn('string', 'Label');
             //data4.addColumn('number', 'Planned Progress')
             //data4.addColumn({ type: 'string', role: 'style' });
             data4.addColumn('number', 'Actual Progress');
-            data4.addColumn({ type: 'string', role: 'style' });           
+            data4.addColumn({ type: 'string', role: 'style' });
             data4.addColumn('number', 'ID');
 
             for (var i = 0; i < chartData1.length; i++) {
                 if (i != (chartData1.length - 1))
                     data1.addRow([chartData1[i].Label, chartData1[i].Progress, 'color: #800080', chartData1[i].ID]);
                 else
-                    data1.addRow([chartData1[i].Label, chartData1[i].Progress, 'color: #000080',chartData1[i].ID]);
+                    data1.addRow([chartData1[i].Label, chartData1[i].Progress, 'color: #000080', chartData1[i].ID]);
             }
 
             for (var i = 0; i < chartData2.length; i++) {
                 if (i != (chartData2.length - 1))
                     data2.addRow([chartData2[i].Label, chartData2[i].Progress, 'color: #1144EA', chartData2[i].ID]);
                 else
-                    data2.addRow([chartData2[i].Label,  chartData2[i].Progress, 'color: #066CC9', chartData2[i].ID]);
+                    data2.addRow([chartData2[i].Label, chartData2[i].Progress, 'color: #066CC9', chartData2[i].ID]);
             }
             for (var i = 0; i < chartData6.length; i++) {
                 if (i != (chartData6.length - 1))
-                    data4.addRow([chartData6[i].Label, chartData6[i].Progress, 'color: #2F262F', chartData6[i].ID]); 
+                    data4.addRow([chartData6[i].Label, chartData6[i].Progress, 'color: #2F262F', chartData6[i].ID]);
                 else
-                    data4.addRow([chartData6[i].Label,  chartData6[i].Progress, 'color: #E8193B', chartData6[i].ID]);
+                    data4.addRow([chartData6[i].Label, chartData6[i].Progress, 'color: #E8193B', chartData6[i].ID]);
             }
             var columnchart1 = new google.visualization.ColumnChart(document.getElementById('chartdiv1'));
             var columnchart2 = new google.visualization.ColumnChart(document.getElementById('chartdiv2'));
@@ -456,7 +434,7 @@
         function modalOpen1(id1, label) {
             $.ajax({
                 url: "Dashboard.aspx/GetModalDetails",
-                data: JSON.stringify({ casid: id1, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML}),
+                data: JSON.stringify({ casid: id1, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
@@ -477,7 +455,7 @@
         function modalOpen(id, label) {
             $.ajax({
                 url: "Dashboard.aspx/GetModalDetails",
-                data: JSON.stringify({ casid: id, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML}),
+                data: JSON.stringify({ casid: id, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
@@ -501,7 +479,7 @@
         function modalOpen2(id2, label) {
             $.ajax({
                 url: "Dashboard.aspx/GetModalDetails",
-                data: JSON.stringify({ casid: id2, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML}),
+                data: JSON.stringify({ casid: id2, prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
@@ -621,15 +599,15 @@
 
             for (var i = 0; i < chartData4.length; i++) {
                 if (i != (chartData4.length - 1))
-                    data1.addRow([chartData4[i].Label,chartData4[i].GraphActualData,'color: #C0C0C0']);
+                    data1.addRow([chartData4[i].Label, chartData4[i].GraphActualData, 'color: #C0C0C0']);
                 else
-                    data1.addRow([chartData4[i].Label,chartData4[i].GraphActualData, 'color: #FF0000']);
+                    data1.addRow([chartData4[i].Label, chartData4[i].GraphActualData, 'color: #FF0000']);
             }
             for (var i = 0; i < chartData5.length; i++) {
                 if (i != (chartData5.length - 1))
-                    data2.addRow([chartData5[i].Label,  chartData5[i].GraphActualData,'color:#00FF00'])
+                    data2.addRow([chartData5[i].Label, chartData5[i].GraphActualData, 'color:#00FF00'])
                 else
-                    data2.addRow([chartData5[i].Label,  chartData5[i].GraphActualData, 'color:#0000FF'])
+                    data2.addRow([chartData5[i].Label, chartData5[i].GraphActualData, 'color:#0000FF'])
             }
             var columnchart1 = new google.visualization.ColumnChart(document.getElementById('chartdiv4'));
             var columnchart2 = new google.visualization.ColumnChart(document.getElementById('chartdiv5'));
@@ -713,17 +691,17 @@
 
 
 
-//        $('modal-content').resizable({
-//            minHeight: 300,
-//            minWidth: 300
-//        });
-//        $('.modal-dialog').draggable();
+        //        $('modal-content').resizable({
+        //            minHeight: 300,
+        //            minWidth: 300
+        //        });
+        //        $('.modal-dialog').draggable();
 
-//        $('#myModal').on('show.bs.modal', function () {
-//            $(this).find('.modal-body').css({
-//                'max-height': '100%'
-//            });
-//        });
+        //        $('#myModal').on('show.bs.modal', function () {
+        //            $(this).find('.modal-body').css({
+        //                'max-height': '100%'
+        //            });
+        //        });
         //function myfunct() {
         //    window.print();
         //}
@@ -775,7 +753,7 @@
                     textPosition: 'out',
                     slantedText: true,
                     slantedTextAngle: 30,
-                    maxTextLines:4
+                    maxTextLines: 4
                 },
                 is3D: true
             };
@@ -843,8 +821,8 @@
                         italic: false,
                         bold: true
                     },
-                    textPosition:'out', 
-                    slantedText: true, 
+                    textPosition: 'out',
+                    slantedText: true,
                     slantedTextAngle: 30,
                     maxTextLines: 4
                 },
@@ -876,55 +854,61 @@
         function getsrc() {
 
             var path = 'LoadImage.ashx?id=' + $("#lblprj").text();;
-      
-        $("#imglogo").attr("src", path);
+
+            $("#imglogo").attr("src", path);
 
         }
     </script>
 </head>
 <body style="background-color: #f1f1f1">
     <div class="container-fluid">
-         <div class="row print-head">
+        <%--<div class="row print-head">
             <div class="col-lg-12">
                 <table class="full-width">
                     <tr>
                         <td class="col-width-100">
-  <img src='#' id="imglogo" class="col-height-100 col-width-100"/>  
+                            <img src='#' id="imglogo" class="col-height-100 col-width-100" />
                         </td>
-                        <td  class="text-center">
+                        <td class="text-center">
                             <ul>
                                 <li>
-                            <strong ><span class="cml-head">CML International (Dubai)</span> </strong>
+                                    <strong><span class="cml-head">
+                                        <asp:Label runat="server" ID="lblcmlhead" Text=""></asp:Label>
+
+
+                                    </span></strong>
                                 </li>
-                                <li>  <strong class="check-link"><asp:Label runat="server" ID="lblprojectprint" Text=""></asp:Label><span> | Dashboard</span> </strong></li>
-                            </ul>                    
+                                <li><strong class="check-link">
+                                    <asp:Label runat="server" ID="lblprojectprint" Text=""></asp:Label><span> | Dashboard</span> </strong></li>
+                            </ul>
                         </td>
-                       <td class="col-width-100">
-                        <img src="../images/logo.JPG" class="col-height-100 col-width-100"/>  
+                        <td class="col-width-100">
+                            <img src="../images/logo.JPG" class="col-height-100 col-width-100" />
                         </td>
                     </tr>
                 </table>
 
-             </div>
-             </div>
-         <div class="row sec-head">
+            </div>
+        </div>--%>
+        <div class="row sec-head">
             <div class="col-lg-11">
-                  <p class="text-center font-weight-bold">
-                    <strong class="check-link"><asp:Label runat="server" ID="lblproject"></asp:Label><span> | Dashboard</span>
-                     </strong>
-                   </p>
-                </div>
-                 <div class="col-lg-1">     
+                <p class="text-center font-weight-bold">
+                    <strong class="check-link">
+                        <asp:Label runat="server" ID="lblproject"></asp:Label><span> | Dashboard</span>
+                    </strong>
+                </p>
+            </div>
+            <div class="col-lg-1">
                 <button type="button" id="btnPrint" class="btn btn-outline btn-default btn-primary">Print</button>
-                </div> 
-             </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-m-t box sum1">
                 <div id="chartdiv" class="chart border-rad" style="position: relative">
                     <div id="loader2" class="loader"></div>
                 </div>
-            </div> 
+            </div>
             <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 col-m-t box sum1">
                 <div id="chartdiv1" class="chart border-rad"></div>
                 <div id="loader3" class="loader"></div>
@@ -944,10 +928,10 @@
         </div>
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 sum1">
-                 <div id="chartdiv6" class="chart border-rad"></div>
-                 <div id="loader9" class="loader"></div>
+                <div id="chartdiv6" class="chart border-rad"></div>
+                <div id="loader9" class="loader"></div>
                 <div id="loader10" class="loader"></div>
-                <asp:Label ID="lblprj" runat="server" Text="Label" style="display:none"></asp:Label>
+                <asp:Label ID="lblprj" runat="server" Text="Label" Style="display: none"></asp:Label>
             </div>
             <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 sum1" style="margin-bottom: 20px;">
                 <div id="chartdiv5" class="chart border-rad"></div>

@@ -143,7 +143,9 @@ namespace CmlTechniques.CMS
         private void Generate_Reports(string sch)
         {
 
-            
+            string phead = GetProjectLocation();
+
+
             TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
             TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
             ConnectionInfo crConnectionInfo = new ConnectionInfo();
@@ -194,7 +196,10 @@ namespace CmlTechniques.CMS
                 else if (lblprj.Text == "MOE")
                     cryRpt.Load(Server.MapPath("cas_lv_MOE.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_lv.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             }
             else if (sch == "51" || sch == "441")
             {
@@ -222,11 +227,6 @@ namespace CmlTechniques.CMS
                     cryRpt.Load(Server.MapPath("cas_mv_pcd.rpt"));
 
 
-                    //Session["Sum_QtyPlanned1"] = "1"; Session["Sum_QtyPlanned2"] = "2";
-                    //Session["Sum_PerPlanned1"] = "3"; Session["Sum_PerPlanned2"] = "4";
-                    //Session["Sum_Percom1"] = "5"; Session["Sum_Percom2"] = "6";
-                    //Session["Sum_Poverall"] = "7"; Session["Sum_Overall"] = "8";
-
                     cryRpt.SetParameterValue("Sum_QtyPlanned1", Session["Sum_QtyPlanned1"].ToString());
                     cryRpt.SetParameterValue("Sum_QtyPlanned2", Session["Sum_QtyPlanned2"].ToString());
 
@@ -244,7 +244,10 @@ namespace CmlTechniques.CMS
 
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_mv.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             }
             else if (sch == "1211" || sch == "1191" || sch == "1181")
             {
@@ -271,6 +274,7 @@ namespace CmlTechniques.CMS
                 {
                     cryRpt.Load(Server.MapPath("cas_tx_pcd.rpt"));
 
+
                     cryRpt.SetParameterValue("TxQty", (string)Request.QueryString["hdnTxQty"]);
                     cryRpt.SetParameterValue("TxP", (string)Request.QueryString["hdnTxP"]);
                     cryRpt.SetParameterValue("TXA", (string)Request.QueryString["hdnTXA"]);
@@ -282,7 +286,10 @@ namespace CmlTechniques.CMS
 
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_tx.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             }
             else if (sch == "31" || sch == "1201")
             {
@@ -336,7 +343,10 @@ namespace CmlTechniques.CMS
                     cryRpt.SetParameterValue("Sum_Overall", Session["Sum_Overall"].ToString());
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_gen.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             }
             else if (sch == "41" && lblprj.Text != "123")
                 cryRpt.Load(Server.MapPath("cas_gen1.rpt"));
@@ -369,7 +379,7 @@ namespace CmlTechniques.CMS
                     cryRpt.SetParameterValue("Sum_Poverall", Session["Sum_Poverall"].ToString());
                     cryRpt.SetParameterValue("Sum_Overall", Session["Sum_Overall"].ToString());
 
-                 
+
                 }
 
                 else if (lblprj.Text == "HMIM")
@@ -379,7 +389,10 @@ namespace CmlTechniques.CMS
                     cryRpt.SetParameterValue("facility", _facility);
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_e_l.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             }
             else if (sch == "61")
                 cryRpt.Load(Server.MapPath("cas_elp1.rpt"));
@@ -413,7 +426,10 @@ namespace CmlTechniques.CMS
                     cryRpt.SetParameterValue("facility", _facility);
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_emg.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             }
             else if (sch == "71")
                 cryRpt.Load(Server.MapPath("cas_cbs1.rpt"));
@@ -444,7 +460,11 @@ namespace CmlTechniques.CMS
                     cryRpt.SetParameterValue("ACOverall", Request.QueryString["ACOverall"]);
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_mec.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
+
             else if (sch == "81" || sch == "511" || sch == "521" || sch == "531" || sch == "541" || sch == "551" || sch == "561" || sch == "571" || sch == "581" || sch == "591" || sch == "601" || sch == "621" || sch == "611" || sch == "631" || sch == "641" || sch == "651" || sch == "661" || sch == "671" || sch == "681" || sch == "691" || sch == "701" || sch == "711" || sch == "721" || sch == "731" || sch == "741" || sch == "751" || sch == "761" || sch == "771" || sch == "781" || sch == "791" || sch == "801" || sch == "811" || sch == "821" || sch == "831" || sch == "841")
             {
                 cryRpt.Load(Server.MapPath("cas_mec1.rpt"));
@@ -470,7 +490,10 @@ namespace CmlTechniques.CMS
                 else if (lblprj.Text == "ASAO")
                     cryRpt.Load(Server.MapPath("cas_fd2.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_fd.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "401" || sch == "301" || sch == "311" || sch == "321" || sch == "331" || sch == "341" || sch == "351" || sch == "361" || sch == "371" || sch == "381" || sch == "391")
             {
                 cryRpt.Load(Server.MapPath("cas_fd1.rpt"));
@@ -497,7 +520,10 @@ namespace CmlTechniques.CMS
                     cryRpt.SetParameterValue("ACOverall", Request.QueryString["ACOverall"]);
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_ph1.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "171" || sch == "851" || sch == "861" || sch == "871" || sch == "881" || sch == "891" || sch == "901" || sch == "991" || sch == "1071" || sch == "1081" || sch == "1171")
             {
                 cryRpt.Load(Server.MapPath("cas_4A.rpt"));
@@ -511,7 +537,10 @@ namespace CmlTechniques.CMS
                 else if (isPcdProject)
                     cryRpt.Load(Server.MapPath("cas_ph2_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_ph2.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "181" || sch == "1011" || sch == "971")
             {
                 cryRpt.Load(Server.MapPath("cas_4B.rpt"));
@@ -529,7 +558,10 @@ namespace CmlTechniques.CMS
                     cryRpt.SetParameterValue("Ac", Request.QueryString["Ac"]);
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_ph3.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "191" || sch == "1021")
                 cryRpt.Load(Server.MapPath("cas_4C.rpt"));
             else if (sch == "20")
@@ -550,7 +582,10 @@ namespace CmlTechniques.CMS
                 else if (isPcdProject)
                     cryRpt.Load(Server.MapPath("cas_bms_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_bms.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "15")
             {
                 if (lblprj.Text == "HMIM")
@@ -590,7 +625,10 @@ namespace CmlTechniques.CMS
                     cryRpt.SetParameterValue("completed", (Session["completed"]).ToString());
                 }
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_flu.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "10")
                 if (lblprj.Text == "14211")
                 {
@@ -609,7 +647,10 @@ namespace CmlTechniques.CMS
                 else if (isPcdProject)
                     cryRpt.Load(Server.MapPath("cas_fava_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_fava.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "101")
                 cryRpt.Load(Server.MapPath("cas_3C.rpt"));
             else if (sch == "22")
@@ -625,7 +666,10 @@ namespace CmlTechniques.CMS
                 else if (isPcdProject)
                     cryRpt.Load(Server.MapPath("cas_acs_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_acs.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             }
             else if (sch == "221")
                 cryRpt.Load(Server.MapPath("cas_3E.rpt"));
@@ -645,9 +689,12 @@ namespace CmlTechniques.CMS
                 else if (lblprj.Text == "OPH")
                     cryRpt.Load(Server.MapPath("cas_lcs_oph.rpt"));
                 else if (isPcdProject)
-                    cryRpt.Load(Server.MapPath("cas_lcs_pcd.rpt")); 
+                    cryRpt.Load(Server.MapPath("cas_lcs_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_lcs.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "12")
                 if (lblprj.Text == "14211")
                 {
@@ -661,12 +708,15 @@ namespace CmlTechniques.CMS
                     string _facility = Get_Building_Name();
                     cryRpt.SetParameterValue("facility", _facility);
                 }
-                else if (lblprj.Text == "OPH" )
+                else if (lblprj.Text == "OPH")
                     cryRpt.Load(Server.MapPath("cas_scn_oph.rpt"));
                 else if (isPcdProject)
                     cryRpt.Load(Server.MapPath("cas_scn_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_scn.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "121")
                 cryRpt.Load(Server.MapPath("cas_3F.rpt"));
             else if (sch == "13")
@@ -681,7 +731,10 @@ namespace CmlTechniques.CMS
                 else if (isPcdProject)
                     cryRpt.Load(Server.MapPath("cas_cctv_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_cctv.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "131")
                 cryRpt.Load(Server.MapPath("cas_3H.rpt"));
             else if (sch == "14")
@@ -693,10 +746,13 @@ namespace CmlTechniques.CMS
                     string _facility = Get_Building_Name();
                     cryRpt.SetParameterValue("facility", _facility);
                 }
-                  else if (isPcdProject)
+                else if (isPcdProject)
                     cryRpt.Load(Server.MapPath("cas_avi_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_avi.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "141")
                 cryRpt.Load(Server.MapPath("cas_3J.rpt"));
             else if (sch == "151")
@@ -715,7 +771,10 @@ namespace CmlTechniques.CMS
                 else if (isPcdProject)
                     cryRpt.Load(Server.MapPath("cas_elv_pcd.rpt"));
                 else
+                {
                     cryRpt.Load(Server.MapPath("cas_elv.rpt"));
+                    cryRpt.SetParameterValue("phead", phead);
+                }
             else if (sch == "161")
                 cryRpt.Load(Server.MapPath("cas_3I.rpt"));
             else if (sch == "241")
@@ -798,7 +857,7 @@ namespace CmlTechniques.CMS
                 else if (lblprj.Text == "HMIM" || lblprj.Text == "11784" || lblprj.Text == "14211" || lblprj.Text == "OCEC")
                 {
                     cryRpt.Load(Server.MapPath("cas_HVT.rpt"));
-                    string _facility = (lblprj.Text == "HMIM")?Get_Building_Name():"";
+                    string _facility = (lblprj.Text == "HMIM") ? Get_Building_Name() : "";
                     cryRpt.SetParameterValue("facility", _facility);
                     cryRpt.SetParameterValue("ProjectCode", lblprj.Text);
                     cryRpt.SetParameterValue("ProjectCode", lblprj.Text, "cassum");
@@ -1073,6 +1132,30 @@ namespace CmlTechniques.CMS
             }
             rptDoc.RecordSelectionFormula = _selectionFormula;
             //return _selectionFormula;
+        }
+        private string GetProjectLocation()
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _objdb.DBName = "DBCML";
+            _clsuser _objcls = new _clsuser();
+            _objcls.project_code = lblprj.Text;
+            DataTable dt = _objbll.Get_ProjectInformation(_objcls, _objdb);
+
+            string _location = "";
+            string value = "";
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                _location = dr["Location"].ToString();
+
+            }
+
+            if (string.IsNullOrEmpty(_location)) value= "CML International LLC";
+            else value = "CML International (" + _location + ") LLC";
+
+            return value;
+
         }
         private void Page_Init(object sender, EventArgs e)
         {
