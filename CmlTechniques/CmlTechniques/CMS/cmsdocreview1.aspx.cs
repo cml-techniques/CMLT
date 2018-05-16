@@ -40,8 +40,6 @@ namespace CmlTechniques.CMS
                     }
                 }
 
-
-                load_users(lblprj.Text);
                 load_services(lblprj.Text);
                 load_doc_review_log(lblprj.Text);
                 Load_DocReview();
@@ -50,9 +48,10 @@ namespace CmlTechniques.CMS
                 Session["rew"] = "";
                 Session["iss"] = "";
                 Session["sta"] = "";
-               
 
-               
+                LoadModuleUsers();
+
+
             }
         }
         void _ReadCookies()
@@ -74,26 +73,12 @@ namespace CmlTechniques.CMS
 
             }
         }
-        protected void load_users(string Project)
-        {
-            //BLL_Dml _objbll = new BLL_Dml();
-            //_database _objdb = new _database();
-            //_objdb.DBName = "dbCML";
-            //_clsuser _objcls = new _clsuser();
-            //_objcls.project_code = Project;
-            //_objcls.mode = 2;
-            //drissuedto.DataSource = _objbll.Load_CMS_Users(_objcls, _objdb);
-            //drissuedto.DataTextField = "uid";
-            //drissuedto.DataValueField = "uid";
-            //drissuedto.DataBind();
-            //drissuedto.Items.Insert(0, "--Select User--");
-
-        }
         protected void btnadd_Click(object sender, EventArgs e)
         {
             lblmode.Text = "0";
             lblfile.Text = "";
             btnupload.Text = "Upload";
+            chk.Enabled = true;
             btndummy_ModalPopupExtender.Show();
         }
         protected void load_services(string Project)
@@ -107,24 +92,7 @@ namespace CmlTechniques.CMS
             drservice.DataBind();
             int count = drservice.Items.Count;
         }
-        protected void Insert_Doc_review_log()
-        {
-            //BLL_Dml _objbll = new BLL_Dml();
-            //_database _objdb = new _database();
-            //_objdb.DBName = "DB_" + lblprj.Text;
-            //_clsdocreview _objcls = new _clsdocreview();
-            //_objcls.dr_reviewed = txtreviewed.Text;
-            //_objcls.issued_date = DateTime.Now;
-            //_objcls.issued_to = drissuedto.SelectedItem.Text;
-            //_objcls.dr_status = true;//open
-            //_objcls.project_code = lblprj.Text;
-            //_objcls.uid = (string)Session["uid"];
-            //_objcls.mode = 1;
-            //_objcls.service = drservice.SelectedItem.Text;
-            //_objbll.Document_Review_Log(_objcls, _objdb);
-            //load_doc_review_log(lblprj.Text);
-            //Load_DocReview();
-        }
+      
         private void load_doc_review_log(string Project)
         {
             BLL_Dml _objbll = new BLL_Dml();
@@ -194,49 +162,15 @@ namespace CmlTechniques.CMS
 
         protected void mygrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //int _rowidx = Convert.ToInt32(e.CommandArgument);
-            //GridViewRow _srow = mygrid.Rows[_rowidx];
-            //TableCell _id = _srow.Cells[9];
-            //TableCell _no = _srow.Cells[0];
-            //Session["dr_id"] = _id.Text;
-            //Session["dr_no"] = _no.Text;
-            //lbldrno.Text = _no.Text;
-            //mydiv.Visible = true;
-            //load_doc_review_details();
-            // ScriptManager.RegisterStartupScript(this, typeof(string), "close", "parent.callcms('','sub');", true);
+
         }
 
         protected void btnaddtr_Click(object sender, EventArgs e)
         {
-            Insert_Doc_review_details();
+           
         }
-        protected void Insert_Doc_review_details()
-        {
-            //BLL_Dml _objbll = new BLL_Dml();
-            //_clsdocreview _objcls = new _clsdocreview();
-            //_objcls.dr_id = Convert.ToInt32((string)Session["dr_id"]);
-            //_objcls.details = txtdetails.Text;
-            //_objcls.response = "";
-            //_objcls.issued_date = DateTime.Now;
-            //_objcls.uid = (string)Session["uid"];
-            //_objcls.dr_itm_id = 0;
-            //_objcls.mode = 1;
-            //_objbll.Document_Review_Details(_objcls);
-            //load_doc_review_details();
-        }
-        protected void load_doc_review_details()
-        {
-            //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('"+ (string)Session["dr_id"] +"');", true);
 
-            //BLL_Dml _objbll = new BLL_Dml();
-            //_clsdocreview _objcls = new _clsdocreview();
-            //_objcls.dr_id = Convert.ToInt32((string)Session["dr_id"]);
-            ////mygrid1.DataSource = _objbll.Load_Document_Review_Details(_objcls);
-            ////mygrid1.DataBind();
-            //mydetailsview.DataSource = _objbll.Load_Document_Review_Details(_objcls);
-            //mydetailsview.DataBind();
-            //lbldrno.Text = (string)Session["dr_no"];
-        }
+
 
         protected void mygrid1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -245,32 +179,15 @@ namespace CmlTechniques.CMS
                 e.Row.Cells[0].Text = (e.Row.DataItemIndex + 1).ToString();
             }
         }
-        protected void Load_users_CC()
-        {
-            //chkuser.Items.Clear();
-            //for (int i = 0; i <= drissuedto.Items.Count - 1; i++)
-            //{
-            //    if (drissuedto.Items[i].Text != drissuedto.SelectedItem.Text && drissuedto.Items[i].Text != "--Select User--")
-            //    {
-            //        ListItem lst = new ListItem();
-            //        lst.Text = drissuedto.Items[i].Text;
-            //        lst.Value = drissuedto.Items[i].Value;
-            //        chkuser.Items.Add(lst);
-            //    }
 
-            //}
-        }
         protected void myview_ItemEditing(object sender, ListViewEditEventArgs e)
         {
-            //myview.EditIndex = e.NewEditIndex;
-            //load_doc_review_log();
-            //set_status();
+
         }
 
         protected void myview_ItemCanceling(object sender, ListViewCancelEventArgs e)
         {
-            // myview.EditIndex = -1; 
-            //load_doc_review_log();
+
         }
         void _Create_Cookies()
         {
@@ -343,41 +260,16 @@ namespace CmlTechniques.CMS
         }
         protected void btnCont_Click(object sender, EventArgs e)
         {
-            ////ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('yes');", true);
-            //Insert_Doc_review_log();
 
-            //int _max = mygrid_dr.Rows.Count - 1;
-            ////Session["dr_id"] = mygrid.Rows[_max].Cells[8].Text;
-            ////Label _lbl = (Label)myview.Items[_max].FindControl("dr_idLabel");
-            ////Button _btn = (Button)myview.Items[_max].FindControl("btndr_no");
-            //Session["dr_id"] = mygrid_dr.Rows[_max].Cells[12].Text;
-            //Session["dr_no"] = mygrid_dr.Rows[_max].Cells[11].Text;
-
-            ////Send_Mail();
-            //btnDummy_ModalPopupExtender.Hide();
-            //ScriptManager.RegisterStartupScript(this, typeof(string), "Message", "window.open('../cmsdocreviewadd.aspx','','left=210,top=100,width=1024,height=600,menubar=1,toolbar=1,scrollbars=1,status=0,resizable=1');", true);
         }
         protected void btncancel_Click(object sender, EventArgs e)
         {
-            //btnDummy_ModalPopupExtender.Hide();
+
         }
 
-
-        protected void set_status()
-        {
-            //DropDownList _drs = (DropDownList)myview.EditItem.FindControl("drstatus");
-            //_drs.Items.Add("OPEN");
-            //_drs.Items.Add("CLOSE");
-            //Label _st = (Label)myview.EditItem.FindControl("dr_statusLabel");
-            //if (_st.Text == "OPEN")
-            //    _drs.Items[0].Selected = true;
-            //else
-            //    _drs.Items[1].Selected = true;
-        }
         protected void myview_ItemUpdating(object sender, ListViewUpdateEventArgs e)
         {
-            //myview.EditIndex = -1;
-            //load_doc_review_log();
+
         }
 
         protected void myview_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -415,49 +307,13 @@ namespace CmlTechniques.CMS
         }
         private void Change_RowClr(ListViewItemEventArgs e)
         {
-            //Button _drno = (Button)e.Item.FindControl("btndr_no");
-            //Label _serv = (Label)e.Item.FindControl("lbsrv");
-            //Label _rew = (Label)e.Item.FindControl("dr_reviewedLabel");
-            //Label _isd = (Label)e.Item.FindControl("issue_dateLabel");
-            //Label _uid = (Label)e.Item.FindControl("uidLabel");
-            //Label _iss = (Label)e.Item.FindControl("issued_toLabel");
-            //Label _com = (Label)e.Item.FindControl("commentsLabel");
-            //Label _res = (Label)e.Item.FindControl("responseLabel");
-            //Label _sts = (Label)e.Item.FindControl("dr_statusLabel");
-            //Label _due = (Label)e.Item.FindControl("lbdue");
-            //_drno.ForeColor = System.Drawing.Color.Red;
-            //_serv.ForeColor = System.Drawing.Color.Red;
-            //_rew.ForeColor = System.Drawing.Color.Red;
-            //_isd.ForeColor = System.Drawing.Color.Red;
-            //_uid.ForeColor = System.Drawing.Color.Red;
-            //_iss.ForeColor = System.Drawing.Color.Red;
-            //_com.ForeColor = System.Drawing.Color.Red;
-            //_res.ForeColor = System.Drawing.Color.Red;
-            //_sts.ForeColor = System.Drawing.Color.Red;
-            //_due.ForeColor = System.Drawing.Color.Red;
+
             HtmlTableRow _tr = (HtmlTableRow)e.Item.FindControl("itm_tr");
             _tr.Style.Add("color", "Red");
 
         }
 
-        void Send_Mail()
-        {
-            //publicCls.publicCls _objcls = new publicCls.publicCls();
-            //string Body = "";
-            //Body = "Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + (string)Session["dr_no"] + "/" + txtreviewed.Text + "\n\n" + "This is an automatically generated email to advise you that the above document has been issued to you." + "\n\n" + "Could you please find time to review the documents  and make comments within the next 15 days" + "\n\n" + "If you review and have no comments on the document, please confirm with 'No comments' in the Response Column." + "\n\n" + "Thank you in anticipation of your co-operation with the review process." + "\n\n" + "CML" + "\n" + "Techniques" + "\n\n\n" + "http://www.cmltechniques.com";
-
-            //string _sub = "Document Review - Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + (string)Session["dr_no"] + "/" + txtreviewed.Text;
-            //_objcls.Send_Email(drissuedto.SelectedItem.Text, _sub, Body);
-            ////_objcls.Send_Email("ssurajpdmsn@gmail.com", _sub, Body);
-            //Body = "Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + (string)Session["dr_no"] + "/" + txtreviewed.Text + "\n\n" + "This is an automatically generated email to advise you that the above document has been issued to " + drissuedto.SelectedItem.Text + "\n\n" + "CML" + "\n" + "Techniques" + "\n\n\n" + "http://www.cmltechniques.com";
-
-            //for (int i = 0; i <= chkuser.Items.Count - 1; i++)
-            //{
-            //    if (chkuser.Items[i].Selected == true)
-            //        _objcls.Send_Email(chkuser.Items[i].Text, _sub, Body);
-            //}
-            // _objcls.Send_Email("ssurajpdmsn@gmail.com", _sub, Body);
-        }
+      
         private void Filtering(string _el1, string _el2, string _el3, string _el4)
         {
             if (_el1 == "") _el1 = "All";
@@ -742,15 +598,6 @@ namespace CmlTechniques.CMS
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
-                ////if (e.Row.Cells[8].Text == "CLOSED")
-                ////    e.Row.Cells[9].Text = "";
-                ////else
-                ////    if (Convert.ToInt32(e.Row.Cells[9].Text) > 0 && e.Row.Cells[8].Text == "OPEN")
-                ////        e.Row.Style.Add("color", "red");
-                ////    else
-                ////        e.Row.Cells[9].Text = "";
-
-
 
                 if ((string)Session["group"] != "ADMIN GROUP" && (string)Session["group"] != "SYS.ADMIN GROUP")
                 {
@@ -772,13 +619,7 @@ namespace CmlTechniques.CMS
             TableCell _issued = _srow.Cells[12];
             TableCell _ser = _srow.Cells[1];
             TableCell _doc = _srow.Cells[2];
-            //Session["dr_id"] = _drid.Text;
-            //Session["dr_no"] = _drno.Text;
-            //Session["created"] = _created.Text;
-            //Session["issued"] = _issued.Text;
-            //Session["service"] = _ser.Text;
-            //Session["doc"] = _doc.Text;
-            //_Create_Cookies();
+
             Label2.Text = _drid.Text;
             if (e.CommandName == "get")
             {
@@ -796,6 +637,8 @@ namespace CmlTechniques.CMS
                 lblfile.Text = "";                
                 btnupload.Text = "Save";                
                 Load_SO_Pdf_Details();
+                //chk.Enabled = false;
+                //tdemail.Visible = false;
                 btndummy_ModalPopupExtender.Show();
             }
         }
@@ -823,6 +666,9 @@ namespace CmlTechniques.CMS
             string id = _objbll.Document_Review_Log(_objcls, _objdb);
             load_doc_review_log(lblprj.Text);
             Load_DocReview();
+
+          
+
             btnDummy_ModalPopupExtender1.Hide();
         }
 
@@ -859,9 +705,11 @@ namespace CmlTechniques.CMS
         {          
             if (IsNullValidation() == true) return;
             uploadFiles();
+
+            if (!chk.Checked && lblmode.Text == "0") btnDummy_ModalPopupExtender2.Show();
+
             load_doc_review_log(lblprj.Text);
             Load_DocReview();
-            //Load_Filtering_Elements();
         }
         private bool IsNullValidation()
         {
@@ -934,7 +782,7 @@ namespace CmlTechniques.CMS
                 _objcls.dr_status = false;
             _objcls.mode = 1;
             _objbll.dml_dr_pdf(_objcls, _objdb);
-            ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('DR Document Uploaded!');", true);
+            //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('DR Document Uploaded!');", true);
             btndummy_ModalPopupExtender.Hide();
         }
         private void Update_Document()
@@ -959,7 +807,7 @@ namespace CmlTechniques.CMS
                 _objcls.dr_status = false;
             _objcls.mode = 2;
             _objbll.dml_dr_pdf(_objcls, _objdb);
-            ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('DR Details Updated');", true);
+            //ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('DR Details Updated');", true);
             btndummy_ModalPopupExtender.Hide();
         }
         protected void mygrid_dr_SelectedIndexChanged(object sender, EventArgs e)
@@ -998,6 +846,84 @@ namespace CmlTechniques.CMS
         protected void drstaus_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+     
+        protected void btnsubmit_Click(object sender, EventArgs e)
+        {
+            Send_Mail();
+
+            btnDummy_ModalPopupExtender2.Hide();
+
+        }
+
+        protected void btnexitwindows_Click(object sender, EventArgs e)
+        {
+            btnDummy_ModalPopupExtender2.Hide();
+
+        }
+        void Send_Mail()
+        {
+            publicCls.publicCls _objcls = new publicCls.publicCls();
+            string Body = "";
+            Body = "Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno+ "/"+ "/" + txt_subject + "\n\n" + "This is an automatically generated email to advise you that the above document has been issued to you." + "\n\n" + "Could you please find time to review the documents  and make comments within the next 15 days" + "\n\n" + "If you review and have no comments on the document, please confirm with 'No comments' in the Response Column." + "\n\n" + "Thank you in anticipation of your co-operation with the review process." + "\n\n" + "CML" + "\n" + "Techniques" + "\n\n\n" + "http://www.cmltechniques.com";
+
+            string _sub = "Document Review - Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno + "/" + txt_subject;
+
+           if (IsValidEmailAddress(txt_issuedto.Text)) _objcls.Send_Email(txt_issuedto.Text, _sub, Body);
+
+            Body = "Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno + "/" + "/" + txt_subject + "\n\n" + "This is an automatically generated email to advise you that the above document has been issued to " + txt_review.Text + "\n\n" + "CML" + "\n" + "Techniques" + "\n\n\n" + "http://www.cmltechniques.com";
+
+            foreach (ListItem _lst in chkprjusers.Items)
+            {
+                if (_lst.Selected == true)
+                {
+                    string _email = _lst.Text;
+                    _objcls.Send_Email(_email, _sub, Body);
+                }
+            }
+        }
+        protected void chkall_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkall.Checked == true)
+            {
+                foreach (ListItem _lst in chkprjusers.Items)
+                {
+                    _lst.Selected = true;
+                }
+            }
+            else
+            {
+                foreach (ListItem _lst in chkprjusers.Items)
+                {
+                    _lst.Selected = false;
+                }
+            }
+        }
+        private void LoadModuleUsers()
+        {
+            BLL_Dml _oblbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _objdb.DBName = "dbCML";
+            _clsuser _objcls = new _clsuser();
+            _objcls.project_code = lblprj.Text;
+             _objcls.mode = 2;
+            DataTable _dtable = _oblbll.Load_CMS_Users(_objcls, _objdb);
+            chkprjusers.DataSource = _dtable;
+            chkprjusers.DataTextField = "uid";
+            chkprjusers.DataValueField = "uid";
+            chkprjusers.DataBind();
+        }
+        public bool IsValidEmailAddress(string email)
+        {
+            try
+            {
+                var emailChecked = new System.Net.Mail.MailAddress(email);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

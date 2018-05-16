@@ -588,7 +588,7 @@
                     </asp:SqlDataSource>
                 </ContentTemplate>
             </asp:UpdatePanel>
-            <asp:Panel ID="pnlPopup1" runat="server" Width="250px" Height="94px" Style="padding: 10px;
+            <asp:Panel ID="pnlPopup1" runat="server" Width="250px" Height="110px" Style="padding: 10px;
                 background-color: White; display: none">
                 <table border="0" cellpadding="0" cellspacing="0" style="background-color: White"
                     id="Table1">
@@ -648,7 +648,7 @@
             <asp:ModalPopupExtender ID="btndummy_ModalPopupExtender" runat="server" TargetControlID="btndummy"
                 PopupControlID="upop" BackgroundCssClass="modal">
             </asp:ModalPopupExtender>
-            <div style="width: 500px; height: 510px; background-color: #ECE1C3; border: solid 2px #063940;"
+            <div style="width: 500px; height: 550px; background-color: #ECE1C3; border: solid 2px #063940;"
                 id="upop">
                 <div style="height: 25px; padding: 5px 10px; font-size: 18px; font-weight: bold;
                     background-color: #063940; color: #ECE1C3;">
@@ -791,6 +791,12 @@
                                 </asp:UpdatePanel>
                             </td>
                         </tr>
+                        <tr id="tdemail" runat="server">
+                            <td></td>
+                            <td colspan="2">
+                                  <asp:CheckBox ID="chk" runat="server" Text="Do Not Send Email Notification Upon Uploading" />
+                            </td>
+                        </tr>
                         <tr>
                             <td>
                             </td>
@@ -825,6 +831,77 @@
             </div>
         </div>
     </div>
+
+         <asp:Panel ID="pnlPopup2" runat="server" Width="500px" Height="350px" BackColor="#83C8EE"
+        Style="padding: 5px; display: none;">
+        <div style="background-color: #fff; padding: 5px;">
+            <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                <ContentTemplate>
+                    <table style="width: 100%">
+                        <tr>
+                            <td colspan="2">
+                                Select Users
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left: 5px">
+                                <asp:CheckBox ID="chkall" runat="server" Text="All" AutoPostBack="true" OnCheckedChanged="chkall_CheckedChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div style="overflow: auto; height: 225px">
+                                    <asp:CheckBoxList ID="chkprjusers" runat="server" Width="100%" RepeatDirection="Vertical"
+                                        BackColor="Gainsboro">
+                                    </asp:CheckBoxList>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <asp:UpdatePanel ID="UpdatePanel23" runat="server">
+                                                <ContentTemplate>
+                                                    <asp:Button ID="btnsubmit" runat="server" OnClick="btnsubmit_Click" Text="Send Notification" />
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </td>
+                                        <td>
+                                            <asp:Button ID="btnexitwindows" runat="server" OnClick="btnexitwindows_Click" Text="Cancel" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="myprogress" runat="server" style="position: absolute; z-index: 40; top: 30%;
+                        left: 35%">
+                        <asp:UpdateProgress ID="UpdateProgress2" runat="server">
+                            <ProgressTemplate>
+                                <asp:Image ID="imgload" runat="server" ImageUrl="../images/loading.gif" Height="200px"
+                                    Width="250px" />
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </asp:Panel>
+    <asp:Button ID="btnDummy2" runat="server" Text="Button" Style="display: none;" />
+    <asp:ModalPopupExtender ID="btnDummy_ModalPopupExtender2" runat="server" TargetControlID="btnDummy2"
+        PopupControlID="pnlPopup2" BackgroundCssClass="model-background">
+    </asp:ModalPopupExtender>
+
     </form>
 
     <script type="text/javascript">

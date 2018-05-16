@@ -136,6 +136,13 @@ namespace CmlTechniques.CMS
                         _prm = mod[0].ToString() + "_M" + mod[0].ToString() + "_N" + mod[1].ToString() + "_P" + Project;
                         _n0.NavigateUrl = "javascript:parent.callcms('" + _prm + "','TDlog')";
                     }
+                    else if (mod[1].ToString() == "Document Review-PDF")
+                    {
+                        _prm = Project;
+                        _n0.NavigateUrl = "javascript:parent.callcms('" + _prm + "','34')";
+
+
+                    }
                     else if (mod[1].ToString() == "Systems List")
                     {
                         string _parm = "";
