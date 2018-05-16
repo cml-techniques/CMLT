@@ -865,13 +865,13 @@ namespace CmlTechniques.CMS
         {
             publicCls.publicCls _objcls = new publicCls.publicCls();
             string Body = "";
-            Body = "Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno+ "/"+ "/" + txt_subject + "\n\n" + "This is an automatically generated email to advise you that the above document has been issued to you." + "\n\n" + "Could you please find time to review the documents  and make comments within the next 15 days" + "\n\n" + "If you review and have no comments on the document, please confirm with 'No comments' in the Response Column." + "\n\n" + "Thank you in anticipation of your co-operation with the review process." + "\n\n" + "CML" + "\n" + "Techniques" + "\n\n\n" + "http://www.cmltechniques.com";
+            Body = "Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno.Text + "/" + txt_subject.Text + "\n\n" + "This is an automatically generated email to advise you that the above document has been issued to you." + "\n\n" + "Could you please find time to review the documents  and make comments within the next 15 days" + "\n\n" + "If you review and have no comments on the document, please confirm with 'No comments' in the Response Column." + "\n\n" + "Thank you in anticipation of your co-operation with the review process." + "\n\n" + "CML" + "\n" + "Techniques" + "\n\n\n" + "http://www.cmltechniques.com";
 
-            string _sub = "Document Review - Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno + "/" + txt_subject;
+            string _sub = "Document Review - Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno.Text + "/" + txt_subject.Text;
 
            if (IsValidEmailAddress(txt_issuedto.Text)) _objcls.Send_Email(txt_issuedto.Text, _sub, Body);
 
-            Body = "Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno + "/" + "/" + txt_subject + "\n\n" + "This is an automatically generated email to advise you that the above document has been issued to " + txt_review.Text + "\n\n" + "CML" + "\n" + "Techniques" + "\n\n\n" + "http://www.cmltechniques.com";
+            Body = "Ref. " + (string)Session["projectname"] + "/" + drservice.SelectedItem.Text + "/" + txt_drno.Text + "/" + "/" + txt_subject.Text + "\n\n" + "This is an automatically generated email to advise you that the above document has been issued to " + txt_review.Text + "\n\n" + "CML" + "\n" + "Techniques" + "\n\n\n" + "http://www.cmltechniques.com";
 
             foreach (ListItem _lst in chkprjusers.Items)
             {
