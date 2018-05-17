@@ -95,7 +95,7 @@
                 var doc = new jsPDF();
                 
                 var width = doc.internal.pageSize.width;    
-                var height = (doc.internal.pageSize.height - 50)/2;
+                var height = (doc.internal.pageSize.height - 60)/2;
 
                 var fontSize = doc.internal.getFontSize();          
                 var title = $("#lblproject").html() + " | Dashboard";
@@ -119,7 +119,7 @@
             fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
             title: "Overall System Summary",
             legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-            series: { 0: { color: '#C98E33' } },
+                series: { 0: { color: '#C98E33' } },
             //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
             animation: { startup: true, duration: 2000, easing: 'out' },
             vAxis: {
@@ -310,6 +310,7 @@
                     fontSize: 9,
                     bold: true
                 },
+                slantedText:true,
                 titleTextStyle: {
                     fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
                     fontSize: 11,
