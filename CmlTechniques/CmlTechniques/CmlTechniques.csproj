@@ -4633,6 +4633,8 @@
     <Content Include="schedulingsub.aspx" />
     <Content Include="Scripts\jquery-1.3.2.js" />
     <Content Include="Scripts\jquery.MultiFile.js" />
+    <Content Include="Scripts\jspdf.debug.js" />
+    <Content Include="Scripts\jspdf.js" />
     <Content Include="Stylesheet1.css" />
     <Content Include="Stylesheet3.css" />
     <Content Include="TreeLineImages\dash.gif" />

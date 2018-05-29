@@ -15,10 +15,17 @@
     <script src="../Assets/js/jquery-ui.min.js"></script>
     <script src="../Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="../Scripts/jspdf.debug.js"></script>
 
     <style type="text/css" media="print">
         @page {
             margin: 0mm;
+        }
+      
+    </style>
+    <style  type="text/css">
+          #btnPdf{
+            margin-right:5px;
         }
     </style>
     <script> 
@@ -31,6 +38,9 @@
         var chartData6;
         var detailData;
         google.load("visualization", "1", { packages: ['corechart'] });
+         
+       
+
         //fill chart data
         $(document).ready(function () {
 
@@ -42,27 +52,640 @@
                 window.open(_url);
 
             });
+          
+           
+       
 
 
             $('#loader7').hide();
             $('#loader8').hide();
             $('#loader9').hide();
-<%--            var xhr = $.ajax({
-                url: "Dashboard.aspx/GetExecutiveData",
-                data: JSON.stringify({ prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
-                dataType: "json",
-                type: "POST",
-                contentType: "application/json;charset=UTF-8",
-                success: function(data) {
-                    chartData3 = data.d;
+
+          
+
+             var columnchart = new google.visualization.ColumnChart(document.getElementById('chartdiv'));
+            var columnchart1 = new google.visualization.ColumnChart(document.getElementById('chartdiv1'));
+            var columnchart2 = new google.visualization.ColumnChart(document.getElementById('chartdiv2'));
+            var columnchart4 = new google.visualization.ColumnChart(document.getElementById('chartdiv4'));
+            var columnchart5 = new google.visualization.ColumnChart(document.getElementById('chartdiv5'));
+            var columnchart6 = new google.visualization.ColumnChart(document.getElementById('chartdiv6'));
+            var detailchart = new google.visualization.ColumnChart(document.getElementById('detailchart'));
+            var btnSave = document.getElementById('btnPdf');
+
+            google.visualization.events.addListener(columnchart, 'ready', function () {
+                btnSave.disabled = false;
+              });
+             google.visualization.events.addListener(columnchart1, 'ready', function () {
+                btnSave.disabled = false;
+            });
+             google.visualization.events.addListener(columnchart2, 'ready', function () {
+                btnSave.disabled = false;
+            });
+             google.visualization.events.addListener(columnchart4, 'ready', function () {
+                btnSave.disabled = false;
+            });
+             google.visualization.events.addListener(columnchart5, 'ready', function () {
+                btnSave.disabled = false;
+            });
+             google.visualization.events.addListener(columnchart6, 'ready', function () {
+                btnSave.disabled = false;
+            });            
+           
+              btnSave.addEventListener('click', function () {
+                var doc = new jsPDF();
+                
+                var width = doc.internal.pageSize.width;    
+                var height = (doc.internal.pageSize.height - 60)/2;
+
+                var fontSize = doc.internal.getFontSize();          
+                var title = $("#lblproject").html() + " | Dashboard";
+                var txtWidth = doc.getStringUnitWidth(title)*fontSize/doc.internal.scaleFactor;       
+          
+                doc.text(( width - txtWidth ) / 2, 10, title);
+                doc.addImage(columnchart.getImageURI(), 0, 20, width, height);
+                doc.addImage(columnchart1.getImageURI(), 0, height + 20, width, height);
+                doc.addPage();
+                doc.addImage(columnchart2.getImageURI(), 0, 20, width, height);
+                doc.addImage(columnchart4.getImageURI(), 0, height + 20, width, height);
+                doc.addPage();
+                doc.addImage(columnchart5.getImageURI(), 0, 20, width, height);
+                doc.addImage(columnchart6.getImageURI(), 0, height + 20, width, height); 
+                doc.save('Dashboard.pdf');                
+            }, false);
+
+            function drawChart(chartData) {
+            var data = new google.visualization.DataTable(chartData);
+            var options = {
+            fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+            title: "Overall System Summary",
+            legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
+                series: { 0: { color: '#C98E33' } },
+            //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
+            animation: { startup: true, duration: 2000, easing: 'out' },
+            vAxis: {
+                title: "Progress %",
+                width: '50%',
+                height: '50%',
+                viewWindowMode: 'maximized',
+                viewWindow: {
+                    max: 100,
+                    min: 0
+                },
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                gridlines: {
+                    count: 10
+                },
+                format: '#\'%\''
+            },
+            hAxis: {
+                title: "",
+                textStyle: {
+                    fontSize: 9,
+                    bold: true,
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
                 }
-            }).done(function() {
-                drawExecutiveChart(chartData3);
-                $('#loader1').hide();
-            }).fail(function(xhr, status, error) {
-                xhr.abort();
-            });--%>
-            var xhr1 = $.ajax({
+            },
+            is3D: true
+            };
+            data.addColumn('string', 'Label');
+            data.addColumn('number', 'Actual Progress');
+            data.addColumn({ type: 'string', role: 'style' });
+
+
+
+            for (var i = 0; i < chartData.length; i++) {
+            if (i == (chartData.length - 1)) {
+                data.addRow([chartData[i].Label, chartData[i].GraphActualData, 'color:#050505']);
+            }
+            else {
+                data.addRow([chartData[i].Label, chartData[i].GraphActualData, 'color:#C10843']);
+            }
+            }
+
+           
+            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
+            formatter.format(data, 1);
+            formatter.format(data, 2);
+            columnchart.draw(data, options);
+             
+            }
+            function drawServiceChart(chartData1, chartData2) {
+            var data1 = new google.visualization.DataTable(chartData1);
+            var data2 = new google.visualization.DataTable(chartData2);
+            var data4 = new google.visualization.DataTable(chartData6);
+            var dataview1 = new google.visualization.DataView(data1);
+            var dataview2 = new google.visualization.DataView(data2);
+            var dataview4 = new google.visualization.DataView(data4);
+            var options1 = {
+            fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+            title: "Electrical Systems",
+            legend: { position: 'none', maxLines: 1, textStyle: { fontSize: 10 } },
+            animation: { startup: true, duration: 2000, easing: 'out' },
+            series: { 0: { color: '#800080' } },
+            vAxis: {
+                title: "Progress %",
+                viewWindowMode: 'maximized',
+                viewWindow: {
+                    max: 100,
+                    min: 0
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                gridlines: {
+                    count: 10
+                },
+                format: '#\'%\''
+            },
+            hAxis: {
+                title: "",
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                }
+            }
+            };
+            var options2 = {
+            // backgroundColor: '#f1f1f1',
+            fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+            title: "Mechanical Systems",
+            legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 9 } },
+            animation: { startup: true, duration: 5000, easing: 'out' },
+            series: { 0: { color: '#D0EA11' }, 1: { color: '#1144EA' } },
+            vAxis: {
+                title: "Progress %",
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                viewWindowMode: 'maximized',
+                viewWindow: {
+                    max: 100,
+                    min: 0
+                },
+                gridlines: {
+                    count: 10
+                },
+                format: '#\'%\''
+            },
+            hAxis: {
+                title: "",
+                textStyle: {
+                    fontSize: 9,
+                    bold: true,
+                    color: '#282c35'
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                }
+            }
+            };
+            var options4 = {
+            fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+            title: "Fire Protection and Public Health Services",
+            legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
+            animation: { startup: true, duration: 2000, easing: 'out' },
+            series: { 0: { color: '#3399ff' }, 1: { color: '#2F262F' } },
+            vAxis: {
+                title: "Progress %",
+                viewWindowMode: 'maximized',
+                viewWindow: {
+                    max: 100,
+                    min: 0
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                gridlines: {
+                    count: 10
+                },
+                format: '#\'%\''
+            },
+            hAxis: {
+                title: "",
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                slantedText:true,
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                }
+            }
+            };
+            data1.addColumn('string', 'Label');
+            //data1.addColumn('number', 'Planned Progress')
+            //data1.addColumn({ type: 'string', role: 'style' });
+            data1.addColumn('number', 'Actual Progress');
+            data1.addColumn({ type: 'string', role: 'style' });
+            data1.addColumn('number', 'ID');
+
+            data2.addColumn('string', 'Label');
+            //data2.addColumn('number', 'Planned Progress')
+            //data2.addColumn({ type: 'string', role: 'style' });
+            data2.addColumn('number', 'Actual Progress');
+            data2.addColumn({ type: 'string', role: 'style' });
+            data2.addColumn('number', 'ID');
+            data4.addColumn('string', 'Label');
+            //data4.addColumn('number', 'Planned Progress')
+            //data4.addColumn({ type: 'string', role: 'style' });
+            data4.addColumn('number', 'Actual Progress');
+            data4.addColumn({ type: 'string', role: 'style' });
+            data4.addColumn('number', 'ID');
+
+            for (var i = 0; i < chartData1.length; i++) {
+            if (i != (chartData1.length - 1))
+                data1.addRow([chartData1[i].Label, chartData1[i].Progress, 'color: #800080', chartData1[i].ID]);
+            else
+                data1.addRow([chartData1[i].Label, chartData1[i].Progress, 'color: #000080', chartData1[i].ID]);
+            }
+
+            for (var i = 0; i < chartData2.length; i++) {
+            if (i != (chartData2.length - 1))
+                data2.addRow([chartData2[i].Label, chartData2[i].Progress, 'color: #1144EA', chartData2[i].ID]);
+            else
+                data2.addRow([chartData2[i].Label, chartData2[i].Progress, 'color: #066CC9', chartData2[i].ID]);
+            }
+            for (var i = 0; i < chartData6.length; i++) {
+            if (i != (chartData6.length - 1))
+                data4.addRow([chartData6[i].Label, chartData6[i].Progress, 'color: #2F262F', chartData6[i].ID]);
+            else
+                data4.addRow([chartData6[i].Label, chartData6[i].Progress, 'color: #E8193B', chartData6[i].ID]);
+            }
+          
+            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
+            formatter.format(data1, 1);
+            formatter.format(data1, 2);
+            formatter.format(data2, 1);
+            formatter.format(data2, 2);
+            formatter.format(data4, 1);
+            formatter.format(data4, 2);
+            //dataview1 = new google.visualization.DataView(data1);
+            dataview1.setColumns([0, 1, 2]);
+            //dataview2 = new google.visualization.DataView(data2);
+            dataview2.setColumns([0, 1, 2]);
+            //dataview4 = new google.visualization.DataView(data4);
+            dataview4.setColumns([0, 1, 2]);
+            columnchart1.draw(dataview1, options1);
+            columnchart2.draw(dataview2, options2);
+            columnchart6.draw(dataview4, options4);
+            google.visualization.events.addListener(columnchart1, 'select', selecthandler);
+            google.visualization.events.addListener(columnchart2, 'select', selecthandler1);
+            google.visualization.events.addListener(columnchart6, 'select', selecthandler4);
+            google.visualization.events.addListener(columnchart1, 'onmouseover', handler1);
+            google.visualization.events.addListener(columnchart1, 'onmouseout', handler2);
+            google.visualization.events.addListener(columnchart2, 'onmouseover', handler1);
+            google.visualization.events.addListener(columnchart2, 'onmouseout', handler2);
+            google.visualization.events.addListener(columnchart6, 'onmouseover', handler1);
+            google.visualization.events.addListener(columnchart6, 'onmouseout', handler2);
+            function handler1() {
+            $('#chartdiv1').css('cursor', 'pointer');
+            $('#chartdiv2').css('cursor', 'pointer');
+            $('#chartdiv6').css('cursor', 'pointer');
+            }
+            function handler2() {
+            $('#chartdiv1').css('cursor', 'default');
+            $('#chartdiv2').css('cursor', 'default');
+            $('#chartdiv6').css('cursor', 'default');
+            }
+            var label;
+            function selecthandler() {
+            var id = data1.getValue(columnchart1.getSelection()[0].row, 3);
+            label = data1.getValue(columnchart1.getSelection()[0].row, 0);
+
+            if (id != 100) {
+                $('#loader7').show();
+                modalOpen(id, label);
+            }
+            }
+            function selecthandler1() {
+            var id1 = data2.getValue(columnchart2.getSelection()[0].row, 3);
+            label = data2.getValue(columnchart2.getSelection()[0].row, 0);
+            if (id1 != 100) {
+                $('#loader8').show();
+                modalOpen1(id1, label);
+            }
+            }
+            function selecthandler4() {
+            var id2 = data4.getValue(columnchart6.getSelection()[0].row, 3);
+            label = data4.getValue(columnchart6.getSelection()[0].row, 0);
+            if (id2 != 100) {
+                $('#loader9').show();
+                modalOpen2(id2, label);
+            }
+            }
+            }
+            function drawCassheetChart(chartData4, chartData5) {
+            var data1 = new google.visualization.DataTable(chartData4);
+            var data2 = new google.visualization.DataTable(chartData5);
+            var options1 = {
+            fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+            title: "Fire & Voice Alarm Services",
+            legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
+            animation: { startup: true, duration: 5000, easing: 'out' },
+            series: { 0: { color: '#E8396E' } },
+            vAxis: {
+                title: "Progress %",
+                viewWindowMode: 'maximized',
+                viewWindow: {
+                    max: 100,
+                    min: 0
+                },
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                gridlines: {
+                    count: 10
+                },
+                format: '#\'%\''
+            },
+            hAxis: {
+                title: "",
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                }
+            }
+            };
+            var options2 = {
+            fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+            title: "BMS",
+            legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
+            animation: { startup: true, duration: 7000, easing: 'out' },
+            series: { 0: { color: '#FF5733' }, 1: { color: '#00FF00' } },
+            vAxis: {
+                title: "Progress %",
+                viewWindowMode: 'maximized',
+                viewWindow: {
+                    max: 100,
+                    min: 0
+                },
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                gridlines: {
+                    count: 10
+                },
+                format: '#\'%\''
+            },
+            hAxis: {
+                title: "",
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                }
+            }
+            };
+
+            data1.addColumn('string', 'Label');
+            //data1.addColumn('number', 'Planned Progress');
+            //data1.addColumn({ type: 'string', role: 'style' });
+            data1.addColumn('number', 'Actual Progress');
+            data1.addColumn({ type: 'string', role: 'style' });
+
+            data2.addColumn('string', 'Label');
+            //data2.addColumn('number', 'Planned Progress');
+            //data2.addColumn({ type: 'string', role: 'style' });
+            data2.addColumn('number', 'Actual Progress');
+            data2.addColumn({ type: 'string', role: 'style' });
+
+            for (var i = 0; i < chartData4.length; i++) {
+            if (i != (chartData4.length - 1))
+                data1.addRow([chartData4[i].Label, chartData4[i].GraphActualData, 'color: #C0C0C0']);
+            else
+                data1.addRow([chartData4[i].Label, chartData4[i].GraphActualData, 'color: #FF0000']);
+            }
+            for (var i = 0; i < chartData5.length; i++) {
+            if (i != (chartData5.length - 1))
+                data2.addRow([chartData5[i].Label, chartData5[i].GraphActualData, 'color:#00FF00'])
+            else
+                data2.addRow([chartData5[i].Label, chartData5[i].GraphActualData, 'color:#0000FF'])
+            }
+          
+            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
+            formatter.format(data1, 1);
+            formatter.format(data1, 2);
+            formatter.format(data2, 1);
+            formatter.format(data2, 2);
+            columnchart4.draw(data1, options1);
+            columnchart5.draw(data2, options2);
+            }
+            function drawDetailsChart(detailData, label) {
+            var data = new google.visualization.DataTable(detailData);
+            var options = {
+            fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+            title: label,
+            legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
+            colors: ['#ff6666'],
+            //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
+            animation: { startup: true, duration: 2000, easing: 'out' },
+            vAxis: {
+                title: "Progress %",
+                width: '50%',
+                height: '50%',
+                viewWindowMode: 'maximized',
+                viewWindow: {
+                    max: 100,
+                    min: 0
+                },
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                gridlines: {
+                    count: 10
+                },
+                format: '#\'%\''
+            },
+            hAxis: {
+                title: "",
+                textStyle: {
+                    fontSize: 8,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                textPosition: 'out',
+                slantedText: true,
+                slantedTextAngle: 30,
+                maxTextLines: 4
+            },
+            is3D: true
+            };
+            data.addColumn('string', 'Label');
+            data.addColumn('number', 'Actual Progress');
+            data.addColumn({ type: 'string', role: 'style' });
+            if (detailData != null) {
+            for (var i = 0; i < detailData.length; i++) {
+                if (i == (detailData.length - 1)) {
+                    data.addRow([detailData[i].Label, detailData[i].Progress, 'color: #993366']);
+                }
+                else {
+                    data.addRow([detailData[i].Label, detailData[i].Progress, 'color: #ff6666']);
+                }
+            }
+            }
+
+          
+            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
+            formatter.format(data, 1);
+            detailchart.draw(data, options);
+            }
+            function drawDetailsChart1(detailData, label) {
+            var data = new google.visualization.DataTable(detailData);
+            var options = {
+            fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+            title: label,
+            legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
+            colors: ['#ff6666'],
+            //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
+            animation: { startup: true, duration: 2000, easing: 'out' },
+            vAxis: {
+                title: "Progress %",
+                width: '50%',
+                height: '50%',
+                viewWindowMode: 'maximized',
+                viewWindow: {
+                    max: 100,
+                    min: 0
+                },
+                textStyle: {
+                    fontSize: 9,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                gridlines: {
+                    count: 10
+                },
+                format: '#\'%\''
+            },
+            hAxis: {
+                title: "",
+                textStyle: {
+                    fontSize: 8,
+                    bold: true
+                },
+                titleTextStyle: {
+                    fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
+                    fontSize: 11,
+                    italic: false,
+                    bold: true
+                },
+                textPosition: 'out',
+                slantedText: true,
+                slantedTextAngle: 30,
+                maxTextLines: 4
+            },
+            is3D: true
+            };
+            data.addColumn('string', 'Label');
+            data.addColumn('number', 'Actual Progress');
+            data.addColumn({ type: 'string', role: 'style' });
+            if (detailData != null) {
+            for (var i = 0; i < detailData.length; i++) {
+                if (i == (detailData.length - 1)) {
+                    data.addRow([detailData[i].Label, detailData[i].Progress, 'color: #993366']);
+                }
+                else {
+                    data.addRow([detailData[i].Label, detailData[i].Progress, 'color: #ff6666']);
+                }
+            }
+            }
+
+           
+            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
+            formatter.format(data, 1);
+            detailchart.draw(data, options);
+            }
+
+              var xhr1 = $.ajax({
                 url: "Dashboard.aspx/GetChartData",
                 data: JSON.stringify({ prj: document.getElementById("<%= lblprj.ClientID %>").innerHTML }),
                 dataType: "json",
@@ -119,318 +742,13 @@
                 $('#loader5').hide();
                 $('#loader6').hide();
             });
-
-
-
         });
-        function drawChart(chartData) {
-            var data = new google.visualization.DataTable(chartData);
-            var options = {
-                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Overall System Summary",
-                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-                series: { 0: { color: '#C98E33' } },
-                //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
-                animation: { startup: true, duration: 2000, easing: 'out' },
-                vAxis: {
-                    title: "Progress %",
-                    width: '50%',
-                    height: '50%',
-                    viewWindowMode: 'maximized',
-                    viewWindow: {
-                        max: 100,
-                        min: 0
-                    },
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    gridlines: {
-                        count: 10
-                    },
-                    format: '#\'%\''
-                },
-                hAxis: {
-                    title: "",
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true,
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    }
-                },
-                is3D: true
-            };
-            data.addColumn('string', 'Label');
-            data.addColumn('number', 'Actual Progress');
-            data.addColumn({ type: 'string', role: 'style' });
 
 
+       
 
-            for (var i = 0; i < chartData.length; i++) {
-                if (i == (chartData.length - 1)) {
-                    data.addRow([chartData[i].Label, chartData[i].GraphActualData, 'color:#050505']);
-                }
-                else {
-                    data.addRow([chartData[i].Label, chartData[i].GraphActualData, 'color:#C10843']);
-                }
-            }
-
-            var columnchart = new google.visualization.ColumnChart(document.getElementById('chartdiv'));
-            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
-            formatter.format(data, 1);
-            formatter.format(data, 2);
-            columnchart.draw(data, options);
-        }
-        function drawServiceChart(chartData1, chartData2) {
-            var data1 = new google.visualization.DataTable(chartData1);
-            var data2 = new google.visualization.DataTable(chartData2);
-            var data4 = new google.visualization.DataTable(chartData6);
-            var dataview1 = new google.visualization.DataView(data1);
-            var dataview2 = new google.visualization.DataView(data2);
-            var dataview4 = new google.visualization.DataView(data4);
-            var options1 = {
-                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Electrical Systems",
-                legend: { position: 'none', maxLines: 1, textStyle: { fontSize: 10 } },
-                animation: { startup: true, duration: 2000, easing: 'out' },
-                series: { 0: { color: '#800080' } },
-                vAxis: {
-                    title: "Progress %",
-                    viewWindowMode: 'maximized',
-                    viewWindow: {
-                        max: 100,
-                        min: 0
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    gridlines: {
-                        count: 10
-                    },
-                    format: '#\'%\''
-                },
-                hAxis: {
-                    title: "",
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    }
-                }
-            };
-            var options2 = {
-                // backgroundColor: '#f1f1f1',
-                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Mechanical Systems",
-                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 9 } },
-                animation: { startup: true, duration: 5000, easing: 'out' },
-                series: { 0: { color: '#D0EA11' }, 1: { color: '#1144EA' } },
-                vAxis: {
-                    title: "Progress %",
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    viewWindowMode: 'maximized',
-                    viewWindow: {
-                        max: 100,
-                        min: 0
-                    },
-                    gridlines: {
-                        count: 10
-                    },
-                    format: '#\'%\''
-                },
-                hAxis: {
-                    title: "",
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true,
-                        color: '#282c35'
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    }
-                }
-            };
-            var options4 = {
-                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Fire Protection and Public Health Services",
-                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-                animation: { startup: true, duration: 2000, easing: 'out' },
-                series: { 0: { color: '#3399ff' }, 1: { color: '#2F262F' } },
-                vAxis: {
-                    title: "Progress %",
-                    viewWindowMode: 'maximized',
-                    viewWindow: {
-                        max: 100,
-                        min: 0
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    gridlines: {
-                        count: 10
-                    },
-                    format: '#\'%\''
-                },
-                hAxis: {
-                    title: "",
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    }
-                }
-            };
-            data1.addColumn('string', 'Label');
-            //data1.addColumn('number', 'Planned Progress')
-            //data1.addColumn({ type: 'string', role: 'style' });
-            data1.addColumn('number', 'Actual Progress');
-            data1.addColumn({ type: 'string', role: 'style' });
-            data1.addColumn('number', 'ID');
-
-            data2.addColumn('string', 'Label');
-            //data2.addColumn('number', 'Planned Progress')
-            //data2.addColumn({ type: 'string', role: 'style' });
-            data2.addColumn('number', 'Actual Progress');
-            data2.addColumn({ type: 'string', role: 'style' });
-            data2.addColumn('number', 'ID');
-            data4.addColumn('string', 'Label');
-            //data4.addColumn('number', 'Planned Progress')
-            //data4.addColumn({ type: 'string', role: 'style' });
-            data4.addColumn('number', 'Actual Progress');
-            data4.addColumn({ type: 'string', role: 'style' });
-            data4.addColumn('number', 'ID');
-
-            for (var i = 0; i < chartData1.length; i++) {
-                if (i != (chartData1.length - 1))
-                    data1.addRow([chartData1[i].Label, chartData1[i].Progress, 'color: #800080', chartData1[i].ID]);
-                else
-                    data1.addRow([chartData1[i].Label, chartData1[i].Progress, 'color: #000080', chartData1[i].ID]);
-            }
-
-            for (var i = 0; i < chartData2.length; i++) {
-                if (i != (chartData2.length - 1))
-                    data2.addRow([chartData2[i].Label, chartData2[i].Progress, 'color: #1144EA', chartData2[i].ID]);
-                else
-                    data2.addRow([chartData2[i].Label, chartData2[i].Progress, 'color: #066CC9', chartData2[i].ID]);
-            }
-            for (var i = 0; i < chartData6.length; i++) {
-                if (i != (chartData6.length - 1))
-                    data4.addRow([chartData6[i].Label, chartData6[i].Progress, 'color: #2F262F', chartData6[i].ID]);
-                else
-                    data4.addRow([chartData6[i].Label, chartData6[i].Progress, 'color: #E8193B', chartData6[i].ID]);
-            }
-            var columnchart1 = new google.visualization.ColumnChart(document.getElementById('chartdiv1'));
-            var columnchart2 = new google.visualization.ColumnChart(document.getElementById('chartdiv2'));
-            var columnchart4 = new google.visualization.ColumnChart(document.getElementById('chartdiv6'));
-            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
-            formatter.format(data1, 1);
-            formatter.format(data1, 2);
-            formatter.format(data2, 1);
-            formatter.format(data2, 2);
-            formatter.format(data4, 1);
-            formatter.format(data4, 2);
-            //dataview1 = new google.visualization.DataView(data1);
-            dataview1.setColumns([0, 1, 2]);
-            //dataview2 = new google.visualization.DataView(data2);
-            dataview2.setColumns([0, 1, 2]);
-            //dataview4 = new google.visualization.DataView(data4);
-            dataview4.setColumns([0, 1, 2]);
-            columnchart1.draw(dataview1, options1);
-            columnchart2.draw(dataview2, options2);
-            columnchart4.draw(dataview4, options4);
-            google.visualization.events.addListener(columnchart1, 'select', selecthandler);
-            google.visualization.events.addListener(columnchart2, 'select', selecthandler1);
-            google.visualization.events.addListener(columnchart4, 'select', selecthandler4);
-            google.visualization.events.addListener(columnchart1, 'onmouseover', handler1);
-            google.visualization.events.addListener(columnchart1, 'onmouseout', handler2);
-            google.visualization.events.addListener(columnchart2, 'onmouseover', handler1);
-            google.visualization.events.addListener(columnchart2, 'onmouseout', handler2);
-            google.visualization.events.addListener(columnchart4, 'onmouseover', handler1);
-            google.visualization.events.addListener(columnchart4, 'onmouseout', handler2);
-            function handler1() {
-                $('#chartdiv1').css('cursor', 'pointer');
-                $('#chartdiv2').css('cursor', 'pointer');
-                $('#chartdiv6').css('cursor', 'pointer');
-            }
-            function handler2() {
-                $('#chartdiv1').css('cursor', 'default');
-                $('#chartdiv2').css('cursor', 'default');
-                $('#chartdiv6').css('cursor', 'default');
-            }
-            var label;
-            function selecthandler() {
-                var id = data1.getValue(columnchart1.getSelection()[0].row, 3);
-                label = data1.getValue(columnchart1.getSelection()[0].row, 0);
-
-                if (id != 100) {
-                    $('#loader7').show();
-                    modalOpen(id, label);
-                }
-            }
-            function selecthandler1() {
-                var id1 = data2.getValue(columnchart2.getSelection()[0].row, 3);
-                label = data2.getValue(columnchart2.getSelection()[0].row, 0);
-                if (id1 != 100) {
-                    $('#loader8').show();
-                    modalOpen1(id1, label);
-                }
-            }
-            function selecthandler4() {
-                var id2 = data4.getValue(columnchart4.getSelection()[0].row, 3);
-                label = data4.getValue(columnchart4.getSelection()[0].row, 0);
-                if (id2 != 100) {
-                    $('#loader9').show();
-                    modalOpen2(id2, label);
-                }
-            }
-        }
+       
+       
         function modalOpen1(id1, label) {
             $.ajax({
                 url: "Dashboard.aspx/GetModalDetails",
@@ -497,187 +815,8 @@
                 });
             });
         }
-        function drawCassheetChart(chartData4, chartData5) {
-            var data1 = new google.visualization.DataTable(chartData4);
-            var data2 = new google.visualization.DataTable(chartData5);
-            var options1 = {
-                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "Fire & Voice Alarm Services",
-                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-                animation: { startup: true, duration: 5000, easing: 'out' },
-                series: { 0: { color: '#E8396E' } },
-                vAxis: {
-                    title: "Progress %",
-                    viewWindowMode: 'maximized',
-                    viewWindow: {
-                        max: 100,
-                        min: 0
-                    },
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    gridlines: {
-                        count: 10
-                    },
-                    format: '#\'%\''
-                },
-                hAxis: {
-                    title: "",
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    }
-                }
-            };
-            var options2 = {
-                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: "BMS",
-                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-                animation: { startup: true, duration: 7000, easing: 'out' },
-                series: { 0: { color: '#FF5733' }, 1: { color: '#00FF00' } },
-                vAxis: {
-                    title: "Progress %",
-                    viewWindowMode: 'maximized',
-                    viewWindow: {
-                        max: 100,
-                        min: 0
-                    },
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    gridlines: {
-                        count: 10
-                    },
-                    format: '#\'%\''
-                },
-                hAxis: {
-                    title: "",
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    }
-                }
-            };
-
-            data1.addColumn('string', 'Label');
-            //data1.addColumn('number', 'Planned Progress');
-            //data1.addColumn({ type: 'string', role: 'style' });
-            data1.addColumn('number', 'Actual Progress');
-            data1.addColumn({ type: 'string', role: 'style' });
-
-            data2.addColumn('string', 'Label');
-            //data2.addColumn('number', 'Planned Progress');
-            //data2.addColumn({ type: 'string', role: 'style' });
-            data2.addColumn('number', 'Actual Progress');
-            data2.addColumn({ type: 'string', role: 'style' });
-
-            for (var i = 0; i < chartData4.length; i++) {
-                if (i != (chartData4.length - 1))
-                    data1.addRow([chartData4[i].Label, chartData4[i].GraphActualData, 'color: #C0C0C0']);
-                else
-                    data1.addRow([chartData4[i].Label, chartData4[i].GraphActualData, 'color: #FF0000']);
-            }
-            for (var i = 0; i < chartData5.length; i++) {
-                if (i != (chartData5.length - 1))
-                    data2.addRow([chartData5[i].Label, chartData5[i].GraphActualData, 'color:#00FF00'])
-                else
-                    data2.addRow([chartData5[i].Label, chartData5[i].GraphActualData, 'color:#0000FF'])
-            }
-            var columnchart1 = new google.visualization.ColumnChart(document.getElementById('chartdiv4'));
-            var columnchart2 = new google.visualization.ColumnChart(document.getElementById('chartdiv5'));
-            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
-            formatter.format(data1, 1);
-            formatter.format(data1, 2);
-            formatter.format(data2, 1);
-            formatter.format(data2, 2);
-            columnchart1.draw(data1, options1);
-            columnchart2.draw(data2, options2);
-        }
-        //function drawExecutiveChart(chartData3) {
-        //    var data = new google.visualization.DataTable(chartData3);
-        //    var options = {
-        //        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-        //        title: "Executive Summary",
-        //        pointSize: 5,
-        //        pointShape: 'square',
-        //        legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-        //        animation: { startup: true, duration: 2000, easing: 'out' },
-        //        series: { 0: { color: '#003300' }, 1: { color: '#6600cc' } },
-        //        vAxis: {
-        //            title: "Progress %",
-        //            viewWindowMode: 'maximized',
-        //            viewWindow: {
-        //                max: 100,
-        //                min: 0
-        //            },
-        //            textStyle: {
-        //                fontSize: 9,
-        //                bold: true
-        //            },
-        //            gridlines: {
-        //                count: 10
-        //            },
-        //            titleTextStyle: {
-        //                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-        //                fontSize: 11,
-        //                italic: false,
-        //                bold: true
-        //            },
-        //            format: '#\'%\''
-        //        },
-        //        hAxis: {
-        //            title: "Weekly Dates",
-        //            textStyle: {
-        //                fontSize: 9,
-        //                bold: true
-        //            },
-        //            titleTextStyle: {
-        //                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-        //                fontSize: 11,
-        //                italic: false,
-        //                bold: true
-        //            }
-        //        },
-        //        interpolateNulls: true
-        //    };
-        //    data.addColumn('string', 'Label');
-        //    data.addColumn('number', 'Planned Progress');
-        //    data.addColumn('number', 'Actual Progress');
-        //    for (var i = 0; i < chartData3.length; i++) {
-        //        data.addRow([chartData3[i].Label, chartData3[i].PlannedProgress, chartData3[i].ActualProgress]);
-        //    }
-        //    var linechart = new google.visualization.LineChart(document.getElementById('chartdiv3'));
-        //    var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
-        //    formatter.format(data, 1);
-        //    //formatter.format(data, 2);
-        //    linechart.draw(data, options);
-        //}
+      
+        
         $(window).resize(function () {
             drawChart(chartData);
             drawServiceChart(chartData1, chartData2);
@@ -705,148 +844,7 @@
         //function myfunct() {
         //    window.print();
         //}
-        function drawDetailsChart(detailData, label) {
-            var data = new google.visualization.DataTable(detailData);
-            var options = {
-                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: label,
-                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-                colors: ['#ff6666'],
-                //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
-                animation: { startup: true, duration: 2000, easing: 'out' },
-                vAxis: {
-                    title: "Progress %",
-                    width: '50%',
-                    height: '50%',
-                    viewWindowMode: 'maximized',
-                    viewWindow: {
-                        max: 100,
-                        min: 0
-                    },
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    gridlines: {
-                        count: 10
-                    },
-                    format: '#\'%\''
-                },
-                hAxis: {
-                    title: "",
-                    textStyle: {
-                        fontSize: 8,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    textPosition: 'out',
-                    slantedText: true,
-                    slantedTextAngle: 30,
-                    maxTextLines: 4
-                },
-                is3D: true
-            };
-            data.addColumn('string', 'Label');
-            data.addColumn('number', 'Actual Progress');
-            data.addColumn({ type: 'string', role: 'style' });
-            if (detailData != null) {
-                for (var i = 0; i < detailData.length; i++) {
-                    if (i == (detailData.length - 1)) {
-                        data.addRow([detailData[i].Label, detailData[i].Progress, 'color: #993366']);
-                    }
-                    else {
-                        data.addRow([detailData[i].Label, detailData[i].Progress, 'color: #ff6666']);
-                    }
-                }
-            }
-
-            var columnchart = new google.visualization.ColumnChart(document.getElementById('detailchart'));
-            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
-            formatter.format(data, 1);
-            columnchart.draw(data, options);
-        }
-        function drawDetailsChart1(detailData, label) {
-            var data = new google.visualization.DataTable(detailData);
-            var options = {
-                fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                title: label,
-                legend: { position: 'none', maxLines: 3, textStyle: { fontSize: 10 } },
-                colors: ['#ff6666'],
-                //series: [{ color: 'blue', visibleInLegend: true }, { color: 'red', visibleInLegend: false }],
-                animation: { startup: true, duration: 2000, easing: 'out' },
-                vAxis: {
-                    title: "Progress %",
-                    width: '50%',
-                    height: '50%',
-                    viewWindowMode: 'maximized',
-                    viewWindow: {
-                        max: 100,
-                        min: 0
-                    },
-                    textStyle: {
-                        fontSize: 9,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    gridlines: {
-                        count: 10
-                    },
-                    format: '#\'%\''
-                },
-                hAxis: {
-                    title: "",
-                    textStyle: {
-                        fontSize: 8,
-                        bold: true
-                    },
-                    titleTextStyle: {
-                        fontName: 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
-                        fontSize: 11,
-                        italic: false,
-                        bold: true
-                    },
-                    textPosition: 'out',
-                    slantedText: true,
-                    slantedTextAngle: 30,
-                    maxTextLines: 4
-                },
-                is3D: true
-            };
-            data.addColumn('string', 'Label');
-            data.addColumn('number', 'Actual Progress');
-            data.addColumn({ type: 'string', role: 'style' });
-            if (detailData != null) {
-                for (var i = 0; i < detailData.length; i++) {
-                    if (i == (detailData.length - 1)) {
-                        data.addRow([detailData[i].Label, detailData[i].Progress, 'color: #993366']);
-                    }
-                    else {
-                        data.addRow([detailData[i].Label, detailData[i].Progress, 'color: #ff6666']);
-                    }
-                }
-            }
-
-            var columnchart = new google.visualization.ColumnChart(document.getElementById('detailchart'));
-            var formatter = new google.visualization.NumberFormat({ pattern: '#\'%\'', fractionDigits: 2 });
-            formatter.format(data, 1);
-            columnchart.draw(data, options);
-        }
+       
         function clearData() {
             var charts = document.getElementById("detailchart");
             charts.innerHTML = "";
@@ -891,16 +889,16 @@
             </div>
         </div>--%>
         <div class="row sec-head">
-            <div class="col-lg-11">
-                <p class="text-center font-weight-bold">
-                    <strong class="check-link">
+            <div class="col-lg-12 text-center">             
+                    <strong class="check-link  font-weight-bold">
                         <asp:Label runat="server" ID="lblproject"></asp:Label><span> | Dashboard</span>
                     </strong>
-                </p>
+               
+                 <button type="button" id="btnPrint" class="btn btn-basic btn-primary pull-right">Print</button>
+                <button type="button" id="btnPdf" class="btn btn-basic btn-primary pull-right">PDF</button>
             </div>
-            <div class="col-lg-1">
-                <button type="button" id="btnPrint" class="btn btn-outline btn-default btn-primary">Print</button>
-            </div>
+           
+                
         </div>
 
         <div class="row">
@@ -952,6 +950,7 @@
             </div>
         </div>
     </div>
+    <canvas id="canvasGraph" style="display:none;"></canvas>
 </body>
 </html>
 
