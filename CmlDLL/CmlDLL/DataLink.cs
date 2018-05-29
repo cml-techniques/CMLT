@@ -177,7 +177,22 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
             _cmd.ExecuteNonQuery();
         }
-     
+        public void Editcomment(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@comment", _obj.comment);
+            _cmd.Parameters.AddWithValue("@user_id", _obj.user_id);
+            _cmd.Parameters.AddWithValue("@comm_id", _obj.comm_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Deletecomment(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@comm_id", _obj.comm_id);
+            _cmd.ExecuteNonQuery();
+        }
         public void addtobasket(string _sp, _clscomment _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -192,7 +207,22 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
             _cmd.ExecuteNonQuery();
         }
-      
+        public void ClearBasket(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            //_cmd.Parameters.AddWithValue("@id", _obj.comm_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable load_basket(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public DataTable load_comments(string _sp, _clsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -289,7 +319,28 @@ namespace DataLinkLibrary
             _cmd.ExecuteNonQuery();
         }
 
-    
+        //-----------------------Created on 13/03/2011--------------------------//
+        public void Manage_Tree(string _sp, _clsManageTree _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@description", _obj.desciption);
+            _cmd.Parameters.AddWithValue("@service", _obj.service);
+            _cmd.Parameters.AddWithValue("@possition", _obj.possition);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Edit_Tree(string _sp, _clsManageTree _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@description", _obj.desciption);
+            _cmd.Parameters.AddWithValue("@service", _obj.service);
+            _cmd.Parameters.AddWithValue("@possition", _obj.possition);
+            _cmd.Parameters.AddWithValue("@code", _obj.code);
+            _cmd.Parameters.AddWithValue("@mode", _obj.mode);
+            _cmd.ExecuteNonQuery();
+        }
+        //--------------------Created on 15/03/2011-----------------//
         public void Tree_Folder(string _sp, _clstreefolder _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -346,7 +397,17 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-     
+        public DataTable Load_PrjDocType(string _sp, _clsFolderTree _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.Project_code);
+            _cmd.Parameters.AddWithValue("@Parent", _obj.Parent_folder);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
 
         public DataTable load_service(string _sp, _clsuser _obj, _database _objdb)
         {
@@ -419,7 +480,14 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@status", _obj.status);
             _cmd.ExecuteNonQuery();
         }
-       
+        public void SetAutoComplete(string _sp, _clsuser _obj, _database _objdb)
+        {
+            //_cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            //_cmd.CommandType = CommandType.StoredProcedure;
+            //_cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            //_cmd.Parameters.AddWithValue("@autocomplete", _obj.autocomplete);
+            //_cmd.ExecuteNonQuery();
+        }
         public void Insert_UserPrj(string _sp, _clsuser _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -464,7 +532,16 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
             _cmd.ExecuteNonQuery();
         }
-       
+        public DataTable Load_Reports(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@package", _obj.package_code);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void Set_Reminder(string _sp, _clsdocduration _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -493,7 +570,26 @@ namespace DataLinkLibrary
                 throw;
             }
         }
-      
+        public int ValidateDocumentRevision(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
+            _cmd.Parameters.Add("@exists", SqlDbType.Int);
+            _cmd.Parameters["@exists"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@exists"].Value.ToString() != "")
+                    return System.Convert.ToInt32(_cmd.Parameters["@exists"].Value.ToString());
+                else
+                    return 0;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public void add_resp(string _sp, _clscomment _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -530,7 +626,36 @@ namespace DataLinkLibrary
                 throw;
             }
         }
-     
+        public void add_cas_main(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@sys_id", _obj.sys);
+            _cmd.Parameters.AddWithValue("@reff_", _obj.reff);
+            _cmd.Parameters.AddWithValue("@desc_", _obj.desc);
+            _cmd.Parameters.AddWithValue("@loca_", _obj.loca);
+            _cmd.Parameters.AddWithValue("@p_power_to", _obj.p_power_to);
+            _cmd.Parameters.AddWithValue("@fed_from", _obj.fed_from);
+            _cmd.Parameters.AddWithValue("@power_on", _obj.power_on);
+            _cmd.Parameters.AddWithValue("@comm_", _obj.comm);
+            _cmd.Parameters.AddWithValue("@act_by", _obj.act_by);
+            _cmd.Parameters.AddWithValue("@act_date", _obj.act_date);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@date_", _obj.date);
+            _cmd.Parameters.AddWithValue("@srv_id", _obj.srv);
+            _cmd.Parameters.AddWithValue("@sch_id", _obj.sch);
+            _cmd.Parameters.AddWithValue("@prj_code", _obj.prj_code);
+            _cmd.Parameters.AddWithValue("@con_acce", _obj.con_acce);
+            _cmd.Parameters.AddWithValue("@filed", _obj.ts_filed);
+            _cmd.Parameters.AddWithValue("@des_vol", _obj.des_vol);
+            _cmd.Parameters.AddWithValue("@des_flow_rate", _obj.des_flow_rate);
+            _cmd.Parameters.AddWithValue("@devices", _obj.dev);
+            _cmd.Parameters.AddWithValue("@sys_monitored", _obj.sys_mon);
+            _cmd.Parameters.AddWithValue("@fa_interfaces", _obj.fa_int);
+            _cmd.Parameters.AddWithValue("@mode", _obj.mode);
+            _cmd.Parameters.AddWithValue("@cas_id", _obj.cas_id);
+            _cmd.ExecuteNonQuery();
+        }
         public void add_asset_code(string _sp, _clsassetcode _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -628,7 +753,26 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-      
+        public DataTable Load_CasSub(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@cas_id", _obj.cas_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void LOG(string _sp, _clslog _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@_uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@_ipaddress", _obj.ipaddr);
+            _cmd.Parameters.AddWithValue("@_location", _obj.location);
+            _cmd.Parameters.AddWithValue("@_login", _obj.login);
+            _cmd.ExecuteNonQuery();
+        }
         public void UpdateUserLog(string _sp, _clslog _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -990,7 +1134,28 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@planned8", _obj.planned8);
             _cmd.ExecuteNonQuery();
         }
-       
+        public DataSet Load_casMain_Graph(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@sch_id", _obj.sch);
+            _cmd.Parameters.AddWithValue("@prj_code", _obj.prj_code);
+            _cmd.Parameters.AddWithValue("@sys_id", _obj.sys);
+            _dta = new SqlDataAdapter(_cmd);
+            DataSet _dtable = new DataSet();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable load_comments(string _sp, _clscmscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@id", _obj.doc_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void Set_User_Permission(string _sp, _clsuser _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1034,7 +1199,18 @@ namespace DataLinkLibrary
                 throw;
             }
         }
-      
+        public void RESTORE_DB(string _sp, _database _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@DBName", _obj.DBName);
+            _cmd.Parameters.AddWithValue("@BackName", _obj.Bakname);
+            _cmd.Parameters.AddWithValue("@DataName", _obj.Dataname);
+            _cmd.Parameters.AddWithValue("@DataFileName", _obj.Datapath);
+            _cmd.Parameters.AddWithValue("@LogName", _obj.Logname);
+            _cmd.Parameters.AddWithValue("@LogFileName", _obj.Logpath);
+            _cmd.ExecuteNonQuery();
+        }
         public void create_package(string _sp, _clspackage _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1155,7 +1331,43 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@testsheet", _obj.testsheet);
             _cmd.ExecuteNonQuery();
         }
-      
+        public void Add_CRS_Master(string _sp, _clsCRS _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@pkg_id", _obj.pkg_cate_id);
+            _cmd.Parameters.AddWithValue("@sys_id", _obj.sys_id);
+            _cmd.Parameters.AddWithValue("@eng_reff", _obj.eng_reff);
+            _cmd.Parameters.AddWithValue("@asset_code", _obj.asset_code);
+            _cmd.Parameters.AddWithValue("@rs_id", _obj.rs_id);
+            _cmd.Parameters.AddWithValue("@tested_by", _obj.tested_by);
+            _cmd.Parameters.AddWithValue("@instrument_used", _obj.instru_used);
+            _cmd.Parameters.AddWithValue("@date_commenced", _obj.date_comm);
+            _cmd.Parameters.AddWithValue("@date_completed", _obj.date_comp);
+            _cmd.Parameters.AddWithValue("@witnessed_by", _obj.witnsd_by);
+            _cmd.Parameters.AddWithValue("@date_witnessed", _obj.date_witnsd);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Add_AirBalancing(string _sp, _clsCRS _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@crs_id", _obj.crs_id);
+            _cmd.Parameters.AddWithValue("@ter_reff", _obj.ter_reff);
+            _cmd.Parameters.AddWithValue("@factor", _obj.factor);
+            _cmd.Parameters.AddWithValue("@design1", _obj.design1);
+            _cmd.Parameters.AddWithValue("@design2", _obj.design2);
+            _cmd.Parameters.AddWithValue("@initial1", _obj.initial1);
+            _cmd.Parameters.AddWithValue("@initial2", _obj.initial2);
+            _cmd.Parameters.AddWithValue("@final1", _obj.final1);
+            _cmd.Parameters.AddWithValue("@final2", _obj.final2);
+            _cmd.Parameters.AddWithValue("@check1", _obj.check1);
+            _cmd.Parameters.AddWithValue("@check2", _obj.check2);
+            _cmd.Parameters.AddWithValue("@hood", _obj.hood);
+            _cmd.Parameters.AddWithValue("@comments", _obj.comments);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.ExecuteNonQuery();
+        }
         public DataTable Get_casinfo(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1166,7 +1378,161 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-       
+        public void CREATE_SYSCASPKG(string _sp, _clspackage _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@pkg_name", _obj.package);
+            _cmd.Parameters.AddWithValue("@pkg_code", _obj.category);
+            _cmd.Parameters.AddWithValue("@cas_id", _obj.sch_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_SnagMaster(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.project);
+            _cmd.Parameters.AddWithValue("@mode", _obj.mode);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+
+        public void Add_Snag_Basket(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _cmd.Parameters.AddWithValue("@area", _obj.area);
+            _cmd.Parameters.AddWithValue("@details", _obj.description);
+            _cmd.Parameters.AddWithValue("@room", _obj.room);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Add_Snag_Img(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _cmd.Parameters.AddWithValue("@img", _obj.img);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Remove_Snag_Basket(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@id", _obj.snag_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Submit_Snag_Details(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            //_cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            //_cmd.CommandType = CommandType.StoredProcedure;
+            //_cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            //_cmd.ExecuteNonQuery();
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Snag_id", _obj.snag_id);
+            _cmd.Parameters.AddWithValue("@Area", _obj.area);
+            _cmd.Parameters.AddWithValue("@Room", _obj.room);
+            _cmd.Parameters.AddWithValue("@Details", _obj.description);
+            _cmd.ExecuteNonQuery();
+
+        }
+        public int Create_Snag(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            //Old Proce.
+            //_cmd.Parameters.AddWithValue("@ref_no", _obj.ref_no);
+            //_cmd.Parameters.AddWithValue("@description", _obj.description);
+            //_cmd.Parameters.AddWithValue("@service", _obj.service);
+            //_cmd.Parameters.AddWithValue("@created_by", _obj.created_by);
+            //_cmd.Parameters.AddWithValue("@date_created", _obj.date_created);
+            //_cmd.Parameters.AddWithValue("@project", _obj.project);
+            //New Proce. 09/10/2011
+            //changes 18/10/2011
+            _cmd.Parameters.AddWithValue("@Pkg_id", _obj.pkg_id);
+            _cmd.Parameters.AddWithValue("@Subject", _obj.description);
+            _cmd.Parameters.AddWithValue("@Created", _obj.created_by);
+            _cmd.Parameters.AddWithValue("@Created_date", _obj.date_created);
+            _cmd.Parameters.AddWithValue("@project", _obj.project);
+            _cmd.Parameters.AddWithValue("@Area", _obj.area);
+            _cmd.Parameters.AddWithValue("@Room", _obj.room);
+            _cmd.Parameters.AddWithValue("@Details", _obj.description);
+            _cmd.Parameters.AddWithValue("@Floor", _obj.Floor);
+            _cmd.Parameters.Add("@Snag_id", SqlDbType.Int);
+            _cmd.Parameters["@Snag_id"].Direction = ParameterDirection.Output;
+            _cmd.ExecuteNonQuery();
+            if (_cmd.Parameters["@Snag_id"].Value.ToString() != "")
+                return (int)_cmd.Parameters["@Snag_id"].Value;
+            else
+                return 0;
+
+        }
+        public DataTable Load_Snag_Basket(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _cmd.Parameters.AddWithValue("@type", _obj.type);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_SnagSub(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_SnagDetails_Stage1(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@uid", _obj.userid);
+            _cmd.Parameters.AddWithValue("@pkg", _obj.package);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Snag_Issue(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _cmd.Parameters.AddWithValue("@issued_date", _obj.date_issued);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Update_SnagResponse(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _cmd.Parameters.AddWithValue("@response", _obj.response);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Update_SnagStatus(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _cmd.Parameters.AddWithValue("@status", _obj.status);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Update_SnagStage(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _cmd.ExecuteNonQuery();
+        }
         public void Create_Company(string _sp, _clsproject _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1187,7 +1553,36 @@ namespace DataLinkLibrary
             _cmd.ExecuteNonQuery();
         }
 
-       
+        public void Inser_Snag_Pkg_Sub(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@pkg_id", _obj.pkg_id);
+            _cmd.Parameters.AddWithValue("@com_id", _obj.com_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public int Insert_Snag_Pkg(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@pkg_name", _obj.pkg_name);
+            _cmd.Parameters.AddWithValue("@com_id", _obj.com_id);
+            _cmd.Parameters.AddWithValue("@project", _obj.project);
+            _cmd.Parameters.Add("@pkg_id", SqlDbType.Int);
+            _cmd.Parameters["@pkg_id"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@pkg_id"].Value.ToString() != "")
+                    return (int)_cmd.Parameters["@pkg_id"].Value;
+                else
+                    return 0;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public void Update_Doc_Control(string _sp, _clsSnag _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1196,7 +1591,61 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@userid", _obj.userid);
             _cmd.ExecuteNonQuery();
         }
-      
+        public string Get_PkgCom_User(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Pkg_id", _obj.pkg_id);
+            _cmd.Parameters.Add("@user", SqlDbType.VarChar, 50);
+            _cmd.Parameters["@user"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@user"].Value.ToString() != "")
+                    return (string)_cmd.Parameters["@user"].Value;
+                else
+                    return "0";
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable Load_PkgCom_SubUser(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Pkg_id", _obj.snag_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+
+        public DataSet load_dataset(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _dta = new SqlDataAdapter(_cmd);
+            DataSet _dtable = new DataSet();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Add_Photo_rpt(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@img", _obj.photo_rpt);
+            _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Populate_SnagRpt(string _sp, _clsSnag _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.project);
+            _cmd.ExecuteNonQuery();
+        }
         public void Generate_DRReport(string _sp, _clsdocreview _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1319,7 +1768,24 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-       
+        public void CAS_PKG_SUM_RPT(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@DBNAME", _objdb.Dataname);
+            _cmd.Parameters.AddWithValue("@SCH_ID", _objdb.cas);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable LOAD_CAS_SERVICE_SUMMARY(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@SER_ID", _obj.srv);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void dr_cml_comment(string _sp, _clsdocreview _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1328,7 +1794,15 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@comment", _obj.response);
             _cmd.ExecuteNonQuery();
         }
-      
+        public DataTable LOAD_CAS_PRJ_SUMMARY(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void Create_Building(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1390,14 +1864,30 @@ namespace DataLinkLibrary
             }
         }
 
-      
+        public void Insert_SummaryGraph(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@sys_name", _obj.sys_mon);
+            _cmd.Parameters.AddWithValue("@total", _obj.per_com1);
+            _cmd.ExecuteNonQuery();
+        }
         public void Clear_Rpt(string _sp, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
             _cmd.CommandType = CommandType.StoredProcedure;
             _cmd.ExecuteNonQuery();
         }
-       
+        public void Generate_CASsheet_RPT(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Cas_Id", _objdb.rpt);
+            _cmd.Parameters.AddWithValue("@DBNAME", _objdb.Dataname);
+            _cmd.Parameters.AddWithValue("@PROJECT", _objdb.project);
+            _cmd.Parameters.AddWithValue("@PROJECT_CODE", _objdb.Datapath);
+            _cmd.ExecuteNonQuery();
+        }
         public void Generate_CASSummary_PKG_RPT(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1438,7 +1928,16 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@F_lvl", _obj.f_level);
             _cmd.ExecuteNonQuery();
         }
-     
+        public DataTable Load_CasServiceData(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@srv_id", _obj.srv);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void Insert_CasServiceSummary(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1688,7 +2187,17 @@ namespace DataLinkLibrary
             _cmd.ExecuteNonQuery();
             return _cmd.Parameters["@Access"].Value.ToString();
         }
-      
+        public DataTable Load_CMS_Users(string _sp, _clsuser _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
+            _cmd.Parameters.AddWithValue("@Type", _obj.mode);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void CMSDoc_Permission(string _sp, _clscmsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1697,7 +2206,16 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@Comments_By", _obj.Comment_By);
             _cmd.ExecuteNonQuery();
         }
-      
+        public DataTable Load_UsersCompany(string _sp, _clsproject _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Company_Id", _obj.com_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void Add_ReviewSettings(string _sp, _clscmsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1780,7 +2298,16 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-      
+        public DataTable Load_CMSUser(string _sp, _clsuser _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.project_code);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void Manage_MsFolder(string _sp, _clscmsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1812,7 +2339,15 @@ namespace DataLinkLibrary
             _cmd.ExecuteNonQuery();
             return _cmd.Parameters["@Project_Name"].Value.ToString();
         }
-    
+        public string Get_TempSONo(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.Add("@so_no", SqlDbType.VarChar, 10);
+            _cmd.Parameters["@so_no"].Direction = ParameterDirection.Output;
+            _cmd.ExecuteNonQuery();
+            return _cmd.Parameters["@so_no"].Value.ToString();
+        }
         public void Update_PrjLogo(string _sp, _clsproject _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1828,7 +2363,132 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@Project", _obj.prjcode);
             _cmd.ExecuteNonQuery();
         }
-      
+        //################################################AMS####################################################
+
+        public void DML_Manufacturer(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Manuf_Id", _obj.manufId);
+            _cmd.Parameters.AddWithValue("@Manuf_Name", _obj.manufName);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_Supplier(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Supplier_Id", _obj.supId);
+            _cmd.Parameters.AddWithValue("@Supplier_Name", _obj.supName);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_AMSInfo(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_Reg_Id", _obj.ams_reg_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void DML_AssetDetails(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_AD_Id", _obj.adId);
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
+            _cmd.Parameters.AddWithValue("@Manufacturer_Id", _obj.manufId);
+            _cmd.Parameters.AddWithValue("@Model_Ref", _obj.model);
+            _cmd.Parameters.AddWithValue("@Serial_No", _obj.srlno);
+            _cmd.Parameters.AddWithValue("@AMS_Sys_Id", _obj.ams_sys_id);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_Purchase(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_PD_Id", _obj.adId);
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
+            _cmd.Parameters.AddWithValue("@Supplier_Id", _obj.supId);
+            _cmd.Parameters.AddWithValue("@BPartner", _obj.partner);
+            _cmd.Parameters.AddWithValue("@PO_No", _obj.pono);
+            _cmd.Parameters.AddWithValue("@PPrice", _obj.pprice);
+            _cmd.Parameters.AddWithValue("@Currency", _obj.cur);
+            _cmd.Parameters.AddWithValue("@WExp_Date", _obj.edate);
+            _cmd.Parameters.AddWithValue("@Replace_Cost", _obj.rcost);
+            _cmd.Parameters.AddWithValue("@Replace_By", _obj.rpby);
+            _cmd.Parameters.AddWithValue("@Purchase_date", _obj.pdate);
+            _cmd.Parameters.AddWithValue("@Depreciation_Value", _obj.depreciation);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_Contractor(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Contr_Id", _obj.contrId);
+            _cmd.Parameters.AddWithValue("@Contr_Name", _obj.contrName);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_MaintenanceContract(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@MC_Id", _obj.mcId);
+            _cmd.Parameters.AddWithValue("@Cas_Id", _obj.casId);
+            _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
+            _cmd.Parameters.AddWithValue("@Contr_Id", _obj.contrId);
+            _cmd.Parameters.AddWithValue("@Annual_Charges", _obj.pprice);
+            _cmd.Parameters.AddWithValue("@S_Date", _obj.cdate);
+            _cmd.Parameters.AddWithValue("@E_Date", _obj.edate);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_ElectricalDtls(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_ED_Id", _obj.eId);
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
+            _cmd.Parameters.AddWithValue("@Phase", _obj.phase);
+            _cmd.Parameters.AddWithValue("@Voltage", _obj.voltage);
+            _cmd.Parameters.AddWithValue("@Amps", _obj.amp);
+            _cmd.Parameters.AddWithValue("@Others", _obj.other);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_MechanicalDtls(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_MD_Id", _obj.mId);
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
+            _cmd.Parameters.AddWithValue("@W_temp", _obj.wtemp);
+            _cmd.Parameters.AddWithValue("@Rpm", _obj.rpm);
+            _cmd.Parameters.AddWithValue("@Others", _obj.other);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_CivilDtls(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_CD_Id", _obj.cId);
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
+            _cmd.Parameters.AddWithValue("@B_Area", _obj.bArea);
+            _cmd.Parameters.AddWithValue("@A_Occupied", _obj.aOccupied);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
         public DataTable Load_ScheduleList(string _sp, _clsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1840,7 +2500,83 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-      
+        public void DML_CheckDates(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@ACD_Id", _obj.ACD_id);
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Comm_SOD", _obj.Comm_SOD);
+            _cmd.Parameters.AddWithValue("@Daily_Check", _obj.DailyChk);
+            _cmd.Parameters.AddWithValue("@Weekly_Check", _obj.WeeklyChk);
+            _cmd.Parameters.AddWithValue("@Monthly_Check", _obj.MonthlyChk);
+            _cmd.Parameters.AddWithValue("@TMonths_Check", _obj.TMonthsChk);
+            _cmd.Parameters.AddWithValue("@SMonths_Check", _obj.SMonthsChk);
+            _cmd.Parameters.AddWithValue("@Yearly_Check", _obj.YearlyChk);
+            _cmd.ExecuteNonQuery();
+        }
+        public string Get_CheckNames(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Date", _obj.edate);
+            _cmd.Parameters.AddWithValue("@Cas_Id", _obj.casId);
+            _cmd.Parameters.Add("@Check", SqlDbType.VarChar, 25);
+            _cmd.Parameters["@Check"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@Check"].Value.ToString() != "")
+                    return (string)_cmd.Parameters["@Check"].Value;
+                else
+                    return "No";
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void Add_Task(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Task", _obj.task);
+            _cmd.Parameters.AddWithValue("@Type", _obj.type);
+            _cmd.Parameters.AddWithValue("@Man_Hrs", _obj.man_hrs);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_Ams_Task(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Type", _obj.type);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Gen_AMS_Task_Rpt(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Type", _obj.type);
+            _cmd.ExecuteNonQuery();
+        }
+        //**************************************TIS******************************************************
+
+        public DataTable LOAD_MASTER(string _sp, _clstis _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@PROJECT_CODE", _obj.prj_code);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public DataTable LOAD_FLOOR(string _sp, _clstis _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1851,7 +2587,142 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-      
+        public DataTable LOAD_ZONE(string _sp, _clstis _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@FLR_ID", _obj.flr_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable LOAD_TENANTS(string _sp, _clstis _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@ZN_ID", _obj.zn_id);
+            _cmd.Parameters.AddWithValue("@FLR_ID", _obj.flr_id);
+            _cmd.Parameters.AddWithValue("@TYPE", _obj.action);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable LOAD_FOLDER(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void DML_TENANCY_CONTRACT(string _sp, _clstis _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@TNC_NAME", _obj.tnc_name);
+            _cmd.Parameters.AddWithValue("@UPLOAD_DATE", _obj.update);
+            _cmd.Parameters.AddWithValue("@FILE_NAME", _obj.filename);
+            _cmd.Parameters.AddWithValue("@FROM_DATE", _obj.fdate);
+            _cmd.Parameters.AddWithValue("@TO_DATE", _obj.tdate);
+            _cmd.Parameters.AddWithValue("@REMIND_DATE", _obj.rdate);
+            _cmd.Parameters.AddWithValue("@VALUE", _obj.tvalue);
+            _cmd.Parameters.AddWithValue("@CURRENCY", _obj.cur);
+            _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
+            _cmd.Parameters.AddWithValue("@PROJECT_CODE", _obj.prj_code);
+            _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable LOAD_TENANCY_CONTRACT(string _sp, _clstis _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
+            _cmd.Parameters.AddWithValue("@STATUS", _obj.status);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void DML_AUTHORITY_LETTER(string _sp, _clstis _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@LETTER_NAME", _obj.letter);
+            _cmd.Parameters.AddWithValue("@FILE_NAME", _obj.filename);
+            _cmd.Parameters.AddWithValue("@SUBJECT", _obj.subject);
+            _cmd.Parameters.AddWithValue("@LETTER_FROM", _obj.from);
+            _cmd.Parameters.AddWithValue("@RECEIVED", _obj.rdate);
+            _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
+            _cmd.Parameters.AddWithValue("@PROJECT_CODE", _obj.prj_code);
+            _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_TC_DOCUMENTS(string _sp, _clstis _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@SERVICE_NAME", _obj.service);
+            _cmd.Parameters.AddWithValue("@ENG_REFF", _obj.eng_ref);
+            _cmd.Parameters.AddWithValue("@CATEGORY", _obj.cate);
+            _cmd.Parameters.AddWithValue("@FLOOR_LEVEL", _obj.flevel);
+            _cmd.Parameters.AddWithValue("@INSP_DATE", _obj.rdate);
+            _cmd.Parameters.AddWithValue("@FILE_NAME", _obj.filename);
+            _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
+            _cmd.Parameters.AddWithValue("@PROJECT_CODE", _obj.prj_code);
+            _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable LOAD_DATEREGISTER(string _sp, _clstis _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_PrjReference(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Sys_id", _obj.sys);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Edit_Task(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Task_Id", _obj.task_id);
+            _cmd.Parameters.AddWithValue("@Task", _obj.task);
+            _cmd.Parameters.AddWithValue("@Type", _obj.type);
+            _cmd.Parameters.AddWithValue("@Man_Hrs", _obj.man_hrs);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DML_SpareParts(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@SP_Id", _obj.sp_id);
+            _cmd.Parameters.AddWithValue("@Srv_Id", _obj.srv_id);
+            _cmd.Parameters.AddWithValue("@Sys_Id", _obj.sys_id);
+            _cmd.Parameters.AddWithValue("@SP_Name", _obj.sp_name);
+            _cmd.Parameters.AddWithValue("@SP_Code", _obj.sp_code);
+            _cmd.Parameters.AddWithValue("@SP_Cost", _obj.sp_cost);
+            _cmd.Parameters.AddWithValue("@Manufacturer", _obj.manufId);
+            _cmd.Parameters.AddWithValue("@Supplier", _obj.supId);
+            _cmd.Parameters.AddWithValue("@Warning_Qty", _obj.wqty);
+            _cmd.Parameters.AddWithValue("@Total_Qty", _obj.qty);
+            _cmd.Parameters.AddWithValue("@Action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
         public DataTable Load_SpareParts(string _sp, _clsams _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1862,7 +2733,72 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-     
+        public DataTable Load_AMSTaskList(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Check_Date", _obj.chkdate);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Update_AMSCheckDates(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Date", _obj.edate);
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Add_SPBasket(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@S_Parts", _obj.sp_name);
+            _cmd.Parameters.AddWithValue("@S_Parts_Id", _obj.sp_id);
+            _cmd.Parameters.AddWithValue("@Qty", _obj.qty);
+            _cmd.Parameters.AddWithValue("@Uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@Cas_id", _obj.casId);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_SPBasket(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@Cas_id", _obj.casId);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Insert_TaskCompletion(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Task_Compl_Id", _obj.task_compl_id);
+            _cmd.Parameters.AddWithValue("@Manpower", _obj.man_hrs);
+            _cmd.Parameters.AddWithValue("@Comment", _obj.comments);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Insert_SpUsed(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Task_Compl_Id", _obj.task_compl_id);
+            _cmd.Parameters.AddWithValue("@S_Parts_Id", _obj.sp_id);
+            _cmd.Parameters.AddWithValue("@Qty", _obj.qty);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Delete_SPBasket(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Cas_Id", _obj.casId);
+            _cmd.Parameters.AddWithValue("@User_id", _obj.uid);
+            _cmd.ExecuteNonQuery();
+        }
         public void Insert_DRTemp(string _sp, _clsdocreview _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1903,7 +2839,76 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-      
+        public DataTable Load_CasAsset(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Cas_id", _obj.cas_id);
+            _cmd.Parameters.AddWithValue("@Sys_Id", _obj.sys);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_Cas_Docselection_AMS(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Sys_Id", _obj.sys);
+            _cmd.Parameters.AddWithValue("@B_Z", _obj.b_zone);
+            _cmd.Parameters.AddWithValue("@F_lvl", _obj.f_level);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_DMSDoc_AMS(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Folder_Id", _obj.folder_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void AMS_Register(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@PROJECT_REF", _obj.prj_reff);
+            _cmd.Parameters.AddWithValue("@SCH_ID", _obj.sch_id);
+            _cmd.Parameters.AddWithValue("@SYS_ID", _obj.sys_id);
+            _cmd.Parameters.AddWithValue("@BZONE", _obj.bzone);
+            _cmd.Parameters.AddWithValue("@CAT", _obj.cat);
+            _cmd.Parameters.AddWithValue("@FLEVEL", _obj.flvl);
+            _cmd.Parameters.AddWithValue("@SEQ_NO", _obj.seq_no);
+            _cmd.Parameters.AddWithValue("@PARENT", _obj.parent);
+            _cmd.Parameters.AddWithValue("@POSSITION", _obj.position);
+            _cmd.Parameters.AddWithValue("@CAS_ID", _obj.casId);
+            _cmd.Parameters.AddWithValue("@LOCATION", _obj.location);
+            _cmd.Parameters.AddWithValue("@PARENT_ASSET", _obj.parent_id);
+            _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public string Get_Category(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Sys_Id", _obj.sys);
+            _cmd.Parameters.Add("@Cate", SqlDbType.VarChar, 10);
+            _cmd.Parameters["@Cate"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                return (string)_cmd.Parameters["@Cate"].Value;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public int Get_NoofCas(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1924,7 +2929,84 @@ namespace DataLinkLibrary
                 throw;
             }
         }
-      
+        public DataTable LOAD_AMS_SCHEDULE_TASK(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@TYPE", _obj.type);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Insert_PPMSDaily_Temp(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.ExecuteNonQuery();
+        }
+        public void Insert_TaskExtension(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Task_Compl_Id", _obj.task_compl_id);
+            _cmd.Parameters.AddWithValue("@Date", _obj.edate);
+            _cmd.ExecuteNonQuery();
+        }
+        public void AMS_Document_Linking(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_DOC_ID", _obj.ams_doc_id);
+            _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@DOC_ID", _obj.dms_doc_id);
+            _cmd.Parameters.AddWithValue("@DOC_NAME", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@DOC_TYPE", _obj.doc_type);
+            _cmd.Parameters.AddWithValue("@DOC_PACKAGE", _obj.doc_package);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_AMS_Documents(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_Reg_Id", _obj.ams_reg_id);
+            _cmd.Parameters.AddWithValue("@Doc_Type", _obj.doc_type);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_AMS_SubAssets(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Parent_Asset", _obj.ams_reg_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_Asset_Spareparts(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_Reg_Id", _obj.ams_reg_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_Spareparts_Details(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@SP_Id", _obj.sp_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void Generate_TS_Upload_Rpt(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -1953,7 +3035,35 @@ namespace DataLinkLibrary
                 throw;
             }
         }
-      
+        public void DML_AMS_System(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@AMS_SYS_ID", _obj.ams_sys_id);
+            _cmd.Parameters.AddWithValue("@ASSET_ID", _obj.srv_id);
+            _cmd.Parameters.AddWithValue("@GROUP_ID", _obj.sch_id);
+            _cmd.Parameters.AddWithValue("@SYS_NAME", _obj.ams_sys_name);
+            _cmd.Parameters.AddWithValue("@DESCRIPTION", _obj.descri);
+            _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_AMS_System(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Group_Id", _obj.casId);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Generate_AmsRegister(string _sp, _clsuser _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@PROJECT", _obj.project_code);
+            _cmd.ExecuteNonQuery();
+        }
         public void Update_DrIssueTo(string _sp, _clsdocreview _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -2765,7 +3875,15 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@P14", _obj.p14);
             _cmd.ExecuteNonQuery();
         }
-       
+        public void Set_Cassheet_Position(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@cas_id", _obj.cas_id);
+            _cmd.Parameters.AddWithValue("@sys_id", _obj.sys);
+            _cmd.Parameters.AddWithValue("@pos", _obj.Position);
+            _cmd.ExecuteNonQuery();
+        }
         public void Add_Cas_MultiEdit_Temp(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -2800,7 +3918,17 @@ namespace DataLinkLibrary
             _cmd.CommandType = CommandType.StoredProcedure;
             _cmd.ExecuteNonQuery();
         }
-     
+        public DataTable LOAD_PROJECT_MODULE(string _sp, _clsproject _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@USERID", _obj.user);
+            _cmd.Parameters.AddWithValue("@MODULE", _obj.module);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void GENERATE_SRVOVR_SUMMARY(string _sp, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -2859,7 +3987,105 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@c_id", _obj.cas_id);
             _cmd.ExecuteNonQuery();
         }
-      
+        public DataTable Load_AllServiceFolder(string _sp, _clstreefolder _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.Project_code);
+            _cmd.Parameters.AddWithValue("@Service_id", _obj.Folder_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Insert_UserInbox(string _sp, _clscommunication _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@User_Id", _obj.userid);
+            _cmd.Parameters.AddWithValue("@From_Id", _obj.mailid);
+            _cmd.Parameters.AddWithValue("@Date_rcvd", _obj.maildate);
+            _cmd.Parameters.AddWithValue("@Subject", _obj.subj);
+            _cmd.Parameters.AddWithValue("@Message", _obj.message);
+            _cmd.Parameters.AddWithValue("@Attachment", _obj.attachment);
+            _cmd.Parameters.AddWithValue("@Project", _obj.project_code);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Insert_UserOutbox(string _sp, _clscommunication _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@User_Id", _obj.userid);
+            _cmd.Parameters.AddWithValue("@To_Id", _obj.mailid);
+            _cmd.Parameters.AddWithValue("@Date_sent", _obj.maildate);
+            _cmd.Parameters.AddWithValue("@Subject", _obj.subj);
+            _cmd.Parameters.AddWithValue("@Message", _obj.message);
+            _cmd.Parameters.AddWithValue("@Attachment", _obj.attachment);
+            _cmd.Parameters.AddWithValue("@Project", _obj.project_code);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_UserMessage(string _sp, _clscommunication _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@userid", _obj.userid);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_Message(string _sp, _clscommunication _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Item_id", _obj.item_id);
+            _cmd.Parameters.AddWithValue("@Type", _obj.type);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public string Get_UserName(string _sp, _clsuser _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@userid", _obj.uid);
+            _cmd.Parameters.Add("@username", SqlDbType.VarChar, 50);
+            _cmd.Parameters["@username"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                return _cmd.Parameters["@username"].Value.ToString();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void Inbox_MarkasRead(string _sp, _clscommunication _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Itemid", _obj.item_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public int Get_UnreadInbox(string _sp, _clscommunication _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@userid", _obj.userid);
+            _cmd.Parameters.Add("@count", SqlDbType.Int);
+            _cmd.Parameters["@count"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                return (int)_cmd.Parameters["@count"].Value;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public DataTable GENERATE_BAREA_SUMMARY(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -2887,7 +4113,24 @@ namespace DataLinkLibrary
                 throw;
             }
         }
-       
+        public DataTable GENERATE_DIV_SUMMARY_SELECT(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            try
+            {
+                _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+                _cmd.CommandType = CommandType.StoredProcedure;
+                _cmd.Parameters.AddWithValue("@bz", _obj.b_zone);
+                _cmd.CommandTimeout = 120;
+                _dta = new SqlDataAdapter(_cmd);
+                DataTable _dtable = new DataTable();
+                _dta.Fill(_dtable);
+                return _dtable;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public DataTable GENERATE_DIV_SER_SUMMARY(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -2909,7 +4152,23 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-     
+        public string Get_Folder_Description(string _sp, _clstreefolder _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
+            return _cmd.ExecuteScalar().ToString();
+        }
+        public DataTable Get_Folder_Details(string _sp, _clstreefolder _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public DataTable Generate_Cassheet_Report(string _sp, _clscassheet _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -2946,7 +4205,168 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-       
+        public int Get_Default(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.Add("@id", SqlDbType.Int);
+            _cmd.Parameters["@id"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@id"].Value.ToString() != null)
+                    return (int)_cmd.Parameters["@id"].Value;
+                else
+                    return 0;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public int Get_DefaultDMSsrv(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
+            _cmd.Parameters.AddWithValue("@userid", _obj.uid);
+            _cmd.Parameters.Add("@id", SqlDbType.Int);
+            _cmd.Parameters["@id"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@id"].Value.ToString() != null)
+                    return (int)_cmd.Parameters["@id"].Value;
+                else
+                    return 0;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable Load_Dms_Packages(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@srv", _obj.folder_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void FileUploadingNew(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@service", _obj.service_code);
+            _cmd.Parameters.AddWithValue("@package", _obj.package_code);
+            _cmd.Parameters.AddWithValue("@doctype", _obj.doctype_code);
+            _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@uploaded", _obj.uploaded);
+            _cmd.Parameters.AddWithValue("@uploaded_date", _obj.uploaded_date);
+            _cmd.Parameters.AddWithValue("@file_size", _obj.file_size);
+            _cmd.Parameters.AddWithValue("@schid", _obj.schid);
+            _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
+            _cmd.Parameters.AddWithValue("@type", _obj.type);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@possition", _obj.possition);
+            _cmd.Parameters.AddWithValue("@status", _obj.status);
+            _cmd.Parameters.AddWithValue("@version", _obj.Version);
+            _cmd.Parameters.AddWithValue("@Manual_title", _obj.Manual_title);
+            _cmd.ExecuteNonQuery();
+
+        }
+
+        public void FileUploading_New(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@service", _obj.service_code);
+            _cmd.Parameters.AddWithValue("@package", _obj.package_code);
+            _cmd.Parameters.AddWithValue("@doctype", _obj.doctype_code);
+            _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@uploaded", _obj.uploaded);
+            _cmd.Parameters.AddWithValue("@uploaded_date", _obj.uploaded_date);
+            _cmd.Parameters.AddWithValue("@file_size", _obj.file_size);
+            _cmd.Parameters.AddWithValue("@schid", _obj.schid);
+            _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
+            _cmd.Parameters.AddWithValue("@type", _obj.type);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@possition", _obj.possition);
+            _cmd.Parameters.AddWithValue("@status", _obj.status);
+            _cmd.Parameters.AddWithValue("@title", _obj.Manual_title);
+            _cmd.Parameters.AddWithValue("@Review", _obj.Review);
+            _cmd.Parameters.AddWithValue("@DisplayVersion", _obj.DisplayVersion);
+            _cmd.Parameters.AddWithValue("@DocStyleId", _obj.DocStyleId);
+            _cmd.Parameters.AddWithValue("@DocStyleChange", _obj.DocStyleChange);
+            _cmd.Parameters.AddWithValue("@submit", _obj.submit);
+            _cmd.Parameters.AddWithValue("@ref", _obj.reff);
+            _cmd.ExecuteNonQuery();
+
+        }
+        public void Update_documentdetails(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@status", _obj.status);
+            _cmd.Parameters.AddWithValue("@DisplayVersion", _obj.DisplayVersion);
+            _cmd.Parameters.AddWithValue("@Manual_title", _obj.Manual_title);
+            _cmd.Parameters.AddWithValue("@DocStyleId", _obj.DocStyleId);
+            _cmd.Parameters.AddWithValue("@DocStyleChange", _obj.DocStyleChange);
+            _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Delete_DocumentNew(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@possition", _obj.possition);
+            _cmd.Parameters.AddWithValue("@folder_Id", _obj.folder_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public string Get_DocumentTitle(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.Parameters.Add("@title", SqlDbType.VarChar, 200);
+            _cmd.Parameters["@title"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@title"].Value.ToString() != "")
+                    return (string)_cmd.Parameters["@title"].Value;
+                else
+                    return "";
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void dml_schedule_basket(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@SCH_ITM_ID", _obj.schid);
+            _cmd.Parameters.AddWithValue("@PRJ_CODE", _obj.project_code);
+            _cmd.Parameters.AddWithValue("@USERID", _obj.uid);
+            _cmd.Parameters.AddWithValue("@DOCUMENT_TITLE", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@FOLDER_ID", _obj.folder_id);
+            _cmd.Parameters.AddWithValue("@FILE_NAME", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@PARTY_ID", _obj.party_id);
+            _cmd.Parameters.AddWithValue("@PARTY_NAME", _obj.party_name);
+            _cmd.Parameters.AddWithValue("@REF_NO", _obj.reff);
+            _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
         public DataTable Load_ScheduleBasket(string _sp, _clsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -2958,7 +4378,207 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-       
+        public void Move_Folder(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
+            _cmd.Parameters.AddWithValue("@possition", _obj.possition);
+            _cmd.Parameters.AddWithValue("@move", _obj.move);
+            _cmd.ExecuteNonQuery();
+        }
+        public void CreateDocSchedule(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@service", _obj.service_code);
+            _cmd.Parameters.AddWithValue("@package", _obj.package_code);
+            _cmd.Parameters.AddWithValue("@doctype", _obj.doctype_code);
+            _cmd.Parameters.AddWithValue("@doc_title", _obj.party_name);
+            _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@date_tobeuploaded", _obj.uploaded_date);
+            _cmd.Parameters.AddWithValue("@Folder_id", _obj.folder_id);
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.project_code);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@possition", _obj.possition);
+            _cmd.Parameters.AddWithValue("@title", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@doc_ref", _obj.reff);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Create_Schedulebskt(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@FOLDER_ID", _obj.folder_id);
+            _cmd.Parameters.AddWithValue("@USERID", _obj.uid);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Delete_DocumentStyle(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@DocStyleId", _obj.DocStyleId);
+            _cmd.ExecuteNonQuery();
+        }
+        public int Check_Record_Exits(string _sp, _clsmanufacture _obj, _database _objdb)
+        {
+
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+
+            _cmd.CommandType = CommandType.StoredProcedure;
+
+            _cmd.Parameters.AddWithValue("@name", _obj.man_name);
+
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.project_code);
+
+            _cmd.Parameters.Add("@id", SqlDbType.Int, 6);
+
+            _cmd.Parameters["@id"].Direction = ParameterDirection.Output;
+
+            try
+            {
+
+                _cmd.ExecuteNonQuery();
+
+                if (_cmd.Parameters["@id"].Value.ToString() != "")
+
+                    return Convert.ToInt16(_cmd.Parameters["@id"].Value);
+
+                else
+
+                    return 0;
+
+            }
+
+            catch
+            {
+
+                throw;
+
+            }
+
+        }
+        public DataTable Load_Document_Submit(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
+            _cmd.Parameters.AddWithValue("@userid", _obj.uid);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Update_Document_Submit(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@title", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@userid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Insert_ProgressTracking(string _sp, _clsProgressTracking _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Progress_Id", _obj.Progress_id);
+            _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
+            _cmd.Parameters.AddWithValue("@Section1", _obj.Section1);
+            _cmd.Parameters.AddWithValue("@Section2", _obj.Section2);
+            _cmd.Parameters.AddWithValue("@Section3", _obj.Section3);
+            _cmd.Parameters.AddWithValue("@Section4", _obj.Section4);
+            _cmd.Parameters.AddWithValue("@Section5", _obj.Section5);
+            _cmd.Parameters.AddWithValue("@Section6", _obj.Section6);
+            _cmd.Parameters.AddWithValue("@Section7", _obj.Section7);
+            _cmd.Parameters.AddWithValue("@Section8", _obj.Section8);
+            _cmd.Parameters.AddWithValue("@Section9", _obj.Section9);
+            _cmd.Parameters.AddWithValue("@Section10", _obj.Section10);
+            _cmd.Parameters.AddWithValue("@DraftIssueDate", _obj.DraftIssuedate);
+            _cmd.Parameters.AddWithValue("@Remarks", _obj.Remarks);
+            _cmd.Parameters.AddWithValue("@User_id", _obj.Userid);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_AllProgressTracking(string _sp, _clsProgressTracking _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Get_ProgressTrackingDetails(string _sp, _clsProgressTracking _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Progress_id", _obj.Progress_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public DataTable Load_DMS_Report_Master(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Update_Document_direct(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@title", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@doc_ref", _obj.reff);
+            _cmd.Parameters.AddWithValue("@userid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Update_Schedule_direct(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@sch_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@title", _obj.title);
+            _cmd.Parameters.AddWithValue("@doc_ref", _obj.reff);
+            _cmd.Parameters.AddWithValue("@action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Create_TreeFolderNew(string _sp, _clstreefolder _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Folder_description", _obj.Folder_description);
+            _cmd.Parameters.AddWithValue("@Folder_code", _obj.Folder_code);
+            _cmd.Parameters.AddWithValue("@Folder_type", _obj.Folder_type);
+            _cmd.Parameters.AddWithValue("@Folder_possition", _obj.Folder_possition);
+            _cmd.Parameters.AddWithValue("@Parent_folder", _obj.Parent_folder);
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.Project_code);
+            _cmd.Parameters.AddWithValue("@Enabled", _obj.Enabled);
+            _cmd.Parameters.AddWithValue("@auto", _obj.auto);
+            _cmd.Parameters.AddWithValue("@Userid", _obj.Userid);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Edit_Tree_Folder_New(string _sp, _clstreefolder _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
+            _cmd.Parameters.AddWithValue("@Folder_code", _obj.Folder_code);
+            _cmd.Parameters.AddWithValue("@Folder_description", _obj.Folder_description);
+            _cmd.Parameters.AddWithValue("@mode", _obj.mode);
+            _cmd.ExecuteNonQuery();
+        }
         public void Update_DR_Details(string _sp, _clsdocreview _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -2987,7 +4607,17 @@ namespace DataLinkLibrary
             _cmd.Parameters.AddWithValue("@action", _obj.mode);
             _cmd.ExecuteNonQuery();
         }
-     
+        public void Update_ProgressTracking_tbl(string _sp, _clsProgressTracking _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Progress_Id", _obj.Progress_id);
+            _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
+            _cmd.Parameters.AddWithValue("@Value", _obj.Value);
+            _cmd.Parameters.AddWithValue("@User_id", _obj.Userid);
+            _cmd.Parameters.AddWithValue("@Type", _obj.Type);
+            _cmd.ExecuteNonQuery();
+        }
         public DataTable Load_dr_pdf_details(string _sp, _clsdocreview _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -3039,7 +4669,72 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-      
+        public void dml_dms_library_general(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@itm_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@srv_id", _obj.service_code);
+            _cmd.Parameters.AddWithValue("@pkg_id", _obj.schid);
+            _cmd.Parameters.AddWithValue("@man_id", _obj.party_id);
+            _cmd.Parameters.AddWithValue("@contra_type", _obj.type);
+            _cmd.Parameters.AddWithValue("@model", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@file_name", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@source", _obj.reff);
+            _cmd.Parameters.AddWithValue("@action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void addcomment_new(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@sec_no", _obj.sec_no);
+            _cmd.Parameters.AddWithValue("@page_no", _obj.page_no);
+            _cmd.Parameters.AddWithValue("@comment", _obj.comment);
+            _cmd.Parameters.AddWithValue("@com_date", _obj.com_date);
+            _cmd.Parameters.AddWithValue("@user_id", _obj.user_id);
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@Image_name", _obj.Image_name);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Editcomment_new(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@comment", _obj.comment);
+            _cmd.Parameters.AddWithValue("@user_id", _obj.user_id);
+            _cmd.Parameters.AddWithValue("@comm_id", _obj.comm_id);
+            _cmd.Parameters.AddWithValue("@Image_name", _obj.Image_name);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable load_CommentDetails(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@comm_id", _obj.comm_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void dml_amslocation(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@location_id", _obj.id);
+            _cmd.Parameters.AddWithValue("@location_name", _obj.location);
+            _cmd.Parameters.AddWithValue("@action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
+        public void dml_amsroom(string _sp, _clsams _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@room_id", _obj.id);
+            _cmd.Parameters.AddWithValue("@room_name", _obj.location);
+            _cmd.Parameters.AddWithValue("@action", _obj.action);
+            _cmd.ExecuteNonQuery();
+        }
 
         public string Get_file(string _sp, _clscmsdocument _obj, _database _objdb)
         {
@@ -3072,7 +4767,29 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-      
+        public DataTable Load_Document_Library_Project(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+
+        public DataTable Generate_DocumentStatus_Other(string _sp, _clscmsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Project_code", _obj.project_code);
+            _cmd.Parameters.AddWithValue("@Service_id", _obj.srv_id);
+            _cmd.Parameters.AddWithValue("@Type", _obj.Type);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public string Get_DocStatus(string _sp, _clsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -3084,7 +4801,53 @@ namespace DataLinkLibrary
             return _cmd.Parameters["@status"].Value.ToString();
         }
 
-      
+        public int Get_Document_Library_Count(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Itm_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
+            _cmd.Parameters.Add("@count", SqlDbType.Int);
+            _cmd.Parameters["@count"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@count"].Value.ToString() != "")
+                    return (int)_cmd.Parameters["@count"].Value;
+                else
+                    return 0;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void dml_dms_library_general_new(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@itm_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@srv_id", _obj.service_code);
+            _cmd.Parameters.AddWithValue("@pkg_id", _obj.schid);
+            _cmd.Parameters.AddWithValue("@man_id", _obj.party_id);
+            _cmd.Parameters.AddWithValue("@contra_type", _obj.type);
+            _cmd.Parameters.AddWithValue("@model", _obj.doc_title);
+            _cmd.Parameters.AddWithValue("@file_name", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@source", _obj.reff);
+            _cmd.Parameters.AddWithValue("@action", _obj.action);
+            _cmd.Parameters.AddWithValue("@File_Size", _obj.file_size);
+            _cmd.ExecuteNonQuery();
+        }
+        public void AddToProject_Library(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@itm_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@Folder_Id", _obj.folder_id);
+            _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.ExecuteNonQuery();
+        }
         public DataTable Load_Comment_Details(string _sp, _clsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -3135,7 +4898,16 @@ namespace DataLinkLibrary
             //_cmd.Parameters.AddWithValue("@PM", _obj.PM);
             _cmd.ExecuteNonQuery();
         }
-      
+        public DataTable Load_Buildinglevel_Navigation(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@prj", _obj.project_code);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
         public void Generate_CAS_RPT_BLG(string _sp, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -3291,7 +5063,39 @@ namespace DataLinkLibrary
                 throw;
             }
         }
-      
+        public void Insert_User_Log_Report(string _sp, _clslog _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@User_Id", _obj.uid);
+            _cmd.Parameters.AddWithValue("@Ip_Address", _obj.ipaddr);
+            _cmd.Parameters.AddWithValue("@Country", _obj.Country);
+            _cmd.Parameters.AddWithValue("@Region", _obj.Region);
+            _cmd.Parameters.AddWithValue("@City", _obj.location);
+            _cmd.Parameters.AddWithValue("@Login_Time", _obj.login);
+            _cmd.ExecuteNonQuery();
+        }
+        public int Get_NoofCas_Bldng(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Srv_Id", _obj.srv);
+            _cmd.Parameters.AddWithValue("@BLDG_ID", _obj.build_id);
+            _cmd.Parameters.Add("@Count", SqlDbType.Int);
+            _cmd.Parameters["@Count"].Direction = ParameterDirection.Output;
+            try
+            {
+                _cmd.ExecuteNonQuery();
+                if (_cmd.Parameters["@Count"].Value.ToString() != "")
+                    return (int)_cmd.Parameters["@Count"].Value;
+                else
+                    return 1;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public DataSet load_dataset(string _sp, _clsSO _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
@@ -3312,456 +5116,261 @@ namespace DataLinkLibrary
             _dta.Fill(_dtable);
             return _dtable;
         }
-      
-        public void dml_SO_pdf(string _sp, _clsSO _obj, _database _objdb)
+        public void Update_CMS_Document(string _sp, _clscmsdocument _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
             _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@So_id", _obj.so_id);
-            _cmd.Parameters.AddWithValue("@SO_no", _obj.so_no);
-            _cmd.Parameters.AddWithValue("@issue_date", _obj.cdate);
-            _cmd.Parameters.AddWithValue("@issue_to", _obj.issued_to);
-            _cmd.Parameters.AddWithValue("@service", _obj.package);
-            _cmd.Parameters.AddWithValue("@subject", _obj.doc_name);
-            _cmd.Parameters.AddWithValue("@created_by", _obj.issued_by);
-            _cmd.Parameters.AddWithValue("@file", _obj.details);
-            _cmd.Parameters.AddWithValue("@comment", _obj.comments);
-            _cmd.Parameters.AddWithValue("@response", _obj.response);
-            _cmd.Parameters.AddWithValue("@status", _obj.status);
-            _cmd.Parameters.AddWithValue("@action", _obj.mode);
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.Doc_Id);
+            _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@upload_date", _obj.upload_date);
+            _cmd.Parameters.AddWithValue("@issue_date", _obj.issue_date);
+            _cmd.Parameters.AddWithValue("@revision", Convert.ToInt32(_obj.revision));
+            _cmd.Parameters.AddWithValue("@doc_status", _obj.doc_status);
+            _cmd.Parameters.AddWithValue("@dr_id", _obj.dr_id);
+            //_cmd.Parameters.AddWithValue("@CMS_file", _obj.CMS_file);
+            _cmd.Parameters.AddWithValue("@file_name", _obj.file_name);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@CarryOverComm", _obj.carry_comm);
             _cmd.ExecuteNonQuery();
         }
-        public DataTable LoadDataTable(string _sp, _database _objdb)
+        public void SO_PhotoImage(string _sp, _clsSO _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
             _cmd.CommandType = CommandType.StoredProcedure;
-            _dta = new SqlDataAdapter(_cmd);
-            DataTable _dtable = new DataTable();
-            _dta.Fill(_dtable);
-            return _dtable;
-        }       
-        public void Generate_CAS_Graph_Summary(string _sp, _clscassheet _obj, _database _objdb)   
-        {
-            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-            _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@SCH_ID", _obj.sch);
-            _cmd.Parameters.AddWithValue("@BZ", _obj.b_zone);
-            _cmd.Parameters.AddWithValue("@CATE", _obj.cate);
-            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
-            _cmd.Parameters.AddWithValue("@F_FROM", _obj.fed_from);
-            _cmd.Parameters.AddWithValue("@LOC", _obj.loca);
-            _cmd.Parameters.AddWithValue("@BUILDING", _obj.build_id);
-            _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
-            _cmd.ExecuteNonQuery();
-
-        }
-        public DataSet Generate_ProgressComparison_Graph(string _sp, _clscassheet _obj, _database _objdb)
-        {
-            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));    
-            _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@sch_id", _obj.sch);
-            _cmd.Parameters.AddWithValue("@BZ", _obj.b_zone);
-            _cmd.Parameters.AddWithValue("@CAT", _obj.cate);
-            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
-            _cmd.Parameters.AddWithValue("@F_FROM", _obj.fed_from);
-            _cmd.Parameters.AddWithValue("@LOC", _obj.loca);
-            _cmd.Parameters.AddWithValue("@PcdRefdate", _obj.date);
-            _cmd.Parameters.AddWithValue("@BUILDING", _obj.build_id);
-            _dta = new SqlDataAdapter(_cmd);
-            DataSet _ds = new DataSet();
-            _dta.Fill(_ds);
-            return _ds;
-        }
-        public void GENERATE_PROJECT_SUMMARY_PCD(string _sp, _clscassheet _obj, _database _objdb)   
-        {
-            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-            _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@PcdRefdate", _obj.date);
-            _cmd.Parameters.AddWithValue("@BZONE", _obj.b_zone);
-            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
+            _cmd.Parameters.AddWithValue("@Id", _obj.so_itm_id);
+            _cmd.Parameters.AddWithValue("@Photo", _obj.photo);
+            _cmd.Parameters.AddWithValue("@PhotoImage", _obj.PhotoImage);
             _cmd.ExecuteNonQuery();
         }
-       
-        public void Get_Total_Executive_Summary(string _sp, _clscassheet _obj, _database _objdb)
+        public void SaveTestPictureDB(string _sp, _clsuser _obj, _database _objdb)
         {
             _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
             _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@DATE_FRM", _obj.dtastart);
-            _cmd.Parameters.AddWithValue("@DATE_TO", _obj.dtpstart);
-            _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
-            _cmd.Parameters.AddWithValue("@SERVICE_TYPE", _obj.cate);
-            _cmd.ExecuteNonQuery();
-
-        }
-      
-        public DataSet GenerateDashboardSummary(string _sp, _clscassheet _obj, _database _objdb)
-        {
-            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-            _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@PcdRefdate", _obj.date);
-            _cmd.Parameters.AddWithValue("@BZONE", _obj.b_zone);
-            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
-            _dta = new SqlDataAdapter(_cmd);
-            DataSet ds = new DataSet();
-            _dta.Fill(ds);
-            return ds;
-        }
-        public DataSet GeneratePlannedServiceSummary(string _sp, _clscassheet _obj, _database _objdb)
-        {
-            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName))
-            {
-                CommandType = CommandType.StoredProcedure
-            };
-            _cmd.Parameters.AddWithValue("@SRV_ID", _obj.srv);
-            _cmd.Parameters.AddWithValue("@PcdRefdate", _obj.date);
-            _cmd.Parameters.AddWithValue("@BZ", _obj.b_zone);
-            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
-            _cmd.Parameters.Add("@OVERALL", SqlDbType.Int);
-            _cmd.Parameters["@OVERALL"].Direction = ParameterDirection.Output;
-            _cmd.Parameters.Add("@P_OVERALL", SqlDbType.Int);
-            _cmd.Parameters["@P_OVERALL"].Direction = ParameterDirection.Output;
-            _dta = new SqlDataAdapter(_cmd);
-            DataSet ds = new DataSet();
-            _dta.Fill(ds);
-            return ds;
-        }
-        public DataTable Generate_CAS_Graph_Summary1(string _sp, _clscassheet _obj, _database _objdb)
-        {
-            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-            _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@SCH_ID", _obj.sch);
-            _cmd.Parameters.AddWithValue("@BZ", _obj.b_zone);
-            _cmd.Parameters.AddWithValue("@CATE", _obj.cate);
-            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
-            _cmd.Parameters.AddWithValue("@F_FROM", _obj.fed_from);
-            _cmd.Parameters.AddWithValue("@LOC", _obj.loca);
-            _cmd.Parameters.AddWithValue("@BUILDING", _obj.build_id);
-            _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
-            _dta = new SqlDataAdapter(_cmd);
-            DataTable _dtable = new DataTable();
-            _dta.Fill(_dtable);
-            return _dtable;
-        }
-        public void SaveCableLog(string _sp, _clscassheet _obj, _database _objdb)
-        {
-            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-            _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@doc_id", _obj.cas_id);
-            _cmd.Parameters.AddWithValue("@cable_reference", _obj.reff);
-            _cmd.Parameters.AddWithValue("@panel_reference", _obj.panel_ref);
-            _cmd.Parameters.AddWithValue("@fed_from", _obj.fed_from);
-            _cmd.Parameters.AddWithValue("@power_to", _obj.p_power_to);
-            _cmd.Parameters.AddWithValue("@document_name", _obj.p10);
-            _cmd.Parameters.AddWithValue("@created_by", _obj.uid);
+            _cmd.Parameters.AddWithValue("@Id", _obj.mode);
+            _cmd.Parameters.AddWithValue("@DisplayName", _obj.uname);
+            _cmd.Parameters.AddWithValue("@Picture", _obj.UserImage);
             _cmd.ExecuteNonQuery();
         }
-        public void DeleteDocuments(string _sp, _clsdocument _obj, _database _objdb)
-        {
-            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-            _cmd.CommandType = CommandType.StoredProcedure;
-            _cmd.Parameters.AddWithValue("@doc_ids", _obj.doc_name);
-            _cmd.ExecuteNonQuery();
-        }
-
-        #region CommentedZeroRef
-        //public void Editcomment(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@comment", _obj.comment);
-        //    _cmd.Parameters.AddWithValue("@user_id", _obj.user_id);
-        //    _cmd.Parameters.AddWithValue("@comm_id", _obj.comm_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Deletecomment(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@comm_id", _obj.comm_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-
-        //Dashboard
-        //public DataSet Get_Total_Executive_Summary_Dashboard(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@DATE_FRM", _obj.dtastart);
-        //    _cmd.Parameters.AddWithValue("@DATE_TO", _obj.dtpstart);
-        //    _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
-        //    _cmd.Parameters.AddWithValue("@SERVICE_TYPE", _obj.cate);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataSet ds = new DataSet();
-        //    _dta.Fill(ds);
-        //    return ds;
-        //}
-        //public void Get_Executive_Summary_pcd(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@DATE_FRM", _obj.dtastart);
-        //    _cmd.Parameters.AddWithValue("@DATE_TO", _obj.dtpstart);
-        //    _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
-        //    _cmd.Parameters.AddWithValue("@SERVICE_TYPE", _obj.cate);
-        //    _cmd.ExecuteNonQuery();
-
-        //}
-
-        //public void Update_CMS_Document(string _sp, _clscmsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.Doc_Id);
-        //    _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@upload_date", _obj.upload_date);
-        //    _cmd.Parameters.AddWithValue("@issue_date", _obj.issue_date);
-        //    _cmd.Parameters.AddWithValue("@revision", Convert.ToInt32(_obj.revision));
-        //    _cmd.Parameters.AddWithValue("@doc_status", _obj.doc_status);
-        //    _cmd.Parameters.AddWithValue("@dr_id", _obj.dr_id);
-        //    //_cmd.Parameters.AddWithValue("@CMS_file", _obj.CMS_file);
-        //    _cmd.Parameters.AddWithValue("@file_name", _obj.file_name);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@CarryOverComm", _obj.carry_comm);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void SO_PhotoImage(string _sp, _clsSO _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Id", _obj.so_itm_id);
-        //    _cmd.Parameters.AddWithValue("@Photo", _obj.photo);
-        //    _cmd.Parameters.AddWithValue("@PhotoImage", _obj.PhotoImage);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void SaveTestPictureDB(string _sp, _clsuser _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Id", _obj.mode);
-        //    _cmd.Parameters.AddWithValue("@DisplayName", _obj.uname);
-        //    _cmd.Parameters.AddWithValue("@Picture", _obj.UserImage);
-        //    _cmd.ExecuteNonQuery();
-        //}
         //JD Changes
-        //public void Update_CMS_Doc_Inline(string _sp, _clscmsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.Doc_Id);
-        //    _cmd.Parameters.AddWithValue("@field_value", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@field_name", _obj.file_name);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Save_CMS_Comments(string _sp, _clscmscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
+        public void Update_CMS_Doc_Inline(string _sp, _clscmsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.Doc_Id);
+            _cmd.Parameters.AddWithValue("@field_value", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@field_name", _obj.file_name);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Save_CMS_Comments(string _sp, _clscmscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.ExecuteNonQuery();
+        }
 
-        //public DataTable Load_CP_Comments(string _sp, _clscmscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Delete_CMS_Comment(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Clear_Comment_Basket(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
+        public DataTable Load_CP_Comments(string _sp, _clscmscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Delete_CMS_Comment(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Clear_Comment_Basket(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.ExecuteNonQuery();
+        }
 
 
         //JJ DR
-        //public string DR_Saved(string _sp, _clsdocreview _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@dr_id", _obj.dr_id);
-        //    _cmd.Parameters.AddWithValue("@dr_reviewed", _obj.dr_reviewed);
-        //    _cmd.Parameters.AddWithValue("@issued_date", _obj.issued_date);
-        //    _cmd.Parameters.AddWithValue("@issued_to", _obj.issued_to);
-        //    _cmd.Parameters.AddWithValue("@project_code", _obj.project_code);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@mode", _obj.mode);
-        //    _cmd.Parameters.AddWithValue("@service", _obj.service);
-        //    _cmd.Parameters.AddWithValue("@LinkTo", _obj.Notes);
+        public string DR_Saved(string _sp, _clsdocreview _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@dr_id", _obj.dr_id);
+            _cmd.Parameters.AddWithValue("@dr_reviewed", _obj.dr_reviewed);
+            _cmd.Parameters.AddWithValue("@issued_date", _obj.issued_date);
+            _cmd.Parameters.AddWithValue("@issued_to", _obj.issued_to);
+            _cmd.Parameters.AddWithValue("@project_code", _obj.project_code);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@mode", _obj.mode);
+            _cmd.Parameters.AddWithValue("@service", _obj.service);
+            _cmd.Parameters.AddWithValue("@LinkTo", _obj.Notes);
 
-        //    _cmd.Parameters.Add("@dr_no", SqlDbType.VarChar, 15);
+            _cmd.Parameters.Add("@dr_no", SqlDbType.VarChar, 15);
 
-        //    _cmd.Parameters["@dr_no"].Direction = ParameterDirection.Output;
-        //    _cmd.ExecuteNonQuery();
-        //    return _cmd.Parameters["@dr_no"].Value.ToString();
-        //}
+            _cmd.Parameters["@dr_no"].Direction = ParameterDirection.Output;
+            _cmd.ExecuteNonQuery();
+            return _cmd.Parameters["@dr_no"].Value.ToString();
+        }
 
-        //public void DR_Saved_Details(string _sp, _clsdocreview _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@dr_itm_id", _obj.dr_itm_id);
-        //    _cmd.Parameters.AddWithValue("@dr_id", _obj.dr_id);
-        //    _cmd.Parameters.AddWithValue("@details", _obj.details);
-        //    _cmd.Parameters.AddWithValue("@desc", _obj.desc);
-        //    _cmd.Parameters.AddWithValue("@mode", _obj.mode);
-        //    _cmd.Parameters.AddWithValue("@LinkTo", _obj.Notes);
-        //    _cmd.Parameters.AddWithValue("@AttchDocument", _obj.AttachDocument);
-        //    _cmd.Parameters.AddWithValue("@Position", _obj.Position);
-        //    _cmd.ExecuteNonQuery();
-        //}
+        public void DR_Saved_Details(string _sp, _clsdocreview _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@dr_itm_id", _obj.dr_itm_id);
+            _cmd.Parameters.AddWithValue("@dr_id", _obj.dr_id);
+            _cmd.Parameters.AddWithValue("@details", _obj.details);
+            _cmd.Parameters.AddWithValue("@desc", _obj.desc);
+            _cmd.Parameters.AddWithValue("@mode", _obj.mode);
+            _cmd.Parameters.AddWithValue("@LinkTo", _obj.Notes);
+            _cmd.Parameters.AddWithValue("@AttchDocument", _obj.AttachDocument);
+            _cmd.Parameters.AddWithValue("@Position", _obj.Position);
+            _cmd.ExecuteNonQuery();
+        }
 
-        //public void Update_Comment_Basket(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
-        //    _cmd.Parameters.AddWithValue("@comment", _obj.comment);
-        //    _cmd.Parameters.AddWithValue("@page", _obj.page_no);
-        //    _cmd.Parameters.AddWithValue("@section", _obj.sec_no);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Get_CMS_Settings(string _sp, _clscmssettings _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Module", _obj.module);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
+        public void Update_Comment_Basket(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
+            _cmd.Parameters.AddWithValue("@comment", _obj.comment);
+            _cmd.Parameters.AddWithValue("@page", _obj.page_no);
+            _cmd.Parameters.AddWithValue("@section", _obj.sec_no);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Get_CMS_Settings(string _sp, _clscmssettings _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Module", _obj.module);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
 
-        //public void Update_CMS_Settings(string _sp, _clscmssettings _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Module", _obj.module);
-        //    _cmd.Parameters.AddWithValue("@RevisionStyle", _obj.revision_style);
-        //    _cmd.Parameters.AddWithValue("@AllowDR", _obj.allowDR);
-        //    _cmd.Parameters.AddWithValue("@AllowComments", _obj.allowcomments);
-        //    _cmd.Parameters.AddWithValue("@ResponsePeriod", _obj.responseperiod);
-        //    _cmd.ExecuteNonQuery();
-        //}
+        public void Update_CMS_Settings(string _sp, _clscmssettings _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@Module", _obj.module);
+            _cmd.Parameters.AddWithValue("@RevisionStyle", _obj.revision_style);
+            _cmd.Parameters.AddWithValue("@AllowDR", _obj.allowDR);
+            _cmd.Parameters.AddWithValue("@AllowComments", _obj.allowcomments);
+            _cmd.Parameters.AddWithValue("@ResponsePeriod", _obj.responseperiod);
+            _cmd.ExecuteNonQuery();
+        }
 
-        //public void Update_CP_Comment(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
-        //    _cmd.Parameters.AddWithValue("@comment", _obj.comment);
-        //    _cmd.Parameters.AddWithValue("@page", _obj.page_no);
-        //    _cmd.Parameters.AddWithValue("@section", _obj.sec_no);
-        //    _cmd.ExecuteNonQuery();
-        //}
+        public void Update_CP_Comment(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
+            _cmd.Parameters.AddWithValue("@comment", _obj.comment);
+            _cmd.Parameters.AddWithValue("@page", _obj.page_no);
+            _cmd.Parameters.AddWithValue("@section", _obj.sec_no);
+            _cmd.ExecuteNonQuery();
+        }
 
 
-        //public void UpdateCPCommentStatus(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
-        //    _cmd.Parameters.AddWithValue("@status", Convert.ToBoolean(_obj.status));
-        //    _cmd.ExecuteNonQuery();
-        //}
+        public void UpdateCPCommentStatus(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
+            _cmd.Parameters.AddWithValue("@status", Convert.ToBoolean(_obj.status));
+            _cmd.ExecuteNonQuery();
+        }
 
-        //public void Update_Issue_Comment(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
-        //    _cmd.Parameters.AddWithValue("@comment", _obj.comment);
-        //    _cmd.Parameters.AddWithValue("@page", _obj.page_no);
-        //    _cmd.Parameters.AddWithValue("@section", _obj.sec_no);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Document_Review_Details_New(string _sp, _clsdocreview _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@dr_itm_id", _obj.dr_itm_id);
-        //    _cmd.Parameters.AddWithValue("@dr_id", _obj.dr_id);
-        //    _cmd.Parameters.AddWithValue("@details", _obj.details);
-        //    _cmd.Parameters.AddWithValue("@response", _obj.response);
-        //    _cmd.Parameters.AddWithValue("@desc", _obj.desc);
-        //    _cmd.Parameters.AddWithValue("@date", _obj.issued_date);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@mode", _obj.mode);
-        //    _cmd.Parameters.AddWithValue("@AttchDocument", _obj.AttachDocument);
-        //    _cmd.Parameters.AddWithValue("@Position", _obj.Position);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Delete_DMS_Document_New(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Generate_CAS_PKG_Summary(string _sp,_clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@SCH_ID", _obj.sch);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void InsertCommentBasket(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@comment", _obj.comment);
-        //    _cmd.Parameters.AddWithValue("@page", _obj.page_no);
-        //    _cmd.Parameters.AddWithValue("@sec", _obj.sec_no);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.user_id);
-        //    _cmd.Parameters.AddWithValue("@prj_code", _obj.prj_code);
-        //    _cmd.Parameters.AddWithValue("@module", _obj.module);
-        //    _cmd.Parameters.AddWithValue("@type", _obj.type);
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_CP_Comments_All(string _sp, _clscmscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@userid", _obj.uid);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Update_Comment_Response(string _sp, _clscmscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.com_id);
-        //    _cmd.Parameters.AddWithValue("@response", _obj.resp);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Issue_Unsaved_Comments(string _sp, _clscmscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.ExecuteNonQuery();
-        //}
+        public void Update_Issue_Comment(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
+            _cmd.Parameters.AddWithValue("@comment", _obj.comment);
+            _cmd.Parameters.AddWithValue("@page", _obj.page_no);
+            _cmd.Parameters.AddWithValue("@section", _obj.sec_no);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Document_Review_Details_New(string _sp, _clsdocreview _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@dr_itm_id", _obj.dr_itm_id);
+            _cmd.Parameters.AddWithValue("@dr_id", _obj.dr_id);
+            _cmd.Parameters.AddWithValue("@details", _obj.details);
+            _cmd.Parameters.AddWithValue("@response", _obj.response);
+            _cmd.Parameters.AddWithValue("@desc", _obj.desc);
+            _cmd.Parameters.AddWithValue("@date", _obj.issued_date);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.Parameters.AddWithValue("@mode", _obj.mode);
+            _cmd.Parameters.AddWithValue("@AttchDocument", _obj.AttachDocument);
+            _cmd.Parameters.AddWithValue("@Position", _obj.Position);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Delete_DMS_Document_New(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Generate_CAS_PKG_Summary(string _sp,_clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@SCH_ID", _obj.sch);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void InsertCommentBasket(string _sp, _clscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@comment", _obj.comment);
+            _cmd.Parameters.AddWithValue("@page", _obj.page_no);
+            _cmd.Parameters.AddWithValue("@sec", _obj.sec_no);
+            _cmd.Parameters.AddWithValue("@uid", _obj.user_id);
+            _cmd.Parameters.AddWithValue("@prj_code", _obj.prj_code);
+            _cmd.Parameters.AddWithValue("@module", _obj.module);
+            _cmd.Parameters.AddWithValue("@type", _obj.type);
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
+            _cmd.Parameters.AddWithValue("@com_id", _obj.comm_id);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable Load_CP_Comments_All(string _sp, _clscmscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@userid", _obj.uid);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void Update_Comment_Response(string _sp, _clscmscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@com_id", _obj.com_id);
+            _cmd.Parameters.AddWithValue("@response", _obj.resp);
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.ExecuteNonQuery();
+        }
+        public void Issue_Unsaved_Comments(string _sp, _clscmscomment _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@uid", _obj.uid);
+            _cmd.ExecuteNonQuery();
+        }
         ////----------------------Jenne 09012016------------------------
 
         //public DataTable Load_MS_Register(string _sp, _clscmsdocument _obj, _database _objdb)
@@ -4183,1847 +5792,179 @@ namespace DataLinkLibrary
         //    _dta.Fill(_dtable);
         //    return _dtable;
         //}
-        //public void Insert_User_Log_Report(string _sp, _clslog _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@User_Id", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@Ip_Address", _obj.ipaddr);
-        //    _cmd.Parameters.AddWithValue("@Country", _obj.Country);
-        //    _cmd.Parameters.AddWithValue("@Region", _obj.Region);
-        //    _cmd.Parameters.AddWithValue("@City", _obj.location);
-        //    _cmd.Parameters.AddWithValue("@Login_Time", _obj.login);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public int Get_NoofCas_Bldng(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Srv_Id", _obj.srv);
-        //    _cmd.Parameters.AddWithValue("@BLDG_ID", _obj.build_id);
-        //    _cmd.Parameters.Add("@Count", SqlDbType.Int);
-        //    _cmd.Parameters["@Count"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@Count"].Value.ToString() != "")
-        //            return (int)_cmd.Parameters["@Count"].Value;
-        //        else
-        //            return 1;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public void DML_AMS_System(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_SYS_ID", _obj.ams_sys_id);
-        //    _cmd.Parameters.AddWithValue("@ASSET_ID", _obj.srv_id);
-        //    _cmd.Parameters.AddWithValue("@GROUP_ID", _obj.sch_id);
-        //    _cmd.Parameters.AddWithValue("@SYS_NAME", _obj.ams_sys_name);
-        //    _cmd.Parameters.AddWithValue("@DESCRIPTION", _obj.descri);
-        //    _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_AMS_System(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Group_Id", _obj.casId);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Generate_AmsRegister(string _sp, _clsuser _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@PROJECT", _obj.project_code);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void ClearBasket(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    //_cmd.Parameters.AddWithValue("@id", _obj.comm_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable load_basket(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
+        public void dml_SO_pdf(string _sp, _clsSO _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@So_id", _obj.so_id);
+            _cmd.Parameters.AddWithValue("@SO_no", _obj.so_no);
+            _cmd.Parameters.AddWithValue("@issue_date", _obj.cdate);
+            _cmd.Parameters.AddWithValue("@issue_to", _obj.issued_to);
+            _cmd.Parameters.AddWithValue("@service", _obj.package);
+            _cmd.Parameters.AddWithValue("@subject", _obj.doc_name);
+            _cmd.Parameters.AddWithValue("@created_by", _obj.issued_by);
+            _cmd.Parameters.AddWithValue("@file", _obj.details);
+            _cmd.Parameters.AddWithValue("@comment", _obj.comments);
+            _cmd.Parameters.AddWithValue("@response", _obj.response);
+            _cmd.Parameters.AddWithValue("@status", _obj.status);
+            _cmd.Parameters.AddWithValue("@action", _obj.mode);
+            _cmd.ExecuteNonQuery();
+        }
+        public DataTable LoadDataTable(string _sp, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }       
+        public void Generate_CAS_Graph_Summary(string _sp, _clscassheet _obj, _database _objdb)   
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@SCH_ID", _obj.sch);
+            _cmd.Parameters.AddWithValue("@BZ", _obj.b_zone);
+            _cmd.Parameters.AddWithValue("@CATE", _obj.cate);
+            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
+            _cmd.Parameters.AddWithValue("@F_FROM", _obj.fed_from);
+            _cmd.Parameters.AddWithValue("@LOC", _obj.loca);
+            _cmd.Parameters.AddWithValue("@BUILDING", _obj.build_id);
+            _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
+            _cmd.ExecuteNonQuery();
 
-        //public DataTable Load_PrjDocType(string _sp, _clsFolderTree _obj, _database _objdb)
+        }
+        public DataSet Generate_ProgressComparison_Graph(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));    
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@sch_id", _obj.sch);
+            _cmd.Parameters.AddWithValue("@BZ", _obj.b_zone);
+            _cmd.Parameters.AddWithValue("@CAT", _obj.cate);
+            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
+            _cmd.Parameters.AddWithValue("@F_FROM", _obj.fed_from);
+            _cmd.Parameters.AddWithValue("@LOC", _obj.loca);
+            _cmd.Parameters.AddWithValue("@PcdRefdate", _obj.date);
+            _cmd.Parameters.AddWithValue("@BUILDING", _obj.build_id);
+            _dta = new SqlDataAdapter(_cmd);
+            DataSet _ds = new DataSet();
+            _dta.Fill(_ds);
+            return _ds;
+        }
+        public void GENERATE_PROJECT_SUMMARY_PCD(string _sp, _clscassheet _obj, _database _objdb)   
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@PcdRefdate", _obj.date);
+            _cmd.Parameters.AddWithValue("@BZONE", _obj.b_zone);
+            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
+            _cmd.ExecuteNonQuery();
+        }
+        //public void Get_Executive_Summary_pcd(string _sp, _clscassheet _obj, _database _objdb)
         //{
         //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
         //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.Project_code);
-        //    _cmd.Parameters.AddWithValue("@Parent", _obj.Parent_folder);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-
-        //-----------------------Created on 13/03/2011--------------------------//
-        //public void Manage_Tree(string _sp, _clsManageTree _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@description", _obj.desciption);
-        //    _cmd.Parameters.AddWithValue("@service", _obj.service);
-        //    _cmd.Parameters.AddWithValue("@possition", _obj.possition);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Edit_Tree(string _sp, _clsManageTree _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@description", _obj.desciption);
-        //    _cmd.Parameters.AddWithValue("@service", _obj.service);
-        //    _cmd.Parameters.AddWithValue("@possition", _obj.possition);
-        //    _cmd.Parameters.AddWithValue("@code", _obj.code);
-        //    _cmd.Parameters.AddWithValue("@mode", _obj.mode);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //--------------------Created on 15/03/2011-----------------//
-
-        //public void SetAutoComplete(string _sp, _clsuser _obj, _database _objdb)
-        //{
-        //    //_cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    //_cmd.CommandType = CommandType.StoredProcedure;
-        //    //_cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    //_cmd.Parameters.AddWithValue("@autocomplete", _obj.autocomplete);
-        //    //_cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_Reports(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@package", _obj.package_code);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-
-        //public int ValidateDocumentRevision(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
-        //    _cmd.Parameters.Add("@exists", SqlDbType.Int);
-        //    _cmd.Parameters["@exists"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@exists"].Value.ToString() != "")
-        //            return System.Convert.ToInt32(_cmd.Parameters["@exists"].Value.ToString());
-        //        else
-        //            return 0;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-
-        //public DataTable Load_CasSub(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@cas_id", _obj.cas_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void LOG(string _sp, _clslog _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@_uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@_ipaddress", _obj.ipaddr);
-        //    _cmd.Parameters.AddWithValue("@_location", _obj.location);
-        //    _cmd.Parameters.AddWithValue("@_login", _obj.login);
-        //    _cmd.ExecuteNonQuery();
-        //}
-
-        //public void add_cas_main(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@sys_id", _obj.sys);
-        //    _cmd.Parameters.AddWithValue("@reff_", _obj.reff);
-        //    _cmd.Parameters.AddWithValue("@desc_", _obj.desc);
-        //    _cmd.Parameters.AddWithValue("@loca_", _obj.loca);
-        //    _cmd.Parameters.AddWithValue("@p_power_to", _obj.p_power_to);
-        //    _cmd.Parameters.AddWithValue("@fed_from", _obj.fed_from);
-        //    _cmd.Parameters.AddWithValue("@power_on", _obj.power_on);
-        //    _cmd.Parameters.AddWithValue("@comm_", _obj.comm);
-        //    _cmd.Parameters.AddWithValue("@act_by", _obj.act_by);
-        //    _cmd.Parameters.AddWithValue("@act_date", _obj.act_date);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@date_", _obj.date);
-        //    _cmd.Parameters.AddWithValue("@srv_id", _obj.srv);
-        //    _cmd.Parameters.AddWithValue("@sch_id", _obj.sch);
-        //    _cmd.Parameters.AddWithValue("@prj_code", _obj.prj_code);
-        //    _cmd.Parameters.AddWithValue("@con_acce", _obj.con_acce);
-        //    _cmd.Parameters.AddWithValue("@filed", _obj.ts_filed);
-        //    _cmd.Parameters.AddWithValue("@des_vol", _obj.des_vol);
-        //    _cmd.Parameters.AddWithValue("@des_flow_rate", _obj.des_flow_rate);
-        //    _cmd.Parameters.AddWithValue("@devices", _obj.dev);
-        //    _cmd.Parameters.AddWithValue("@sys_monitored", _obj.sys_mon);
-        //    _cmd.Parameters.AddWithValue("@fa_interfaces", _obj.fa_int);
-        //    _cmd.Parameters.AddWithValue("@mode", _obj.mode);
-        //    _cmd.Parameters.AddWithValue("@cas_id", _obj.cas_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-
-        //public DataSet Load_casMain_Graph(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@sch_id", _obj.sch);
-        //    _cmd.Parameters.AddWithValue("@prj_code", _obj.prj_code);
-        //    _cmd.Parameters.AddWithValue("@sys_id", _obj.sys);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataSet _dtable = new DataSet();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable load_comments(string _sp, _clscmscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@id", _obj.doc_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-
-        //public void RESTORE_DB(string _sp, _database _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@DBName", _obj.DBName);
-        //    _cmd.Parameters.AddWithValue("@BackName", _obj.Bakname);
-        //    _cmd.Parameters.AddWithValue("@DataName", _obj.Dataname);
-        //    _cmd.Parameters.AddWithValue("@DataFileName", _obj.Datapath);
-        //    _cmd.Parameters.AddWithValue("@LogName", _obj.Logname);
-        //    _cmd.Parameters.AddWithValue("@LogFileName", _obj.Logpath);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Add_CRS_Master(string _sp, _clsCRS _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@pkg_id", _obj.pkg_cate_id);
-        //    _cmd.Parameters.AddWithValue("@sys_id", _obj.sys_id);
-        //    _cmd.Parameters.AddWithValue("@eng_reff", _obj.eng_reff);
-        //    _cmd.Parameters.AddWithValue("@asset_code", _obj.asset_code);
-        //    _cmd.Parameters.AddWithValue("@rs_id", _obj.rs_id);
-        //    _cmd.Parameters.AddWithValue("@tested_by", _obj.tested_by);
-        //    _cmd.Parameters.AddWithValue("@instrument_used", _obj.instru_used);
-        //    _cmd.Parameters.AddWithValue("@date_commenced", _obj.date_comm);
-        //    _cmd.Parameters.AddWithValue("@date_completed", _obj.date_comp);
-        //    _cmd.Parameters.AddWithValue("@witnessed_by", _obj.witnsd_by);
-        //    _cmd.Parameters.AddWithValue("@date_witnessed", _obj.date_witnsd);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Add_AirBalancing(string _sp, _clsCRS _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@crs_id", _obj.crs_id);
-        //    _cmd.Parameters.AddWithValue("@ter_reff", _obj.ter_reff);
-        //    _cmd.Parameters.AddWithValue("@factor", _obj.factor);
-        //    _cmd.Parameters.AddWithValue("@design1", _obj.design1);
-        //    _cmd.Parameters.AddWithValue("@design2", _obj.design2);
-        //    _cmd.Parameters.AddWithValue("@initial1", _obj.initial1);
-        //    _cmd.Parameters.AddWithValue("@initial2", _obj.initial2);
-        //    _cmd.Parameters.AddWithValue("@final1", _obj.final1);
-        //    _cmd.Parameters.AddWithValue("@final2", _obj.final2);
-        //    _cmd.Parameters.AddWithValue("@check1", _obj.check1);
-        //    _cmd.Parameters.AddWithValue("@check2", _obj.check2);
-        //    _cmd.Parameters.AddWithValue("@hood", _obj.hood);
-        //    _cmd.Parameters.AddWithValue("@comments", _obj.comments);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Update_ProgressTracking_tbl(string _sp, _clsProgressTracking _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Progress_Id", _obj.Progress_id);
-        //    _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
-        //    _cmd.Parameters.AddWithValue("@Value", _obj.Value);
-        //    _cmd.Parameters.AddWithValue("@User_id", _obj.Userid);
-        //    _cmd.Parameters.AddWithValue("@Type", _obj.Type);
-        //    _cmd.ExecuteNonQuery();
-        //}
-
-        //public void dml_dms_library_general(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@itm_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@srv_id", _obj.service_code);
-        //    _cmd.Parameters.AddWithValue("@pkg_id", _obj.schid);
-        //    _cmd.Parameters.AddWithValue("@man_id", _obj.party_id);
-        //    _cmd.Parameters.AddWithValue("@contra_type", _obj.type);
-        //    _cmd.Parameters.AddWithValue("@model", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@file_name", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@source", _obj.reff);
-        //    _cmd.Parameters.AddWithValue("@action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void addcomment_new(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@sec_no", _obj.sec_no);
-        //    _cmd.Parameters.AddWithValue("@page_no", _obj.page_no);
-        //    _cmd.Parameters.AddWithValue("@comment", _obj.comment);
-        //    _cmd.Parameters.AddWithValue("@com_date", _obj.com_date);
-        //    _cmd.Parameters.AddWithValue("@user_id", _obj.user_id);
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@Image_name", _obj.Image_name);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Editcomment_new(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@comment", _obj.comment);
-        //    _cmd.Parameters.AddWithValue("@user_id", _obj.user_id);
-        //    _cmd.Parameters.AddWithValue("@comm_id", _obj.comm_id);
-        //    _cmd.Parameters.AddWithValue("@Image_name", _obj.Image_name);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable load_CommentDetails(string _sp, _clscomment _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@comm_id", _obj.comm_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void dml_amslocation(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@location_id", _obj.id);
-        //    _cmd.Parameters.AddWithValue("@location_name", _obj.location);
-        //    _cmd.Parameters.AddWithValue("@action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void dml_amsroom(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@room_id", _obj.id);
-        //    _cmd.Parameters.AddWithValue("@room_name", _obj.location);
-        //    _cmd.Parameters.AddWithValue("@action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_Document_Library_Project(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-
-        //public DataTable Generate_DocumentStatus_Other(string _sp, _clscmsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.project_code);
-        //    _cmd.Parameters.AddWithValue("@Service_id", _obj.srv_id);
-        //    _cmd.Parameters.AddWithValue("@Type", _obj.Type);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public int Get_Document_Library_Count(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Itm_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
-        //    _cmd.Parameters.Add("@count", SqlDbType.Int);
-        //    _cmd.Parameters["@count"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@count"].Value.ToString() != "")
-        //            return (int)_cmd.Parameters["@count"].Value;
-        //        else
-        //            return 0;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public void dml_dms_library_general_new(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@itm_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@srv_id", _obj.service_code);
-        //    _cmd.Parameters.AddWithValue("@pkg_id", _obj.schid);
-        //    _cmd.Parameters.AddWithValue("@man_id", _obj.party_id);
-        //    _cmd.Parameters.AddWithValue("@contra_type", _obj.type);
-        //    _cmd.Parameters.AddWithValue("@model", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@file_name", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@source", _obj.reff);
-        //    _cmd.Parameters.AddWithValue("@action", _obj.action);
-        //    _cmd.Parameters.AddWithValue("@File_Size", _obj.file_size);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void AddToProject_Library(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@itm_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@Folder_Id", _obj.folder_id);
-        //    _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_Buildinglevel_Navigation(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@prj", _obj.project_code);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void CREATE_SYSCASPKG(string _sp, _clspackage _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@pkg_name", _obj.package);
-        //    _cmd.Parameters.AddWithValue("@pkg_code", _obj.category);
-        //    _cmd.Parameters.AddWithValue("@cas_id", _obj.sch_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_SnagMaster(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.project);
-        //    _cmd.Parameters.AddWithValue("@mode", _obj.mode);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-
-        //public void Add_Snag_Basket(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _cmd.Parameters.AddWithValue("@area", _obj.area);
-        //    _cmd.Parameters.AddWithValue("@details", _obj.description);
-        //    _cmd.Parameters.AddWithValue("@room", _obj.room);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Add_Snag_Img(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _cmd.Parameters.AddWithValue("@img", _obj.img);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Remove_Snag_Basket(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@id", _obj.snag_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Submit_Snag_Details(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    //_cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    //_cmd.CommandType = CommandType.StoredProcedure;
-        //    //_cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    //_cmd.ExecuteNonQuery();
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Snag_id", _obj.snag_id);
-        //    _cmd.Parameters.AddWithValue("@Area", _obj.area);
-        //    _cmd.Parameters.AddWithValue("@Room", _obj.room);
-        //    _cmd.Parameters.AddWithValue("@Details", _obj.description);
+        //    _cmd.Parameters.AddWithValue("@DATE_FRM", _obj.dtastart);
+        //    _cmd.Parameters.AddWithValue("@DATE_TO", _obj.dtpstart);
+        //    _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
+        //    _cmd.Parameters.AddWithValue("@SERVICE_TYPE", _obj.cate);
         //    _cmd.ExecuteNonQuery();
 
         //}
-        //public int Create_Snag(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    //Old Proce.
-        //    //_cmd.Parameters.AddWithValue("@ref_no", _obj.ref_no);
-        //    //_cmd.Parameters.AddWithValue("@description", _obj.description);
-        //    //_cmd.Parameters.AddWithValue("@service", _obj.service);
-        //    //_cmd.Parameters.AddWithValue("@created_by", _obj.created_by);
-        //    //_cmd.Parameters.AddWithValue("@date_created", _obj.date_created);
-        //    //_cmd.Parameters.AddWithValue("@project", _obj.project);
-        //    //New Proce. 09/10/2011
-        //    //changes 18/10/2011
-        //    _cmd.Parameters.AddWithValue("@Pkg_id", _obj.pkg_id);
-        //    _cmd.Parameters.AddWithValue("@Subject", _obj.description);
-        //    _cmd.Parameters.AddWithValue("@Created", _obj.created_by);
-        //    _cmd.Parameters.AddWithValue("@Created_date", _obj.date_created);
-        //    _cmd.Parameters.AddWithValue("@project", _obj.project);
-        //    _cmd.Parameters.AddWithValue("@Area", _obj.area);
-        //    _cmd.Parameters.AddWithValue("@Room", _obj.room);
-        //    _cmd.Parameters.AddWithValue("@Details", _obj.description);
-        //    _cmd.Parameters.AddWithValue("@Floor", _obj.Floor);
-        //    _cmd.Parameters.Add("@Snag_id", SqlDbType.Int);
-        //    _cmd.Parameters["@Snag_id"].Direction = ParameterDirection.Output;
-        //    _cmd.ExecuteNonQuery();
-        //    if (_cmd.Parameters["@Snag_id"].Value.ToString() != "")
-        //        return (int)_cmd.Parameters["@Snag_id"].Value;
-        //    else
-        //        return 0;
+        public void Get_Total_Executive_Summary(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@DATE_FRM", _obj.dtastart);
+            _cmd.Parameters.AddWithValue("@DATE_TO", _obj.dtpstart);
+            _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
+            _cmd.Parameters.AddWithValue("@SERVICE_TYPE", _obj.cate);
+            _cmd.ExecuteNonQuery();
 
-        //}
-        //public DataTable Load_Snag_Basket(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _cmd.Parameters.AddWithValue("@type", _obj.type);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_SnagSub(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_SnagDetails_Stage1(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.userid);
-        //    _cmd.Parameters.AddWithValue("@pkg", _obj.package);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Snag_Issue(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _cmd.Parameters.AddWithValue("@issued_date", _obj.date_issued);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Update_SnagResponse(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _cmd.Parameters.AddWithValue("@response", _obj.response);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Update_SnagStatus(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _cmd.Parameters.AddWithValue("@status", _obj.status);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Update_SnagStage(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Inser_Snag_Pkg_Sub(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@pkg_id", _obj.pkg_id);
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.com_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public int Insert_Snag_Pkg(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@pkg_name", _obj.pkg_name);
-        //    _cmd.Parameters.AddWithValue("@com_id", _obj.com_id);
-        //    _cmd.Parameters.AddWithValue("@project", _obj.project);
-        //    _cmd.Parameters.Add("@pkg_id", SqlDbType.Int);
-        //    _cmd.Parameters["@pkg_id"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@pkg_id"].Value.ToString() != "")
-        //            return (int)_cmd.Parameters["@pkg_id"].Value;
-        //        else
-        //            return 0;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public string Get_PkgCom_User(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Pkg_id", _obj.pkg_id);
-        //    _cmd.Parameters.Add("@user", SqlDbType.VarChar, 50);
-        //    _cmd.Parameters["@user"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@user"].Value.ToString() != "")
-        //            return (string)_cmd.Parameters["@user"].Value;
-        //        else
-        //            return "0";
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public DataTable Load_PkgCom_SubUser(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Pkg_id", _obj.snag_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
+        }
+        //Dashboard
+        public DataSet Get_Total_Executive_Summary_Dashboard(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@DATE_FRM", _obj.dtastart);
+            _cmd.Parameters.AddWithValue("@DATE_TO", _obj.dtpstart);
+            _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
+            _cmd.Parameters.AddWithValue("@SERVICE_TYPE", _obj.cate);
+            _dta = new SqlDataAdapter(_cmd);
+            DataSet ds = new DataSet();
+            _dta.Fill(ds);
+            return ds;
+        }
+       
 
-        //public DataSet load_dataset(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataSet _dtable = new DataSet();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Add_Photo_rpt(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@img", _obj.photo_rpt);
-        //    _cmd.Parameters.AddWithValue("@snag_id", _obj.snag_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Populate_SnagRpt(string _sp, _clsSnag _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.project);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void CAS_PKG_SUM_RPT(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@DBNAME", _objdb.Dataname);
-        //    _cmd.Parameters.AddWithValue("@SCH_ID", _objdb.cas);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable LOAD_CAS_SERVICE_SUMMARY(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@SER_ID", _obj.srv);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable LOAD_CAS_PRJ_SUMMARY(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Insert_SummaryGraph(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@sys_name", _obj.sys_mon);
-        //    _cmd.Parameters.AddWithValue("@total", _obj.per_com1);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Generate_CASsheet_RPT(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Cas_Id", _objdb.rpt);
-        //    _cmd.Parameters.AddWithValue("@DBNAME", _objdb.Dataname);
-        //    _cmd.Parameters.AddWithValue("@PROJECT", _objdb.project);
-        //    _cmd.Parameters.AddWithValue("@PROJECT_CODE", _objdb.Datapath);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_CasServiceData(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@srv_id", _obj.srv);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_CMS_Users(string _sp, _clsuser _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
-        //    _cmd.Parameters.AddWithValue("@Type", _obj.mode);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_UsersCompany(string _sp, _clsproject _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Company_Id", _obj.com_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_CMSUser(string _sp, _clsuser _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.project_code);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public string Get_TempSONo(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.Add("@so_no", SqlDbType.VarChar, 10);
-        //    _cmd.Parameters["@so_no"].Direction = ParameterDirection.Output;
-        //    _cmd.ExecuteNonQuery();
-        //    return _cmd.Parameters["@so_no"].Value.ToString();
-        //}
-        //################################################AMS####################################################
-
-        //public void DML_Manufacturer(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Manuf_Id", _obj.manufId);
-        //    _cmd.Parameters.AddWithValue("@Manuf_Name", _obj.manufName);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_Supplier(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Supplier_Id", _obj.supId);
-        //    _cmd.Parameters.AddWithValue("@Supplier_Name", _obj.supName);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_AMSInfo(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_Reg_Id", _obj.ams_reg_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void DML_AssetDetails(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_AD_Id", _obj.adId);
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
-        //    _cmd.Parameters.AddWithValue("@Manufacturer_Id", _obj.manufId);
-        //    _cmd.Parameters.AddWithValue("@Model_Ref", _obj.model);
-        //    _cmd.Parameters.AddWithValue("@Serial_No", _obj.srlno);
-        //    _cmd.Parameters.AddWithValue("@AMS_Sys_Id", _obj.ams_sys_id);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_Purchase(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_PD_Id", _obj.adId);
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
-        //    _cmd.Parameters.AddWithValue("@Supplier_Id", _obj.supId);
-        //    _cmd.Parameters.AddWithValue("@BPartner", _obj.partner);
-        //    _cmd.Parameters.AddWithValue("@PO_No", _obj.pono);
-        //    _cmd.Parameters.AddWithValue("@PPrice", _obj.pprice);
-        //    _cmd.Parameters.AddWithValue("@Currency", _obj.cur);
-        //    _cmd.Parameters.AddWithValue("@WExp_Date", _obj.edate);
-        //    _cmd.Parameters.AddWithValue("@Replace_Cost", _obj.rcost);
-        //    _cmd.Parameters.AddWithValue("@Replace_By", _obj.rpby);
-        //    _cmd.Parameters.AddWithValue("@Purchase_date", _obj.pdate);
-        //    _cmd.Parameters.AddWithValue("@Depreciation_Value", _obj.depreciation);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_Contractor(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Contr_Id", _obj.contrId);
-        //    _cmd.Parameters.AddWithValue("@Contr_Name", _obj.contrName);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_MaintenanceContract(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@MC_Id", _obj.mcId);
-        //    _cmd.Parameters.AddWithValue("@Cas_Id", _obj.casId);
-        //    _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
-        //    _cmd.Parameters.AddWithValue("@Contr_Id", _obj.contrId);
-        //    _cmd.Parameters.AddWithValue("@Annual_Charges", _obj.pprice);
-        //    _cmd.Parameters.AddWithValue("@S_Date", _obj.cdate);
-        //    _cmd.Parameters.AddWithValue("@E_Date", _obj.edate);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_ElectricalDtls(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_ED_Id", _obj.eId);
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
-        //    _cmd.Parameters.AddWithValue("@Phase", _obj.phase);
-        //    _cmd.Parameters.AddWithValue("@Voltage", _obj.voltage);
-        //    _cmd.Parameters.AddWithValue("@Amps", _obj.amp);
-        //    _cmd.Parameters.AddWithValue("@Others", _obj.other);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_MechanicalDtls(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_MD_Id", _obj.mId);
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
-        //    _cmd.Parameters.AddWithValue("@W_temp", _obj.wtemp);
-        //    _cmd.Parameters.AddWithValue("@Rpm", _obj.rpm);
-        //    _cmd.Parameters.AddWithValue("@Others", _obj.other);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_CivilDtls(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_CD_Id", _obj.cId);
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Equip_No", _obj.eqpNo);
-        //    _cmd.Parameters.AddWithValue("@B_Area", _obj.bArea);
-        //    _cmd.Parameters.AddWithValue("@A_Occupied", _obj.aOccupied);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_CheckDates(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@ACD_Id", _obj.ACD_id);
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Comm_SOD", _obj.Comm_SOD);
-        //    _cmd.Parameters.AddWithValue("@Daily_Check", _obj.DailyChk);
-        //    _cmd.Parameters.AddWithValue("@Weekly_Check", _obj.WeeklyChk);
-        //    _cmd.Parameters.AddWithValue("@Monthly_Check", _obj.MonthlyChk);
-        //    _cmd.Parameters.AddWithValue("@TMonths_Check", _obj.TMonthsChk);
-        //    _cmd.Parameters.AddWithValue("@SMonths_Check", _obj.SMonthsChk);
-        //    _cmd.Parameters.AddWithValue("@Yearly_Check", _obj.YearlyChk);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public string Get_CheckNames(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Date", _obj.edate);
-        //    _cmd.Parameters.AddWithValue("@Cas_Id", _obj.casId);
-        //    _cmd.Parameters.Add("@Check", SqlDbType.VarChar, 25);
-        //    _cmd.Parameters["@Check"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@Check"].Value.ToString() != "")
-        //            return (string)_cmd.Parameters["@Check"].Value;
-        //        else
-        //            return "No";
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public void Add_Task(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Task", _obj.task);
-        //    _cmd.Parameters.AddWithValue("@Type", _obj.type);
-        //    _cmd.Parameters.AddWithValue("@Man_Hrs", _obj.man_hrs);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_Ams_Task(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Type", _obj.type);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Gen_AMS_Task_Rpt(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Type", _obj.type);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //**************************************TIS******************************************************
-
-        //public DataTable LOAD_MASTER(string _sp, _clstis _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@PROJECT_CODE", _obj.prj_code);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable LOAD_ZONE(string _sp, _clstis _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@FLR_ID", _obj.flr_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable LOAD_TENANTS(string _sp, _clstis _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@ZN_ID", _obj.zn_id);
-        //    _cmd.Parameters.AddWithValue("@FLR_ID", _obj.flr_id);
-        //    _cmd.Parameters.AddWithValue("@TYPE", _obj.action);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable LOAD_FOLDER(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void DML_TENANCY_CONTRACT(string _sp, _clstis _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@TNC_NAME", _obj.tnc_name);
-        //    _cmd.Parameters.AddWithValue("@UPLOAD_DATE", _obj.update);
-        //    _cmd.Parameters.AddWithValue("@FILE_NAME", _obj.filename);
-        //    _cmd.Parameters.AddWithValue("@FROM_DATE", _obj.fdate);
-        //    _cmd.Parameters.AddWithValue("@TO_DATE", _obj.tdate);
-        //    _cmd.Parameters.AddWithValue("@REMIND_DATE", _obj.rdate);
-        //    _cmd.Parameters.AddWithValue("@VALUE", _obj.tvalue);
-        //    _cmd.Parameters.AddWithValue("@CURRENCY", _obj.cur);
-        //    _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
-        //    _cmd.Parameters.AddWithValue("@PROJECT_CODE", _obj.prj_code);
-        //    _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable LOAD_TENANCY_CONTRACT(string _sp, _clstis _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
-        //    _cmd.Parameters.AddWithValue("@STATUS", _obj.status);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void DML_AUTHORITY_LETTER(string _sp, _clstis _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@LETTER_NAME", _obj.letter);
-        //    _cmd.Parameters.AddWithValue("@FILE_NAME", _obj.filename);
-        //    _cmd.Parameters.AddWithValue("@SUBJECT", _obj.subject);
-        //    _cmd.Parameters.AddWithValue("@LETTER_FROM", _obj.from);
-        //    _cmd.Parameters.AddWithValue("@RECEIVED", _obj.rdate);
-        //    _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
-        //    _cmd.Parameters.AddWithValue("@PROJECT_CODE", _obj.prj_code);
-        //    _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_TC_DOCUMENTS(string _sp, _clstis _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@SERVICE_NAME", _obj.service);
-        //    _cmd.Parameters.AddWithValue("@ENG_REFF", _obj.eng_ref);
-        //    _cmd.Parameters.AddWithValue("@CATEGORY", _obj.cate);
-        //    _cmd.Parameters.AddWithValue("@FLOOR_LEVEL", _obj.flevel);
-        //    _cmd.Parameters.AddWithValue("@INSP_DATE", _obj.rdate);
-        //    _cmd.Parameters.AddWithValue("@FILE_NAME", _obj.filename);
-        //    _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
-        //    _cmd.Parameters.AddWithValue("@PROJECT_CODE", _obj.prj_code);
-        //    _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable LOAD_DATEREGISTER(string _sp, _clstis _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@TENANT_ID", _obj.tnts_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_PrjReference(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Sys_id", _obj.sys);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Edit_Task(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Task_Id", _obj.task_id);
-        //    _cmd.Parameters.AddWithValue("@Task", _obj.task);
-        //    _cmd.Parameters.AddWithValue("@Type", _obj.type);
-        //    _cmd.Parameters.AddWithValue("@Man_Hrs", _obj.man_hrs);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void DML_SpareParts(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@SP_Id", _obj.sp_id);
-        //    _cmd.Parameters.AddWithValue("@Srv_Id", _obj.srv_id);
-        //    _cmd.Parameters.AddWithValue("@Sys_Id", _obj.sys_id);
-        //    _cmd.Parameters.AddWithValue("@SP_Name", _obj.sp_name);
-        //    _cmd.Parameters.AddWithValue("@SP_Code", _obj.sp_code);
-        //    _cmd.Parameters.AddWithValue("@SP_Cost", _obj.sp_cost);
-        //    _cmd.Parameters.AddWithValue("@Manufacturer", _obj.manufId);
-        //    _cmd.Parameters.AddWithValue("@Supplier", _obj.supId);
-        //    _cmd.Parameters.AddWithValue("@Warning_Qty", _obj.wqty);
-        //    _cmd.Parameters.AddWithValue("@Total_Qty", _obj.qty);
-        //    _cmd.Parameters.AddWithValue("@Action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_AMSTaskList(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Check_Date", _obj.chkdate);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Update_AMSCheckDates(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Date", _obj.edate);
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Add_SPBasket(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@S_Parts", _obj.sp_name);
-        //    _cmd.Parameters.AddWithValue("@S_Parts_Id", _obj.sp_id);
-        //    _cmd.Parameters.AddWithValue("@Qty", _obj.qty);
-        //    _cmd.Parameters.AddWithValue("@Uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@Cas_id", _obj.casId);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_SPBasket(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@Cas_id", _obj.casId);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Insert_TaskCompletion(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Task_Compl_Id", _obj.task_compl_id);
-        //    _cmd.Parameters.AddWithValue("@Manpower", _obj.man_hrs);
-        //    _cmd.Parameters.AddWithValue("@Comment", _obj.comments);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Insert_SpUsed(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Task_Compl_Id", _obj.task_compl_id);
-        //    _cmd.Parameters.AddWithValue("@S_Parts_Id", _obj.sp_id);
-        //    _cmd.Parameters.AddWithValue("@Qty", _obj.qty);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Delete_SPBasket(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Cas_Id", _obj.casId);
-        //    _cmd.Parameters.AddWithValue("@User_id", _obj.uid);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_CasAsset(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Cas_id", _obj.cas_id);
-        //    _cmd.Parameters.AddWithValue("@Sys_Id", _obj.sys);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_Cas_Docselection_AMS(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Sys_Id", _obj.sys);
-        //    _cmd.Parameters.AddWithValue("@B_Z", _obj.b_zone);
-        //    _cmd.Parameters.AddWithValue("@F_lvl", _obj.f_level);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_DMSDoc_AMS(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Folder_Id", _obj.folder_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void AMS_Register(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@PROJECT_REF", _obj.prj_reff);
-        //    _cmd.Parameters.AddWithValue("@SCH_ID", _obj.sch_id);
-        //    _cmd.Parameters.AddWithValue("@SYS_ID", _obj.sys_id);
-        //    _cmd.Parameters.AddWithValue("@BZONE", _obj.bzone);
-        //    _cmd.Parameters.AddWithValue("@CAT", _obj.cat);
-        //    _cmd.Parameters.AddWithValue("@FLEVEL", _obj.flvl);
-        //    _cmd.Parameters.AddWithValue("@SEQ_NO", _obj.seq_no);
-        //    _cmd.Parameters.AddWithValue("@PARENT", _obj.parent);
-        //    _cmd.Parameters.AddWithValue("@POSSITION", _obj.position);
-        //    _cmd.Parameters.AddWithValue("@CAS_ID", _obj.casId);
-        //    _cmd.Parameters.AddWithValue("@LOCATION", _obj.location);
-        //    _cmd.Parameters.AddWithValue("@PARENT_ASSET", _obj.parent_id);
-        //    _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public string Get_Category(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Sys_Id", _obj.sys);
-        //    _cmd.Parameters.Add("@Cate", SqlDbType.VarChar, 10);
-        //    _cmd.Parameters["@Cate"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        return (string)_cmd.Parameters["@Cate"].Value;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public DataTable LOAD_AMS_SCHEDULE_TASK(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@TYPE", _obj.type);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Insert_PPMSDaily_Temp(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Insert_TaskExtension(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Task_Compl_Id", _obj.task_compl_id);
-        //    _cmd.Parameters.AddWithValue("@Date", _obj.edate);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void AMS_Document_Linking(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_DOC_ID", _obj.ams_doc_id);
-        //    _cmd.Parameters.AddWithValue("@AMS_REG_ID", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@DOC_ID", _obj.dms_doc_id);
-        //    _cmd.Parameters.AddWithValue("@DOC_NAME", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@DOC_TYPE", _obj.doc_type);
-        //    _cmd.Parameters.AddWithValue("@DOC_PACKAGE", _obj.doc_package);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_AMS_Documents(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_Reg_Id", _obj.ams_reg_id);
-        //    _cmd.Parameters.AddWithValue("@Doc_Type", _obj.doc_type);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_AMS_SubAssets(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Parent_Asset", _obj.ams_reg_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_Asset_Spareparts(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@AMS_Reg_Id", _obj.ams_reg_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_Spareparts_Details(string _sp, _clsams _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@SP_Id", _obj.sp_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Set_Cassheet_Position(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@cas_id", _obj.cas_id);
-        //    _cmd.Parameters.AddWithValue("@sys_id", _obj.sys);
-        //    _cmd.Parameters.AddWithValue("@pos", _obj.Position);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable LOAD_PROJECT_MODULE(string _sp, _clsproject _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@USERID", _obj.user);
-        //    _cmd.Parameters.AddWithValue("@MODULE", _obj.module);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_AllServiceFolder(string _sp, _clstreefolder _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.Project_code);
-        //    _cmd.Parameters.AddWithValue("@Service_id", _obj.Folder_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Insert_UserInbox(string _sp, _clscommunication _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@User_Id", _obj.userid);
-        //    _cmd.Parameters.AddWithValue("@From_Id", _obj.mailid);
-        //    _cmd.Parameters.AddWithValue("@Date_rcvd", _obj.maildate);
-        //    _cmd.Parameters.AddWithValue("@Subject", _obj.subj);
-        //    _cmd.Parameters.AddWithValue("@Message", _obj.message);
-        //    _cmd.Parameters.AddWithValue("@Attachment", _obj.attachment);
-        //    _cmd.Parameters.AddWithValue("@Project", _obj.project_code);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Insert_UserOutbox(string _sp, _clscommunication _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@User_Id", _obj.userid);
-        //    _cmd.Parameters.AddWithValue("@To_Id", _obj.mailid);
-        //    _cmd.Parameters.AddWithValue("@Date_sent", _obj.maildate);
-        //    _cmd.Parameters.AddWithValue("@Subject", _obj.subj);
-        //    _cmd.Parameters.AddWithValue("@Message", _obj.message);
-        //    _cmd.Parameters.AddWithValue("@Attachment", _obj.attachment);
-        //    _cmd.Parameters.AddWithValue("@Project", _obj.project_code);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_UserMessage(string _sp, _clscommunication _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@userid", _obj.userid);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_Message(string _sp, _clscommunication _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Item_id", _obj.item_id);
-        //    _cmd.Parameters.AddWithValue("@Type", _obj.type);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public string Get_UserName(string _sp, _clsuser _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@userid", _obj.uid);
-        //    _cmd.Parameters.Add("@username", SqlDbType.VarChar, 50);
-        //    _cmd.Parameters["@username"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        return _cmd.Parameters["@username"].Value.ToString();
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public void Inbox_MarkasRead(string _sp, _clscommunication _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Itemid", _obj.item_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public int Get_UnreadInbox(string _sp, _clscommunication _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@userid", _obj.userid);
-        //    _cmd.Parameters.Add("@count", SqlDbType.Int);
-        //    _cmd.Parameters["@count"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        return (int)_cmd.Parameters["@count"].Value;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public DataTable GENERATE_DIV_SUMMARY_SELECT(string _sp, _clscassheet _obj, _database _objdb)
-        //{
-        //    try
-        //    {
-        //        _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //        _cmd.CommandType = CommandType.StoredProcedure;
-        //        _cmd.Parameters.AddWithValue("@bz", _obj.b_zone);
-        //        _cmd.CommandTimeout = 120;
-        //        _dta = new SqlDataAdapter(_cmd);
-        //        DataTable _dtable = new DataTable();
-        //        _dta.Fill(_dtable);
-        //        return _dtable;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public string Get_Folder_Description(string _sp, _clstreefolder _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
-        //    return _cmd.ExecuteScalar().ToString();
-        //}
-        //public DataTable Get_Folder_Details(string _sp, _clstreefolder _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public int Get_Default(string _sp, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.Add("@id", SqlDbType.Int);
-        //    _cmd.Parameters["@id"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@id"].Value.ToString() != null)
-        //            return (int)_cmd.Parameters["@id"].Value;
-        //        else
-        //            return 0;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public int Get_DefaultDMSsrv(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
-        //    _cmd.Parameters.AddWithValue("@userid", _obj.uid);
-        //    _cmd.Parameters.Add("@id", SqlDbType.Int);
-        //    _cmd.Parameters["@id"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@id"].Value.ToString() != null)
-        //            return (int)_cmd.Parameters["@id"].Value;
-        //        else
-        //            return 0;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public DataTable Load_Dms_Packages(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@srv", _obj.folder_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void FileUploadingNew(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@service", _obj.service_code);
-        //    _cmd.Parameters.AddWithValue("@package", _obj.package_code);
-        //    _cmd.Parameters.AddWithValue("@doctype", _obj.doctype_code);
-        //    _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@uploaded", _obj.uploaded);
-        //    _cmd.Parameters.AddWithValue("@uploaded_date", _obj.uploaded_date);
-        //    _cmd.Parameters.AddWithValue("@file_size", _obj.file_size);
-        //    _cmd.Parameters.AddWithValue("@schid", _obj.schid);
-        //    _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
-        //    _cmd.Parameters.AddWithValue("@type", _obj.type);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@possition", _obj.possition);
-        //    _cmd.Parameters.AddWithValue("@status", _obj.status);
-        //    _cmd.Parameters.AddWithValue("@version", _obj.Version);
-        //    _cmd.Parameters.AddWithValue("@Manual_title", _obj.Manual_title);
-        //    _cmd.ExecuteNonQuery();
-
-        //}
-
-        //public void FileUploading_New(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@service", _obj.service_code);
-        //    _cmd.Parameters.AddWithValue("@package", _obj.package_code);
-        //    _cmd.Parameters.AddWithValue("@doctype", _obj.doctype_code);
-        //    _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@uploaded", _obj.uploaded);
-        //    _cmd.Parameters.AddWithValue("@uploaded_date", _obj.uploaded_date);
-        //    _cmd.Parameters.AddWithValue("@file_size", _obj.file_size);
-        //    _cmd.Parameters.AddWithValue("@schid", _obj.schid);
-        //    _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
-        //    _cmd.Parameters.AddWithValue("@type", _obj.type);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@possition", _obj.possition);
-        //    _cmd.Parameters.AddWithValue("@status", _obj.status);
-        //    _cmd.Parameters.AddWithValue("@title", _obj.Manual_title);
-        //    _cmd.Parameters.AddWithValue("@Review", _obj.Review);
-        //    _cmd.Parameters.AddWithValue("@DisplayVersion", _obj.DisplayVersion);
-        //    _cmd.Parameters.AddWithValue("@DocStyleId", _obj.DocStyleId);
-        //    _cmd.Parameters.AddWithValue("@DocStyleChange", _obj.DocStyleChange);
-        //    _cmd.Parameters.AddWithValue("@submit", _obj.submit);
-        //    _cmd.Parameters.AddWithValue("@ref", _obj.reff);
-        //    _cmd.ExecuteNonQuery();
-
-        //}
-        //public void Update_documentdetails(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@status", _obj.status);
-        //    _cmd.Parameters.AddWithValue("@DisplayVersion", _obj.DisplayVersion);
-        //    _cmd.Parameters.AddWithValue("@Manual_title", _obj.Manual_title);
-        //    _cmd.Parameters.AddWithValue("@DocStyleId", _obj.DocStyleId);
-        //    _cmd.Parameters.AddWithValue("@DocStyleChange", _obj.DocStyleChange);
-        //    _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Delete_DocumentNew(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@possition", _obj.possition);
-        //    _cmd.Parameters.AddWithValue("@folder_Id", _obj.folder_id);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public string Get_DocumentTitle(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.Parameters.Add("@title", SqlDbType.VarChar, 200);
-        //    _cmd.Parameters["@title"].Direction = ParameterDirection.Output;
-        //    try
-        //    {
-        //        _cmd.ExecuteNonQuery();
-        //        if (_cmd.Parameters["@title"].Value.ToString() != "")
-        //            return (string)_cmd.Parameters["@title"].Value;
-        //        else
-        //            return "";
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-        //public void dml_schedule_basket(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@SCH_ITM_ID", _obj.schid);
-        //    _cmd.Parameters.AddWithValue("@PRJ_CODE", _obj.project_code);
-        //    _cmd.Parameters.AddWithValue("@USERID", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@DOCUMENT_TITLE", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@FOLDER_ID", _obj.folder_id);
-        //    _cmd.Parameters.AddWithValue("@FILE_NAME", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@PARTY_ID", _obj.party_id);
-        //    _cmd.Parameters.AddWithValue("@PARTY_NAME", _obj.party_name);
-        //    _cmd.Parameters.AddWithValue("@REF_NO", _obj.reff);
-        //    _cmd.Parameters.AddWithValue("@ACTION", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Move_Folder(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
-        //    _cmd.Parameters.AddWithValue("@possition", _obj.possition);
-        //    _cmd.Parameters.AddWithValue("@move", _obj.move);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void CreateDocSchedule(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@service", _obj.service_code);
-        //    _cmd.Parameters.AddWithValue("@package", _obj.package_code);
-        //    _cmd.Parameters.AddWithValue("@doctype", _obj.doctype_code);
-        //    _cmd.Parameters.AddWithValue("@doc_title", _obj.party_name);
-        //    _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@date_tobeuploaded", _obj.uploaded_date);
-        //    _cmd.Parameters.AddWithValue("@Folder_id", _obj.folder_id);
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.project_code);
-        //    _cmd.Parameters.AddWithValue("@uid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@possition", _obj.possition);
-        //    _cmd.Parameters.AddWithValue("@title", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@doc_ref", _obj.reff);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Create_Schedulebskt(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@FOLDER_ID", _obj.folder_id);
-        //    _cmd.Parameters.AddWithValue("@USERID", _obj.uid);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Delete_DocumentStyle(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@DocStyleId", _obj.DocStyleId);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public int Check_Record_Exits(string _sp, _clsmanufacture _obj, _database _objdb)
-        //{
-
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-
-        //    _cmd.Parameters.AddWithValue("@name", _obj.man_name);
-
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.project_code);
-
-        //    _cmd.Parameters.Add("@id", SqlDbType.Int, 6);
-
-        //    _cmd.Parameters["@id"].Direction = ParameterDirection.Output;
-
-        //    try
-        //    {
-
-        //        _cmd.ExecuteNonQuery();
-
-        //        if (_cmd.Parameters["@id"].Value.ToString() != "")
-
-        //            return Convert.ToInt16(_cmd.Parameters["@id"].Value);
-
-        //        else
-
-        //            return 0;
-
-        //    }
-
-        //    catch
-        //    {
-
-        //        throw;
-
-        //    }
-
-        //}
-        //public DataTable Load_Document_Submit(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@folder_id", _obj.folder_id);
-        //    _cmd.Parameters.AddWithValue("@userid", _obj.uid);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Update_Document_Submit(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@title", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@userid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Insert_ProgressTracking(string _sp, _clsProgressTracking _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Progress_Id", _obj.Progress_id);
-        //    _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
-        //    _cmd.Parameters.AddWithValue("@Section1", _obj.Section1);
-        //    _cmd.Parameters.AddWithValue("@Section2", _obj.Section2);
-        //    _cmd.Parameters.AddWithValue("@Section3", _obj.Section3);
-        //    _cmd.Parameters.AddWithValue("@Section4", _obj.Section4);
-        //    _cmd.Parameters.AddWithValue("@Section5", _obj.Section5);
-        //    _cmd.Parameters.AddWithValue("@Section6", _obj.Section6);
-        //    _cmd.Parameters.AddWithValue("@Section7", _obj.Section7);
-        //    _cmd.Parameters.AddWithValue("@Section8", _obj.Section8);
-        //    _cmd.Parameters.AddWithValue("@Section9", _obj.Section9);
-        //    _cmd.Parameters.AddWithValue("@Section10", _obj.Section10);
-        //    _cmd.Parameters.AddWithValue("@DraftIssueDate", _obj.DraftIssuedate);
-        //    _cmd.Parameters.AddWithValue("@Remarks", _obj.Remarks);
-        //    _cmd.Parameters.AddWithValue("@User_id", _obj.Userid);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public DataTable Load_AllProgressTracking(string _sp, _clsProgressTracking _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Get_ProgressTrackingDetails(string _sp, _clsProgressTracking _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Progress_id", _obj.Progress_id);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public DataTable Load_DMS_Report_Master(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@prj_code", _obj.project_code);
-        //    _dta = new SqlDataAdapter(_cmd);
-        //    DataTable _dtable = new DataTable();
-        //    _dta.Fill(_dtable);
-        //    return _dtable;
-        //}
-        //public void Update_Document_direct(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@doc_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@title", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@doc_ref", _obj.reff);
-        //    _cmd.Parameters.AddWithValue("@userid", _obj.uid);
-        //    _cmd.Parameters.AddWithValue("@action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Update_Schedule_direct(string _sp, _clsdocument _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@sch_id", _obj.doc_id);
-        //    _cmd.Parameters.AddWithValue("@doc_title", _obj.doc_title);
-        //    _cmd.Parameters.AddWithValue("@doc_name", _obj.doc_name);
-        //    _cmd.Parameters.AddWithValue("@title", _obj.title);
-        //    _cmd.Parameters.AddWithValue("@doc_ref", _obj.reff);
-        //    _cmd.Parameters.AddWithValue("@action", _obj.action);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Create_TreeFolderNew(string _sp, _clstreefolder _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Folder_description", _obj.Folder_description);
-        //    _cmd.Parameters.AddWithValue("@Folder_code", _obj.Folder_code);
-        //    _cmd.Parameters.AddWithValue("@Folder_type", _obj.Folder_type);
-        //    _cmd.Parameters.AddWithValue("@Folder_possition", _obj.Folder_possition);
-        //    _cmd.Parameters.AddWithValue("@Parent_folder", _obj.Parent_folder);
-        //    _cmd.Parameters.AddWithValue("@Project_code", _obj.Project_code);
-        //    _cmd.Parameters.AddWithValue("@Enabled", _obj.Enabled);
-        //    _cmd.Parameters.AddWithValue("@auto", _obj.auto);
-        //    _cmd.Parameters.AddWithValue("@Userid", _obj.Userid);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        //public void Edit_Tree_Folder_New(string _sp, _clstreefolder _obj, _database _objdb)
-        //{
-        //    _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
-        //    _cmd.CommandType = CommandType.StoredProcedure;
-        //    _cmd.Parameters.AddWithValue("@Folder_id", _obj.Folder_id);
-        //    _cmd.Parameters.AddWithValue("@Folder_code", _obj.Folder_code);
-        //    _cmd.Parameters.AddWithValue("@Folder_description", _obj.Folder_description);
-        //    _cmd.Parameters.AddWithValue("@mode", _obj.mode);
-        //    _cmd.ExecuteNonQuery();
-        //}
-        #endregion
+        public DataSet GenerateDashboardSummary(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@PcdRefdate", _obj.date);
+            _cmd.Parameters.AddWithValue("@BZONE", _obj.b_zone);
+            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
+            _dta = new SqlDataAdapter(_cmd);
+            DataSet ds = new DataSet();
+            _dta.Fill(ds);
+            return ds;
+        }
+        public DataSet GeneratePlannedServiceSummary(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName))
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            _cmd.Parameters.AddWithValue("@SRV_ID", _obj.srv);
+            _cmd.Parameters.AddWithValue("@PcdRefdate", _obj.date);
+            _cmd.Parameters.AddWithValue("@BZ", _obj.b_zone);
+            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
+            _cmd.Parameters.Add("@OVERALL", SqlDbType.Int);
+            _cmd.Parameters["@OVERALL"].Direction = ParameterDirection.Output;
+            _cmd.Parameters.Add("@P_OVERALL", SqlDbType.Int);
+            _cmd.Parameters["@P_OVERALL"].Direction = ParameterDirection.Output;
+            _dta = new SqlDataAdapter(_cmd);
+            DataSet ds = new DataSet();
+            _dta.Fill(ds);
+            return ds;
+        }
+        public DataTable Generate_CAS_Graph_Summary1(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@SCH_ID", _obj.sch);
+            _cmd.Parameters.AddWithValue("@BZ", _obj.b_zone);
+            _cmd.Parameters.AddWithValue("@CATE", _obj.cate);
+            _cmd.Parameters.AddWithValue("@FLVL", _obj.f_level);
+            _cmd.Parameters.AddWithValue("@F_FROM", _obj.fed_from);
+            _cmd.Parameters.AddWithValue("@LOC", _obj.loca);
+            _cmd.Parameters.AddWithValue("@BUILDING", _obj.build_id);
+            _cmd.Parameters.AddWithValue("@TYPE", _obj.mode);
+            _dta = new SqlDataAdapter(_cmd);
+            DataTable _dtable = new DataTable();
+            _dta.Fill(_dtable);
+            return _dtable;
+        }
+        public void SaveCableLog(string _sp, _clscassheet _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_id", _obj.cas_id);
+            _cmd.Parameters.AddWithValue("@cable_reference", _obj.reff);
+            _cmd.Parameters.AddWithValue("@panel_reference", _obj.panel_ref);
+            _cmd.Parameters.AddWithValue("@fed_from", _obj.fed_from);
+            _cmd.Parameters.AddWithValue("@power_to", _obj.p_power_to);
+            _cmd.Parameters.AddWithValue("@document_name", _obj.p10);
+            _cmd.Parameters.AddWithValue("@created_by", _obj.uid);
+            _cmd.ExecuteNonQuery();
+        }
+        public void DeleteDocuments(string _sp, _clsdocument _obj, _database _objdb)
+        {
+            _cmd = new SqlCommand(_sp, _objcon.con_open(_objdb.DBName));
+            _cmd.CommandType = CommandType.StoredProcedure;
+            _cmd.Parameters.AddWithValue("@doc_ids", _obj.doc_name);
+            _cmd.ExecuteNonQuery();
+        }        
     }
 }
