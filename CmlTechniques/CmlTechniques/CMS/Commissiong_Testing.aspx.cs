@@ -1536,6 +1536,7 @@ namespace CmlTechniques.CMS
                     if (DateValidation(_5fn.Text) == true || _5fn.Text == "")
                         _nos += 1;
                     if (_nos > 0) _percentage = (Convert.ToDecimal(count) / _nos) * 100;
+                    else _percentage = -1;
                 }
             }
             else if (lblsch.Text == "2" || (lblprj.Text == "11784" && lblsch.Text == "25"))
@@ -2372,8 +2373,12 @@ namespace CmlTechniques.CMS
 
             decimal _percentage = 0;
             int count = 0;
-            if (lblsch.Text == "1" || lblsch.Text == "5" || (lblprj.Text == "11784" && lblsch.Text == "28"))
+            bool v = lblsch.Text == "5";
+            if (lblsch.Text == "1" || v || (lblprj.Text == "11784" && lblsch.Text == "28"))
             {
+                   if (_5tc.Text == "N/A")
+                    _percentage = -1;
+
                 if ((IsNumeric(_5total.Text) == true) && (IsNumeric(_5tc.Text) == true))
                 {
                     if (lblprj.Text == "ASAO")
@@ -2802,6 +2807,9 @@ namespace CmlTechniques.CMS
             }
             else if (lblsch.Text == "1" || lblsch.Text == "5" || (lblprj.Text == "11784" && lblsch.Text == "28"))
             {
+                if (_5tl.Text == "N/A")
+                    _percentage = -1;
+
                 if ((IsNumeric(_5total.Text) == true) && (IsNumeric(_5tl.Text) == true))
                 {
                     if (lblprj.Text == "ASAO")

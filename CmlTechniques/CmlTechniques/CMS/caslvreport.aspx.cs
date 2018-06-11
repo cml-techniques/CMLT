@@ -147,14 +147,25 @@ namespace CmlTechniques.CMS
             lblefp.Text = "60-40% EFP";
             lblups.Text = "60-40% UPS";
 
-            if (lblprj.Text == "HMIM" || lblprj.Text == "MOE") lblpfc.Text = "100% PFC";
-            else   lblpfc.Text = "50-30-20% PFC";
+            if (lblprj.Text == "HMIM" || lblprj.Text == "MOE") { lblpfc.Text = "100% PFC"; } 
+            else lblpfc.Text = "50-30-20% PFC";
 
             if (lblprj.Text == "MOE")
             {
                 lblups.Text = "80-20% UPS";
                 lblats.Text = "80-20% ATS";
             }
+
+            if (lblprj.Text == "SRH") {
+                lblbushar.Visible = false;
+                lbllcp.Visible = false;
+                lblefp.Visible = false;
+                lblpfc.Text = "60-40% PFC";
+                lbldb.Text = "50-30-20% DB";
+                lblups.Text = "50-30-20% UPS";
+
+            }
+
 
         }
         private void Set_Title()
@@ -579,7 +590,13 @@ namespace CmlTechniques.CMS
                 Label _lbl2 = (Label)e.Row.Cells[5].FindControl("lbl2");
                 Label _lbl3 = (Label)e.Row.Cells[5].FindControl("lbl3");
 
-                if (lblprj.Text == "MOE" || lblprj.Text == "MOE1")
+                if (lblprj.Text == "SRH")
+                {
+                    if (e.Row.Cells[12].Text == "PFC") _lbl3.Text = "N/A";
+
+                }
+
+                    if (lblprj.Text == "MOE" || lblprj.Text == "MOE1")
                 {
 
                     if ((e.Row.Cells[12].Text == "BDT") || (e.Row.Cells[12].Text == "PFC"))
@@ -1854,6 +1871,11 @@ namespace CmlTechniques.CMS
 
                             _p2 = -1;
                             _p3 = -1;
+                        }
+                        else if (lblprj.Text == "SRH")
+                        {
+                            _total = Decimal.Round(((_per1 * 0.6m) + (_per2 * 0.4m)), MidpointRounding.AwayFromZero);
+
                         }
                         else
                         {

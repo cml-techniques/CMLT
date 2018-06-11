@@ -54,6 +54,7 @@ namespace CmlTechniques.CMS
         public static DataTable _dtresult;
         public static DataTable _summary;
         public bool _exp;
+        public bool isNewProject;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -75,7 +76,9 @@ namespace CmlTechniques.CMS
                 else
                     lblprj.Text = _prm;
                 Load_Master();
-                
+
+                isNewProject = (Array.IndexOf(Constants.CMLTConstants.recentProjects, lblprj.Text) > -1) ? true : false;
+
                 Session["filter"] = "no";
                 Session["zone"] = "All";
                 Session["flvl"] = "All";
@@ -87,11 +90,14 @@ namespace CmlTechniques.CMS
                 Hide_Details();
                 if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
                     Generate_Summary1();
+               else if (isNewProject)
+                    Generate_Summary();
                 else
                     Generate_Summary();
                 //Load_Summary();
                 _exp = false;
             }
+            isNewProject = (Array.IndexOf(Constants.CMLTConstants.recentProjects, lblprj.Text) > -1) ? true : false;
         }
         private void Set_Title()
         {
@@ -482,6 +488,9 @@ namespace CmlTechniques.CMS
             }
             if (e.Row.RowType == DataControlRowType.Footer)
             {
+                decimal weight1 = 0.9m; decimal weight2 = 0.1m;
+                if (isNewProject) { weight1 = 0.5m; weight2 = 0.5m; }
+
                 e.Row.Cells[1].Text = "TOTALS";
                 e.Row.Cells[2].Text = _qty.ToString();
                 if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
@@ -495,7 +504,7 @@ namespace CmlTechniques.CMS
                 {
                     e.Row.Cells[3].Text = (Decimal.Round((_tested1 / _count),0,MidpointRounding.AwayFromZero)).ToString() + '%';
                     e.Row.Cells[4].Text = (Decimal.Round((_tested2 / _count),0,MidpointRounding.AwayFromZero)).ToString() + '%';
-                    e.Row.Cells[8].Text = (Decimal.Round(((_tested1 * 0.9m + _tested2 * 0.1m) / _count),0,MidpointRounding.AwayFromZero)).ToString() + '%';
+                    e.Row.Cells[8].Text = (Decimal.Round(((_tested1 * weight1 + _tested2 * weight2) / _count),0,MidpointRounding.AwayFromZero)).ToString() + '%';
                 }
                 
                 //e.Row.Cells[5].Text = (Decimal.Round((_total / _count))).ToString() + '%';
@@ -885,6 +894,9 @@ namespace CmlTechniques.CMS
         }
         private void Generate_Summary()
         {
+            decimal weight1 = 0.9m;decimal weight2 = 0.1m;  
+            if (isNewProject) { weight1 = 0.5m; weight2 = 0.5m; }
+
             try
             {
                 DataTable _dtsummary = new DataTable();
@@ -957,13 +969,15 @@ namespace CmlTechniques.CMS
                     {
                         _drow[2] = _per3.ToString();
                         _drow[3] = _per4.ToString();
-                        _total = Decimal.Round((_per3 * 0.9m) + (_per4 * 0.1m),0,MidpointRounding.AwayFromZero);
+                        //_total = Decimal.Round((_per3 * 0.9m) + (_per4 * 0.1m),0,MidpointRounding.AwayFromZero);
+                        _total = Decimal.Round((_per3 * weight1) + (_per4 * weight2), 0, MidpointRounding.AwayFromZero);
                     }
                     else
                     {
                         _drow[2] = _per1.ToString();
                         _drow[3] = _per2.ToString();
-                        _total = Decimal.Round((_per1 * 0.9m) + (_per2 * 0.1m),0,MidpointRounding.AwayFromZero);
+                        //_total = Decimal.Round((_per1 * 0.9m) + (_per2 * 0.1m),0,MidpointRounding.AwayFromZero);
+                        _total = Decimal.Round((_per1 * weight1) + (_per2 * weight2), 0, MidpointRounding.AwayFromZero);
                     }
                     _drow[4] = "0";
                     _drow[5] = _total.ToString();

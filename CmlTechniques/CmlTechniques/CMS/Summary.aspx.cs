@@ -24,6 +24,7 @@ namespace CmlTechniques.CMS
         public static DataTable _dtfilter;
         public static DataTable _dtresult;
         public static DataTable _dtsummary;
+        public bool isNewProject;
         protected void Page_Load(object sender, EventArgs e)
         {
             //if(!IsPostBack)
@@ -1003,6 +1004,11 @@ namespace CmlTechniques.CMS
 
                                 _p2 = -1;
                                 _p3 = -1;
+                            }
+                            else if (lblprj.Text == "SRH")
+                            {
+                                _total = Decimal.Round(((_per1 * 0.6m) + (_per2 * 0.4m)), MidpointRounding.AwayFromZero);
+
                             }
                             else
                             {
@@ -2150,6 +2156,9 @@ namespace CmlTechniques.CMS
         }
         private void Summary6()
         {
+            decimal weight1 = 0.9m; decimal weight2 = 0.1m;
+            if (isNewProject) { weight1 = 0.5m; weight2 = 0.5m; }
+
             try
             {
                 _dtsummary = new DataTable();
@@ -2222,13 +2231,13 @@ namespace CmlTechniques.CMS
                     {
                         _drow[2] = _per3.ToString();
                         _drow[3] = _per4.ToString();
-                        _total = Decimal.Round((_per3 * 0.9m) + (_per4 * 0.1m),0,MidpointRounding.AwayFromZero);
+                        _total = Decimal.Round((_per3 * weight1) + (_per4 * weight2),0,MidpointRounding.AwayFromZero);
                     }
                     else
                     {
                         _drow[2] = _per1.ToString();
                         _drow[3] = _per2.ToString();
-                        _total = Decimal.Round((_per1 * 0.9m) + (_per2 * 0.1m),0,MidpointRounding.AwayFromZero);
+                        _total = Decimal.Round((_per1 * weight1) + (_per2 * weight2),0,MidpointRounding.AwayFromZero);
                     }
                     _drow[4] = "0";
                     _drow[5] = _total.ToString();
@@ -7309,8 +7318,9 @@ namespace CmlTechniques.CMS
                 Session["loc"] = "All";
                 Load_Filtering_Elements();
 
+                isNewProject = (Array.IndexOf(Constants.CMLTConstants.recentProjects, lblprj.Text) > -1) ? true : false;
 
-                    Generate_Summary();
+                Generate_Summary();
                     Generate_Summary_Graph();
                
                      Generate_Reports();
@@ -7320,6 +7330,7 @@ namespace CmlTechniques.CMS
             }
             else
             {
+                isNewProject = (Array.IndexOf(Constants.CMLTConstants.recentProjects, lblprj.Text) > -1) ? true : false;
                 if (Session["Report"] != null)
                 {
                     CrystalReportViewer1.ReportSource = (ReportDocument)Session["Report"];
