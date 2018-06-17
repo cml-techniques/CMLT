@@ -478,7 +478,7 @@ namespace CmlTechniques
                 }
                 td_lbl1.Visible = false; td_txtppt.Visible = false; td_0.Visible = false;
             }
-            else if ((string)Session["sch"] == "25")
+            else if ((string)Session["sch"] == "25" && lblprj.Text != "SRH")
             {
                 lbl1.Text = "";
                 lbl2.Text = "DESCRIPTION";
@@ -1320,7 +1320,7 @@ namespace CmlTechniques
                     lblhead.Text = "CAS M2 Flushing Commissioning Activity Schedule";
                 td_0.Visible = false; td_lbl1.Visible = false; td_txtppt.Visible = false; td_lbl3.Visible = false; td_txtfed.Visible = false; td_1.Visible = false; td_lbl2.Visible = false; td_txtdes.Visible = false; td_2.Visible = false;
             }
-            else if ((string)Session["sch"] == "22" || (lblprj.Text == "11784" && (string)Session["sch"] == "43"))
+            else if ((string)Session["sch"] == "22" || (lblprj.Text == "11784" && (string)Session["sch"] == "43")||(lblprj.Text == "SRH" && (string)Session["sch"] == "25"))
             {
                 if (lblprj.Text == "CCAD")
                 {
@@ -1336,8 +1336,9 @@ namespace CmlTechniques
                     lbnum.Text = "NO.OF ACCESS CONTROLLED DOORS";
 
                 }
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD")
+                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD" || lblprj.Text == "SRH")
                 {
+                   
 
                     lbl2.Text = "FED FROM";
                     lblhead.Text = "CAS ELV 4 - Access Control System Commissioning Activity Schedule";
@@ -1347,6 +1348,8 @@ namespace CmlTechniques
                     td_lbl3.Visible = false;
                     td_txtfed.Visible = false;
                     td_1.Visible = false;
+
+                     if (lblprj.Text == "SRH" && (string)Session["sch"] == "25") { lblhead.Text = "CAS ELV 5 - Internet Protocol Television System Commissioning Activity Schedule"; }
 
                 }
                 else
@@ -1364,12 +1367,13 @@ namespace CmlTechniques
                     td_1.Visible = false;
                     drfed.Style.Add("display", "none");
                 }
+
                 td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
                 td_lbl1.Visible = false;
                 td_txtppt.Visible = false;
                 td_0.Visible = false;
 
-                if (lblprj.Text != "OPH" && lblprj.Text != "PCD")
+                if (lblprj.Text != "OPH" && lblprj.Text != "PCD" && lblprj.Text != "SRH")
                 {
                     td_lbl2.Visible = false;
                     td_txtdes.Visible = false;
@@ -2064,7 +2068,7 @@ namespace CmlTechniques
                 lb3.Text = lbl3.Text;
                 tr3.Visible = false; tr4.Visible = false;
             }
-            else if ((string)Session["sch"] == "25")
+            else if ((string)Session["sch"] == "25" && lblprj.Text != "SRH")
             {
                 if (lblprj.Text == "CCAD")
                 {
@@ -2330,13 +2334,13 @@ namespace CmlTechniques
                 tr3.Visible = false; tr4.Visible = false; tr0.Visible = false;
 
             }
-            else if ((string)Session["sch"] == "22" || (lblprj.Text == "11784" && (string)Session["sch"] == "43"))
+            else if ((string)Session["sch"] == "22" || (lblprj.Text == "11784" && (string)Session["sch"] == "43") || (lblprj.Text == "SRH" && (string)Session["sch"] == "25"))
             {
                 if (lblprj.Text == "CCAD")
                 {
                     lb3.Text = lbl3.Text;
                 }
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD")
+                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD" || (lblprj.Text == "SRH"))
                 {
                     lb3.Text = lbl2.Text;
                 }
@@ -2603,7 +2607,7 @@ namespace CmlTechniques
                 }
                 e.Row.Cells[10].Visible = false; e.Row.Cells[11].Visible = false;
             }
-            else if ((string)Session["sch"] == "25")
+            else if ((string)Session["sch"] == "25" && lblprj.Text != "SRH")
             {
                 if (lblprj.Text == "CCAD")
                 {
@@ -2792,9 +2796,9 @@ namespace CmlTechniques
                 }
                 e.Row.Cells[10].Visible = false; e.Row.Cells[7].Visible = false; e.Row.Cells[11].Visible = false;
             }
-            else if ((string)Session["sch"] == "22" || (lblprj.Text == "11784" && (string)Session["sch"] == "43"))
+            else if ((string)Session["sch"] == "22" || (lblprj.Text == "11784" && (string)Session["sch"] == "43") || (lblprj.Text == "SRH" && (string)Session["sch"] == "25"))
             {
-                if (lblprj.Text != "CCAD" && lblprj.Text != "14211" && lblprj.Text != "OPH" && lblprj.Text != "PCD")
+                if (lblprj.Text != "CCAD" && lblprj.Text != "14211" && lblprj.Text != "OPH" && lblprj.Text != "PCD" && lblprj.Text != "SRH")
                 {
                     e.Row.Cells[9].Visible = false;
                 }
@@ -3043,7 +3047,7 @@ namespace CmlTechniques
                 ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('Select Floor Level');", true);
                 return;
             }
-            if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || (string)Session["sch"] == "7" || ((string)Session["sch"] == "39" && lblprj.Text == "14211") || (string)Session["sch"] == "21" || (string)Session["sch"] == "13" || (string)Session["sch"] == "22" || (string)Session["sch"] == "12" || (string)Session["sch"] == "15" || (string)Session["sch"] == "14" || (lblprj.Text == "11784" && ((string)Session["sch"] == "28") || (string)Session["sch"] == "30" || (string)Session["sch"] == "36") || (string)Session["sch"] == "43" || (string)Session["sch"] == "35" || (string)Session["sch"] == "37" || (lblprj.Text == "11784" && ((string)Session["sch"] == "42" || (string)Session["sch"] == "39")))
+            if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || (string)Session["sch"] == "7" || ((string)Session["sch"] == "39" && lblprj.Text == "14211") || (string)Session["sch"] == "21" || (string)Session["sch"] == "13" || (string)Session["sch"] == "22" || (string)Session["sch"] == "12" || (string)Session["sch"] == "15" || (string)Session["sch"] == "14" || (lblprj.Text == "11784" && ((string)Session["sch"] == "28") || (string)Session["sch"] == "30" || (string)Session["sch"] == "36") || (string)Session["sch"] == "43" || (string)Session["sch"] == "35" || (string)Session["sch"] == "37" || (lblprj.Text == "11784" && ((string)Session["sch"] == "42" || (string)Session["sch"] == "39")) || (lblprj.Text == "SRH" && (string)Session["sch"] == "25"))
             {
                 if (IsNumeric(txtnoof.Text) == false)
                 {
@@ -3220,7 +3224,7 @@ namespace CmlTechniques
 
         protected void btnupdate_Click(object sender, EventArgs e)
         {
-            if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || (string)Session["sch"] == "7" || (string)Session["sch"] == "18" || (string)Session["sch"] == "21" || (string)Session["sch"] == "20" || (string)Session["sch"] == "13" || (string)Session["sch"] == "22" || (string)Session["sch"] == "11" || (string)Session["sch"] == "12" || (string)Session["sch"] == "15" || (string)Session["sch"] == "14" || (lblprj.Text == "11784" && (string)Session["sch"] == "28" || (string)Session["sch"] == "30") || (string)Session["sch"] == "41" || (string)Session["sch"] == "36" || (string)Session["sch"] == "43" || (string)Session["sch"] == "34" || (string)Session["sch"] == "35" || (string)Session["sch"] == "37" || (lblprj.Text == "11784" && ((string)Session["sch"] == "42" || (string)Session["sch"] == "39")))
+            if ((string)Session["sch"] == "1" || (string)Session["sch"] == "5" || (string)Session["sch"] == "7" || (string)Session["sch"] == "18" || (string)Session["sch"] == "21" || (string)Session["sch"] == "20" || (string)Session["sch"] == "13" || (string)Session["sch"] == "22" || (string)Session["sch"] == "11" || (string)Session["sch"] == "12" || (string)Session["sch"] == "15" || (string)Session["sch"] == "14" || (lblprj.Text == "11784" && (string)Session["sch"] == "28" || (string)Session["sch"] == "30") || (string)Session["sch"] == "41" || (string)Session["sch"] == "36" || (string)Session["sch"] == "43" || (string)Session["sch"] == "34" || (string)Session["sch"] == "35" || (string)Session["sch"] == "37" || (lblprj.Text == "11784" && ((string)Session["sch"] == "42" || (string)Session["sch"] == "39")) || (lblprj.Text == "SRH" && (string)Session["sch"] == "25"))
             {
                 if (IsNumeric(uplb4.Text) == false)
                 {

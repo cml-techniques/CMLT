@@ -8076,7 +8076,152 @@
         <asp:Button ID="btnMVTestDataInput" runat="server" Text="Button" style="display:none;"  />
         <asp:ModalPopupExtender ID="ModalPopupExtender_MVTestDataInput" runat="server" TargetControlID="btnMVTestDataInput"  PopupControlID="pnlMVTestDataInput" 
         X="0" Y="0" BackgroundCssClass="modal" ></asp:ModalPopupExtender>
-        
+
+
+           <asp:Panel ID="pnlPopup_25SRH" runat="server" Width="825px" Height="245px" 
+                style="padding:15px;display:none" BackColor="White"  >
+            <div>
+                <asp:UpdatePanel ID="UpdatePanel46" runat="server">
+                <ContentTemplate>
+                <table style="font-size:x-small;width:825px;" cellpadding="3" border="0" cellspacing="0" >
+                <tr >
+                        <td colspan="6" style="background-color: #092443;height:25px" >
+                            <asp:Label ID="_25slbl" runat="server" ForeColor="White"></asp:Label>
+                       </td>
+                    </tr>
+                    <tr >
+                        <td width="200PX" >
+                            CONTINUITY/IR TEST</td>
+                        <td width="75PX" >
+                            <asp:TextBox ID="_25scit" runat="server" Width="75px"></asp:TextBox>
+                        </td>
+                        <td width="200PX">
+                            ADDRESSING/PROGRAMMING TEST</td>
+                        <td width="75PX" >
+                            <asp:TextBox ID="_25sapt" runat="server" Width="75px"></asp:TextBox>
+                        </td>
+                        <td width="200PX" >
+                            FAULT &amp; ALARM TEST</td>
+                        <td width="75PX" >
+                            <asp:TextBox ID="_25sfat" runat="server" Width="75px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200PX">
+                            POWER FAILURE TEST</td>
+                        <td width="75PX">
+                            <asp:TextBox ID="_25spft" runat="server" Width="75px"></asp:TextBox>
+                        </td>
+                        <td width="200PX">
+                            <asp:TextBox ID="_25snoof" runat="server" Width="75px" style="display:none"></asp:TextBox>
+                            INTERFACE TEST</td>
+                        <td width="75PX">
+                            <asp:TextBox ID="_25sit" runat="server" Width="75px"></asp:TextBox>
+                        </td>
+                        <td width="200PX">
+                            PC HEADEND/GRAPHIC TEST</td>
+                        <td width="75PX">
+                            <asp:TextBox ID="_25sphgt" runat="server" Width="75px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr style="background-image: url('../images/head_bg.png'); background-repeat: repeat-x;">
+                        <td >
+                            CONSULTANT ACCEPTED</td>
+                        <td >
+                           
+                            <asp:TextBox ID="_25saccept1" runat="server" Width="75px"></asp:TextBox>
+                           <asp:CalendarExtender ID="CalendarExtender236" runat="server" 
+                        TargetControlID="_25saccept1" PopupButtonID="_25saccept1" ClearTime="true" 
+                        Format="dd/MM/yyyy" ></asp:CalendarExtender>
+                        </td>
+                        <td >
+                            TEST SHEETS FILED</td>
+                        <td >
+                           
+                            <asp:TextBox ID="_25sfiled1" runat="server" Width="75px"></asp:TextBox>
+                            <asp:CalendarExtender ID="CalendarExtender237" runat="server" 
+                        TargetControlID="_25sfiled1" PopupButtonID="_25sfiled1" ClearTime="true" 
+                        Format="dd/MM/yyyy" ></asp:CalendarExtender>
+                        </td>
+                        <td >
+                            &nbsp;</td>
+                        <td >
+                      </td>
+                    </tr>
+                    <tr style="background-color:#83C8EE" >
+                        <td>
+                            ACTION BY&nbsp;</td>
+                        <td colspan="2">
+                            
+                            <asp:TextBox ID="_25sactby" runat="server" Width="250px"></asp:TextBox>
+                            
+                        </td>
+                        <td>
+                            COMMENTS</td>
+                        <td colspan="2" rowspan="2">
+                            
+                            <asp:TextBox ID="_25scommts" runat="server" Height="50px" TextMode="MultiLine" 
+                                Width="97%"></asp:TextBox>
+                            
+                        </td>
+                    </tr>
+                    <tr style="background-color:#83C8EE">
+                        <td>
+                            ACTION DATE</td>
+                        <td>
+                            
+                            <asp:TextBox ID="_25sactdt" runat="server" Width="75px"></asp:TextBox>
+                            <asp:CalendarExtender ID="CalendarExtender238" runat="server" 
+                        TargetControlID="_25sactdt" PopupButtonID="_25sactdt" ClearTime="true" 
+                        Format="dd/MM/yyyy" ></asp:CalendarExtender>
+                        </td>
+                        <td>
+                            &nbsp;</td>
+                        <td>
+                            &nbsp;</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            &nbsp;</td>
+                        <td align="right">
+                           <asp:Button ID="_25sbtnupdate" runat="server" Text="Update" 
+                                onclick="_25sbtnupdate_Click"  />
+                           
+                        </td>
+                        <td align="left">
+                            <asp:Button ID="_25sbtncancel" runat="server" Text="Cancel" 
+                                onclick="_25sbtncancel_Click"   />
+                        </td>
+                        <td align="right">
+                            &nbsp;</td>
+                        <td>
+                           
+                        </td>
+                        <td>
+                            &nbsp;</td>
+                    </tr>
+                
+                </table>
+                </ContentTemplate>
+                </asp:UpdatePanel>
+                 <div id="Div25srh" runat="server" style="position:absolute; z-index:40;top:30%;left: 35%">
+        <asp:UpdateProgress ID="UpdateProgress36" runat="server" >
+            <ProgressTemplate>
+                <asp:Image ID="imgload25_SRH" runat="server" ImageUrl="../images/loading.gif" Height="200px" Width="250px" />
+            </ProgressTemplate>
+       </asp:UpdateProgress>
+        </div> 
+               
+            </div>
+        </asp:Panel>
+
+         <asp:Button ID="btn25SRH" runat="server" Text="Button" style="display:none;"  />
+       <%-- <asp:ModalPopupExtender ID="ModalPopupExtender_25SRH" runat="server" TargetControlID="btn25SRH"  PopupControlID="pnlPopup_25SRH" 
+        X="0" Y="0" BackgroundCssClass="modal" ></asp:ModalPopupExtender>--%>
+      
+        <asp:ModalPopupExtender ID="ModalPopupExtender_25SRH" runat="server" TargetControlID="btn25SRH"  PopupControlID="pnlPopup_25SRH" BackgroundCssClass="modal"></asp:ModalPopupExtender> 
+            
     </div>
     <asp:CheckBox ID="CheckBox1" runat="server" />
     <asp:CheckBox ID="CheckBox2" runat="server" />

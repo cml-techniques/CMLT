@@ -445,6 +445,13 @@
     <Compile Include="CMS\casbmsreport_pcd.aspx.designer.cs">
       <DependentUpon>casbmsreport_pcd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CMS\casElvIPTVreport.aspx.cs">
+      <DependentUpon>casElvIPTVreport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CMS\casElvIPTVreport.aspx.designer.cs">
+      <DependentUpon>casElvIPTVreport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CMS\casfdreport_pcd.aspx.cs">
       <DependentUpon>casfdreport_pcd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4583,6 +4590,7 @@
     <Content Include="Assets\js\jquery.dataTables.min.js" />
     <Content Include="Assets\js\sweetalert.min.js" />
     <Content Include="cmlhome.aspx" />
+    <Content Include="CMS\casElvIPTVreport.aspx" />
     <Content Include="CMS\Dashboard.aspx" />
     <Content Include="CMS\Dashboard1_print.aspx" />
     <Content Include="CMS\Dashboard_Print.aspx" />
