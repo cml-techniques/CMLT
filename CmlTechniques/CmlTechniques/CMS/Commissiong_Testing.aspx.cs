@@ -292,7 +292,7 @@ namespace CmlTechniques.CMS
                     lblhead.Text = "CAS M1 Ducted Fan System Commissioning Activity Schedule";
                     td_lbl2.Visible = false; td_2.Visible = false;
                 }
-                else if (lblsch.Text == "25")
+                else if (lblsch.Text == "25" && lblprj.Text!="SRH")
                 {
                     if (lblprj.Text == "OPH")
                     {
@@ -1146,7 +1146,7 @@ namespace CmlTechniques.CMS
                 }
                 else if (lblprj.Text == "SRH")
                 {
-                    ModalPopupExtender_25SRH.Show();
+                    ModalPopupExtender_26SRH.Show();
                     _26slbl.Text = _title;
                     _26sit.Text = "N/A"; _26sphgt.Text = "N/A";
                 }

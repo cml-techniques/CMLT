@@ -8078,7 +8078,7 @@
         X="0" Y="0" BackgroundCssClass="modal" ></asp:ModalPopupExtender>
 
 
-           <asp:Panel ID="pnlPopup_25SRH" runat="server" Width="825px" Height="245px" 
+           <asp:Panel ID="pnlPopup_25SRH" runat="server" Width="825px" Height="205px" 
                 style="padding:15px;display:none" BackColor="White"  >
             <div>
                 <asp:UpdatePanel ID="UpdatePanel46" runat="server">
@@ -8220,7 +8220,7 @@
         <asp:ModalPopupExtender ID="ModalPopupExtender_25SRH" runat="server" TargetControlID="btn25SRH"  PopupControlID="pnlPopup_25SRH" BackgroundCssClass="modal"></asp:ModalPopupExtender> 
         
         
-         <asp:Panel ID="pnlPopup_26SRH" runat="server" Width="825px" Height="245px" 
+         <asp:Panel ID="pnlPopup_26SRH" runat="server" Width="825px" Height="205px" 
                 style="padding:15px;display:none" BackColor="White"  >
             <div>
                 <asp:UpdatePanel ID="UpdatePanel47" runat="server">
@@ -8358,8 +8358,8 @@
             </div>
         </asp:Panel>
 
-         <asp:Button ID="Button2" runat="server" Text="Button" style="display:none;"  />      
-        <asp:ModalPopupExtender ID="ModalPopupExtender_26SRH" runat="server" TargetControlID="btn25SRH"  PopupControlID="pnlPopup_26SRH" BackgroundCssClass="modal"></asp:ModalPopupExtender> 
+         <asp:Button ID="btn26SRH" runat="server" Text="Button" style="display:none;"  />      
+        <asp:ModalPopupExtender ID="ModalPopupExtender_26SRH" runat="server" TargetControlID="btn26SRH"  PopupControlID="pnlPopup_26SRH" BackgroundCssClass="modal"></asp:ModalPopupExtender> 
 
     </div>
     <asp:CheckBox ID="CheckBox1" runat="server" />
