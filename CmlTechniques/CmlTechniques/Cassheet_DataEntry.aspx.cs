@@ -1521,32 +1521,55 @@ namespace CmlTechniques
             }
             else if ((string)Session["sch"] == "26")
             {
-                lbl1.Text = "";
-                lbl2.Text = "";
-                lbl3.Text = "FED FROM";
-                lbnum.Text = "NO.OF VALVE SETS";
-                if (lblprj.Text == "CCAD")
+
+                if (lblprj.Text != "SRH")
                 {
-                    lblhead.Text = "CAS 3M - ELV - Intercom & Healthcare Communications and Monitoring(IHCM) System Commissioning Activity Schedule";
-                    td_lbnum.Visible = false; td_txtnum.Visible = false; td_3.Visible = false; td_lbl3.Visible = false; td_txtfed.Visible = false; td_1.Visible = false; td_txtdescr.Visible = false; td_lbldes.Visible = false; tddes.Visible = false;
-                }
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD")
-                {
-                    lblhead.Text = "CAS ELV7 - Leak Detection System Commissioning Activity Schedule";
-                    lbnum.Text = "NO OF POINTS/ DETECTION";
-                    lbl3.Text = "CONNECTED FROM";
-                    td_txtdescr.Visible = false; td_lbldes.Visible = false; tddes.Visible = false;
+                    lbl1.Text = "";
+                    lbl2.Text = "";
+                    lbl3.Text = "FED FROM";
+                    lbnum.Text = "NO.OF VALVE SETS";
+                    if (lblprj.Text == "CCAD")
+                    {
+                        lblhead.Text = "CAS 3M - ELV - Intercom & Healthcare Communications and Monitoring(IHCM) System Commissioning Activity Schedule";
+                        td_lbnum.Visible = false; td_txtnum.Visible = false; td_3.Visible = false; td_lbl3.Visible = false; td_txtfed.Visible = false; td_1.Visible = false; td_txtdescr.Visible = false; td_lbldes.Visible = false; tddes.Visible = false;
+                    }
+                    else if (lblprj.Text == "OPH" || lblprj.Text == "PCD")
+                    {
+                        lblhead.Text = "CAS ELV7 - Leak Detection System Commissioning Activity Schedule";
+                        lbnum.Text = "NO OF POINTS/ DETECTION";
+                        lbl3.Text = "CONNECTED FROM";
+                        td_txtdescr.Visible = false; td_lbldes.Visible = false; tddes.Visible = false;
+                    }
+                    else
+                    {
+                        lblhead.Text = "CAS M5 Chilled & Condenser Systems Commissioning Activity Schedule";
+                    }
+                    td_lbl1.Visible = false;
+                    td_txtppt.Visible = false;
+                    td_0.Visible = false;
+                    td_lbl2.Visible = false;
+                    td_txtdes.Visible = false;
+                    td_2.Visible = false;
                 }
                 else
                 {
-                    lblhead.Text = "CAS M5 Chilled & Condenser Systems Commissioning Activity Schedule";
+                    lbl2.Text = "FED FROM";
+                    lblhead.Text = "CAS ELV 9 Nurse Call System Commissioning Activity Schedule";
+                    lbloc.Text = "SYSTEMS MONITORED";
+                    lbnum.Text = "NO.OF ACCESS CONTROLLED DOORS";
+
+                    td_lbl3.Visible = false;
+                    td_txtfed.Visible = false;
+                    td_1.Visible = false;
+                    drfed.Style.Add("display", "none");
+
+
+                    td_lbldes.Visible = false; td_txtdescr.Visible = false; tddes.Visible = false;
+                    td_lbl1.Visible = false;
+                    td_txtppt.Visible = false;
+                    td_0.Visible = false;
+
                 }
-                td_lbl1.Visible = false;
-                td_txtppt.Visible = false;
-                td_0.Visible = false;
-                td_lbl2.Visible = false;
-                td_txtdes.Visible = false;
-                td_2.Visible = false;
             }
             else if ((string)Session["sch"] == "37" && lblprj.Text != "11784")
             {
@@ -2443,11 +2466,16 @@ namespace CmlTechniques
                     tr2.Visible = false;
                     tr5.Visible = false;
                 }
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD")
+                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD" || lblprj.Text == "SRH")
+                {
                     tr0.Visible = false;
+                    lblloc.Text = lbloc.Text;
+                    lbl3.Text= lbl2.Text;
+                }
                 lb3.Text = lbl3.Text;
                 lb4.Text = lbnum.Text;
                 tr3.Visible = false; tr4.Visible = false;
+
             }
             else if ((string)Session["sch"] == "39")
             {
@@ -2871,7 +2899,8 @@ namespace CmlTechniques
                 {
                     e.Row.Cells[7].Visible = false; e.Row.Cells[9].Visible = false; e.Row.Cells[12].Visible = false;
                 }
-                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD")
+
+                else if (lblprj.Text == "OPH" || lblprj.Text == "PCD" || lblprj.Text == "SRH")
                 {
                     e.Row.Cells[7].Visible = false;
                 }

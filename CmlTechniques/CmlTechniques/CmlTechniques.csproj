@@ -466,6 +466,13 @@
     <Compile Include="CMS\casgrmsreport_PCD.aspx.designer.cs">
       <DependentUpon>casgrmsreport_PCD.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CMS\casNCSreport.aspx.cs">
+      <DependentUpon>casNCSreport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CMS\casNCSreport.aspx.designer.cs">
+      <DependentUpon>casNCSreport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CMS\casph1report_pcd.aspx.cs">
       <DependentUpon>casph1report_pcd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4591,6 +4598,7 @@
     <Content Include="Assets\js\sweetalert.min.js" />
     <Content Include="cmlhome.aspx" />
     <Content Include="CMS\casElvIPTVreport.aspx" />
+    <Content Include="CMS\casNCSreport.aspx" />
     <Content Include="CMS\Dashboard.aspx" />
     <Content Include="CMS\Dashboard1_print.aspx" />
     <Content Include="CMS\Dashboard_Print.aspx" />

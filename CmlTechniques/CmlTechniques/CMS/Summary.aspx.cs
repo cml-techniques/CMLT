@@ -461,7 +461,7 @@ namespace CmlTechniques.CMS
                 case "30": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "14211") Summary30_14211(); else if (lblprj.Text == "11784") Summary7(); else Summary8(); } else if (drtype.SelectedItem.Value == "2")if (lblprj.Text == "14211" || lblprj.Text=="11784")Building_Summary(30); else Building8(); break; }
                 case "25": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary20_1(); else if (lblprj.Text == "OPH") Summary25a(); else if (lblprj.Text == "11784") Summary2(); else if (lblprj.Text == "SRH") Summary25_SRH(); else Summary8(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "11784")Building_Summary(25); else Building8(); } break; }
                 case "27": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary27_1(); else if (lblprj.Text == "12761")Summary23_12761(); else if (lblprj.Text == "12761")Summary27_OPH(); else if (lblprj.Text == "HMIM" || lblprj.Text == "OCEC")Summary27_HMIM(); else if (lblprj.Text == "11784")Summary4(); else Summary8(); } else if (drtype.SelectedItem.Value == "2") if (lblprj.Text == "HMIM" || lblprj.Text=="11784")Building27(); else  Building8(); break; }
-                case "26": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary20_1(); else if (lblprj.Text == "11784")Summary3(); else Summary8(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "11784") Building_Summary(26); else Building8(); } break; }
+                case "26": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary20_1(); else if (lblprj.Text == "11784")Summary3(); else if (lblprj.Text == "SRH") Summary26_SRH(); else Summary8(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "11784") Building_Summary(26); else Building8(); } break; }
                 case "28": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "CCAD")Summary28_1(); else if (lblprj.Text == "HMIM")Summary28_HMIM(); else if (lblprj.Text == "14211")Summary28_14221(); else if (lblprj.Text == "OPH")Summary24(); else if (lblprj.Text == "11784") Summary1_5(); else Summary19(); } else if (drtype.SelectedItem.Value == "2")if (lblprj.Text == "14211" || lblprj.Text == "11784")Building_Summary(28); else Building19(); break; }
                 case "34": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "14211") Summary34_14211(); else if (lblprj.Text == "11784") Summary11(); else Summary34(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "14211" || lblprj.Text=="11784")Building_Summary(34); else Building34(); } break; }
                 case "35": { if (drtype.SelectedItem.Value == "1") { if (lblprj.Text == "14211") Summary35_14211(); if (lblprj.Text == "11784") Summary12(); else Summary34(); } else if (drtype.SelectedItem.Value == "2") { if (lblprj.Text == "14211" || lblprj.Text=="11784") Building_Summary(35); else Building34(); } break; }
@@ -3671,6 +3671,86 @@ namespace CmlTechniques.CMS
                     _drow[3] = "0";
                     _drow[4] = "0";
                     _drow[5] = _total.ToString();
+                    _drow[6] = row[0].ToString();
+                    _dtsummary.Rows.Add(_drow);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + ex.Message + "');", true);
+            }
+        }
+        private void Summary26_SRH()    
+        {
+            try
+            {
+                _dtsummary = new DataTable();
+                _dtsummary.Columns.Add("SYS_NAME", typeof(string));
+                _dtsummary.Columns.Add("QTY", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED1", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED2", typeof(string));
+                _dtsummary.Columns.Add("TOTAL", typeof(string));
+                _dtsummary.Columns.Add("CODE", typeof(string));
+                decimal _p1 = 0;
+                decimal _p2 = 0;
+                decimal _p3 = 0;
+                decimal _p4 = 0;
+                //decimal _p5 = 0;
+                //decimal _p6 = 0;
+                decimal _devices1 = 0;
+                decimal _devices2 = 0;
+                decimal _devices3 = 0;
+                decimal _devices4 = 0;
+                //decimal _devices5 = 0;
+                //decimal _devices6 = 0;
+
+                decimal _total = 0;
+                var _result = from _data in _dtresult.AsEnumerable()
+                              select _data;
+                foreach (var _row in _result)
+                {
+                    if (Convert.ToDecimal(_row["per_com1"].ToString()) != -1) _p1 += Convert.ToDecimal(_row["per_com1"].ToString());
+                    if (Convert.ToDecimal(_row["per_com2"].ToString()) != -1) _p2 += Convert.ToDecimal(_row["per_com2"].ToString());
+                    if (Convert.ToDecimal(_row["per_com3"].ToString()) != -1) _p3 += Convert.ToDecimal(_row["per_com3"].ToString());
+                    if (Convert.ToDecimal(_row["per_com4"].ToString()) != -1) _p4 += Convert.ToDecimal(_row["per_com4"].ToString());
+                    //if (Convert.ToDecimal(_row["per_com5"].ToString()) != -1) _p5 += Convert.ToDecimal(_row["per_com5"].ToString());
+                    //if (Convert.ToDecimal(_row["per_com6"].ToString()) != -1) _p6 += Convert.ToDecimal(_row["per_com6"].ToString());
+                    if (_row["test1"].ToString() != "N/A") _devices1 += Convert.ToInt32(_row["devices1"].ToString());
+                    if (_row["test2"].ToString() != "N/A") _devices2 += Convert.ToInt32(_row["devices1"].ToString());
+                    if (_row["test3"].ToString() != "N/A") _devices3 += Convert.ToInt32(_row["devices1"].ToString());
+                    if (_row["test4"].ToString() != "N/A") _devices4 += Convert.ToInt32(_row["devices1"].ToString());
+                    //if (_row["test5"].ToString() != "N/A") _devices5 += Convert.ToInt32(_row["devices1"].ToString());
+                    //if (_row["test6"].ToString() != "N/A") _devices6 += Convert.ToInt32(_row["devices1"].ToString());
+                }
+                BLL_Dml _objbll = new BLL_Dml();
+                _database _objdb = new _database();
+                _objdb.DBName = "DB_" + lblprj.Text;
+                _clscassheet _objcas = new _clscassheet();
+                _objcas.sch = Convert.ToInt32(lblsch1.Text);
+                DataTable _dtnames = _objbll.Load_CasTestNames(_objcas, _objdb);
+                var TestNames = from _data in _dtnames.AsEnumerable()
+                                select _data;
+                foreach (var row in TestNames)
+                {
+                    _total = 0;
+                    DataRow _drow = _dtsummary.NewRow();
+                    _drow[0] = row[0].ToString();
+                    if (row[0].ToString() == "Continuity/IR Test") { _drow[2] = Decimal.Round(_p1).ToString(); _drow[1] = _devices1.ToString(); }
+                    else if (row[0].ToString() == "Device Test") { _drow[2] = Decimal.Round(_p2).ToString(); _drow[1] = _devices2.ToString(); }
+                    else if (row[0].ToString() == "Addressing/Programming Test") { _drow[2] = Decimal.Round(_p3).ToString(); _drow[1] = _devices3.ToString(); }
+                    else if (row[0].ToString() == "Fault & Alarm Test") { _drow[2] = Decimal.Round(_p4).ToString(); _drow[1] = _devices4.ToString(); }
+
+                    //else if (row[0].ToString() == "Interface Test") { _drow[2] = decimal.Round(_p6).ToString(); _drow[1] = _devices5.ToString(); }
+                    //else if (row[0].ToString() == "PC Headend/Graphics Test") { _drow[2] = decimal.Round(_p6).ToString(); _drow[1] = _devices6.ToString(); }
+                    if (_drow[1].ToString() != "0")
+                    {
+                        _total = (Convert.ToDecimal(_drow[2].ToString()) / (Convert.ToDecimal(_drow[1].ToString()))) * 100;
+                        if (_total >= 99.5m && _total < 100m) _total = 99;
+                    }
+                    _drow[3] = "0";
+                    _drow[4] = "0";
+                    _drow[5] = decimal.Round(_total).ToString();
                     _drow[6] = row[0].ToString();
                     _dtsummary.Rows.Add(_drow);
                 }
@@ -7309,7 +7389,7 @@ namespace CmlTechniques.CMS
              {
                  _name = lblsch.Text + "_" + lblprj.Text;
              }
-            if (lblprj.Text == "SRH" && lblsch.Text == "25")
+            if (lblprj.Text == "SRH" && (lblsch.Text == "25" || lblsch.Text == "26"))
             {
                 _name = lblsch.Text + "_" + lblprj.Text;
             }

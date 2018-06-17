@@ -222,24 +222,47 @@ namespace CmlTechniques.CMS
             }
             else if (lblsch.Text == "17" || lblsch.Text == "24" || lblsch.Text == "30" || (lblsch.Text == "25" && lblprj.Text != "SRH") || lblsch.Text == "26" || (lblsch.Text == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && (lblsch.Text == "38" || lblsch.Text == "45")) || (lblprj.Text == "MOE" && lblsch.Text == "32"))
             {
-                lbl1.Text = "";
-                lbl2.Text = "DESCRIPTION";
-                lbl3.Text = "FED FROM";
-                if (lblsch.Text == "17" || (lblprj.Text == "11784" && lblsch.Text == "38"))
+                if (lblprj.Text != "SRH")
                 {
-                    if (lblprj.Text == "11784" && lblsch.Text == "38")
+                    lbl1.Text = "";
+                    lbl2.Text = "DESCRIPTION";
+                    lbl3.Text = "FED FROM";
+                    if (lblsch.Text == "17" || (lblprj.Text == "11784" && lblsch.Text == "38"))
                     {
-                        lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule - Marketing Suite";
+                        if (lblprj.Text == "11784" && lblsch.Text == "38")
+                        {
+                            lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule - Marketing Suite";
+                        }
+                        else if (lblprj.Text == "11784" && (string)Session["sch"] == "45")
+                        {
+                            lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule - Marketing Suite";
+                        }
+                        else
+                            lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule";
+                        td_lbl2.Visible = false; td_2.Visible = false; td_0.Visible = false; td_lbnum.Visible = false;
+                        td_3.Visible = false; td_lbl1.Visible = false;
                     }
-                    else if(lblprj.Text == "11784" && (string)Session["sch"] == "45")
-                    {
-                        lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule - Marketing Suite";
-                    }
-                    else
-                        lblhead.Text = "CAS PH1 Public Health Services Commissioning Activity Schedule";
-                    td_lbl2.Visible = false; td_2.Visible = false; td_0.Visible = false; td_lbnum.Visible = false;
-                    td_3.Visible = false; td_lbl1.Visible = false;  
                 }
+                else
+                {
+                    lbl2.Text = "FED FROM";
+                    lblhead.Text = "CAS ELV 9 Nurse Call System Commissioning Activity Schedule";
+                    lbloc.Text = "SYSTEMS MONITORED";
+                    lbnum.Text = "NO.OF ACCESS CONTROLLED DOORS";
+
+                    td_lbl3.Visible = false;
+                    td_1.Visible = false;
+                    drfed.Style.Add("display", "none");
+
+
+                    td_lbldes.Visible = false; td_txtdescr.Visible = false;
+                    td_lbl1.Visible = false;
+                    td_0.Visible = false;
+
+                }
+
+
+            }
                 else if (lblsch.Text == "24" || (lblsch.Text == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && lblsch.Text == "45") || (lblprj.Text == "MOE" && lblsch.Text == "32"))
                 {
                     if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
@@ -299,7 +322,7 @@ namespace CmlTechniques.CMS
                         td_lbnum.Visible = false; td_3.Visible = false;
                     }
                     td_lbl2.Visible = false; td_2.Visible = false;
-                }
+                //}
                 td_0.Visible = false; td_lbl1.Visible = false;
             }
             else if (lblsch.Text == "27" && lblprj.Text != "12761")
@@ -1121,6 +1144,12 @@ namespace CmlTechniques.CMS
                     btnDummy_ModalPopupExtender26a.Show();
                     _26lbl.Text = _title;
                 }
+                else if (lblprj.Text == "SRH")
+                {
+                    ModalPopupExtender_25SRH.Show();
+                    _26slbl.Text = _title;
+                    _26sit.Text = "N/A"; _26sphgt.Text = "N/A";
+                }
                 else
                 {
                     btnDummy_ModalPopupExtender25.Show();
@@ -1220,6 +1249,7 @@ namespace CmlTechniques.CMS
             }
             else if (lblsch.Text == "17" || lblsch.Text == "24" || lblsch.Text == "30" || (lblsch.Text == "25" && lblprj.Text != "SRH")|| lblsch.Text == "26" || lblsch.Text == "27" || (lblsch.Text == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && (lblsch.Text == "38" || lblsch.Text == "45")) || (lblprj.Text == "MOE" && lblsch.Text == "32"))
             {
+
                 e.Row.Cells[10].Visible = false; e.Row.Cells[12].Visible = false; e.Row.Cells[11].Visible = false;
                 if (lblsch.Text == "27" && lblprj.Text == "12761")
                     e.Row.Cells[7].Visible = false;
@@ -1232,6 +1262,12 @@ namespace CmlTechniques.CMS
                 {
                     e.Row.Cells[7].Visible = false;
                     e.Row.Cells[10].Visible = true;
+                }
+                else if (lblprj.Text == "SRH" && lblsch.Text == "26")
+                {
+                    e.Row.Cells[7].Visible = false;
+                    e.Row.Cells[12].Visible = true; ;
+
                 }
                 else if (lblprj.Text == "OPH" && lblsch.Text == "27")
                 { e.Row.Cells[7].Visible = false; }
@@ -1663,64 +1699,64 @@ namespace CmlTechniques.CMS
                 else if (lblprj.Text == "HMIM")
                 {
                     {
-                    int _no = 0;
-                    if (txtTorqueTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtTorqueTest.Text))?(count+1):count;    
+                        int _no = 0;
+                        if (txtTorqueTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtTorqueTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtIRTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtIRTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtHiPotTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtHiPotTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtVTTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtVTTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtCTTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtCTTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtPrimInjTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtPrimInjTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtSecInjTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtSecInjTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtDuctorTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtDuctorTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtFuncTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtFuncTest.Text)) ? (count + 1) : count;
+                        }
+                        if (txtProtRelayTest.Text != "N/A")
+                        {
+                            _no += 1;
+                            count = (DateValidation(txtProtRelayTest.Text)) ? (count + 1) : count;
+                        }
+
+
+                        if (_no == 0)
+                            _percentage = -1;
+                        else
+                            _percentage = (Convert.ToDecimal(count) / _no) * 100;
                     }
-                    if (txtIRTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtIRTest.Text)) ? (count + 1) : count; 
-                    }
-                    if (txtHiPotTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtHiPotTest.Text)) ? (count + 1) : count;
-                    }
-                    if (txtVTTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtVTTest.Text)) ? (count + 1) : count;
-                    }
-                    if (txtCTTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtCTTest.Text)) ? (count + 1) : count;
-                    }
-                    if (txtPrimInjTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtPrimInjTest.Text)) ? (count + 1) : count;
-                    }
-                    if (txtSecInjTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtSecInjTest.Text)) ? (count + 1) : count;
-                    }
-                    if (txtDuctorTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtDuctorTest.Text)) ? (count + 1) : count;
-                    }
-                    if (txtFuncTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtFuncTest.Text)) ? (count + 1) : count;
-                    }
-                    if (txtProtRelayTest.Text != "N/A")
-                    {
-                        _no += 1;
-                        count = (DateValidation(txtProtRelayTest.Text)) ? (count + 1) : count;
-                    }
-                  
-                   
-                    if (_no == 0)
-                        _percentage = -1;
-                    else
-                        _percentage = (Convert.ToDecimal(count) / _no) * 100;
-                }
                 }
                 else
                 #region
@@ -1804,7 +1840,7 @@ namespace CmlTechniques.CMS
                     count += 1;
                 _percentage = (Convert.ToDecimal(count) / 3) * 100;
             }
-            else if (lblsch.Text == "3" || (lblprj.Text == "11784" && (lblsch.Text== "26")))
+            else if (lblsch.Text == "3" || (lblprj.Text == "11784" && (lblsch.Text == "26")))
             {
                 if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
                 {
@@ -1949,7 +1985,7 @@ namespace CmlTechniques.CMS
 
                 }
             }
-            else if (lblsch.Text == "32" && lblprj.Text!="MOE")
+            else if (lblsch.Text == "32" && lblprj.Text != "MOE")
             {
                 if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
                 {
@@ -1978,7 +2014,7 @@ namespace CmlTechniques.CMS
                     //    _percentage = 1;
                 }
             }
-            else if (lblsch.Text == "13" ||(lblprj.Text == "11784" && lblsch.Text == "36"))
+            else if (lblsch.Text == "13" || (lblprj.Text == "11784" && lblsch.Text == "36"))
             {
                 if (IsNumeric(_13cit.Text))
                     _percentage = Convert.ToDecimal(_13cit.Text);
@@ -2003,7 +2039,7 @@ namespace CmlTechniques.CMS
             {
                 if (isElvdateProject)
                 {
-                    if (DateValidation(_10ccit.Text) == true)_percentage = 1;
+                    if (DateValidation(_10ccit.Text) == true) _percentage = 1;
                 }
                 else
                 {
@@ -2095,7 +2131,7 @@ namespace CmlTechniques.CMS
                         _percentage = Convert.ToDecimal(_15cit.Text);
                 }
             }
-            else if (lblsch.Text == "14" || (lblprj.Text == "11784" && lblsch.Text=="37" ))
+            else if (lblsch.Text == "14" || (lblprj.Text == "11784" && lblsch.Text == "37"))
             {
                 if (IsNumeric(_14cit.Text))
                     _percentage = Convert.ToDecimal(_14cit.Text);
@@ -2178,15 +2214,15 @@ namespace CmlTechniques.CMS
                 if (IsNumeric(_16ir.Text))
                     _percentage = Convert.ToDecimal(_16ir.Text);
             }
-            else if (lblsch.Text == "24" || (lblsch.Text == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && lblsch.Text == "45")|| (lblprj.Text == "MOE" && lblsch.Text == "32"))
+            else if (lblsch.Text == "24" || (lblsch.Text == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && lblsch.Text == "45") || (lblprj.Text == "MOE" && lblsch.Text == "32"))
             {
                 if (DateValidation(_24ir.Text) == true)
-                        count += 1;
-                    if (DateValidation(_24ft.Text) == true)
-                        count += 1;
-                    if (DateValidation(_24it.Text) != true)
-                        count += 1;
-                    _percentage = (Convert.ToDecimal(count) / 3) * 100;              
+                    count += 1;
+                if (DateValidation(_24ft.Text) == true)
+                    count += 1;
+                if (DateValidation(_24it.Text) != true)
+                    count += 1;
+                _percentage = (Convert.ToDecimal(count) / 3) * 100;
             }
             else if (lblsch.Text == "30")
             {
@@ -2201,11 +2237,19 @@ namespace CmlTechniques.CMS
                         _percentage = 1;
 
                 }
-                if (lblsch.Text == "25" && lblprj.Text == "SRH")
+               else if (lblprj.Text == "SRH")
                 {
-                    if (IsNumeric(_25scit.Text))
-                        _percentage = Convert.ToDecimal(_25scit.Text);
+                    if (lblsch.Text == "25")
+                    {
+                        if (IsNumeric(_25scit.Text))
+                            _percentage = Convert.ToDecimal(_25scit.Text);
+                    }
+                    else
+                    {
+                        if (IsNumeric(_26scit.Text))
+                            _percentage = Convert.ToDecimal(_26scit.Text);
 
+                    }
                 }
                 else
                 {
@@ -2213,6 +2257,7 @@ namespace CmlTechniques.CMS
                         _percentage = 1;
                 }
             }
+
             else if (lblsch.Text == "27" && lblprj.Text != "12761")
             {
                 if (lblprj.Text == "OPH")
@@ -2402,7 +2447,7 @@ namespace CmlTechniques.CMS
             bool v = lblsch.Text == "5";
             if (lblsch.Text == "1" || v || (lblprj.Text == "11784" && lblsch.Text == "28"))
             {
-                   if (_5tc.Text == "N/A")
+                if (_5tc.Text == "N/A")
                     _percentage = -1;
 
                 if ((IsNumeric(_5total.Text) == true) && (IsNumeric(_5tc.Text) == true))
@@ -2458,8 +2503,8 @@ namespace CmlTechniques.CMS
                     if (txtCableIR.Text != "N/A") NoOfTestParams += 1;
                     if (txtTerTorTest.Text != "N/A") NoOfTestParams += 1;
 
-                    if(NoOfTestParams != 0)
-                    _percentage = (IRTestedCables + TerTorTestedCables) / (Convert.ToDecimal(lblNoOfCables.Text) * NoOfTestParams) * 100;
+                    if (NoOfTestParams != 0)
+                        _percentage = (IRTestedCables + TerTorTestedCables) / (Convert.ToDecimal(lblNoOfCables.Text) * NoOfTestParams) * 100;
                 }
                 else
                 {
@@ -2583,6 +2628,15 @@ namespace CmlTechniques.CMS
                 {
                     if (IsNumeric(_20ppt.Text) == true)
                         _percentage = Convert.ToDecimal(_20ppt.Text);
+                }
+            }
+            else if (lblsch.Text == "26")
+            {
+                if (lblprj.Text == "SRH")
+                { 
+                    if (IsNumeric(_26sdvt.Text) == true)
+                        _percentage = Convert.ToDecimal(_26sdvt.Text);
+
                 }
             }
             else if (lblsch.Text == "32" && lblprj.Text!="MOE")
@@ -2793,6 +2847,7 @@ namespace CmlTechniques.CMS
                 if (DateValidation(_18accept1.Text) == true)
                     _percentage = 1;
             }
+
             else if (lblsch.Text == "12" || (lblprj.Text == "11784" && lblsch.Text == "35"))
             {
                 if (DateValidation(_12accept1.Text) == true)
@@ -3022,8 +3077,17 @@ namespace CmlTechniques.CMS
             }
             else if (lblsch.Text == "26")
             {
-                if (DateValidation(_25accept1.Text) == true)
-                    _percentage = 1;
+                if (lblprj.Text == "SRH")
+                {
+                    if (IsNumeric(_26sapt.Text))
+                        _percentage = Convert.ToDecimal(_26sapt.Text);
+
+                }
+                else
+                {
+                    if (DateValidation(_25accept1.Text) == true)
+                        _percentage = 1;
+                }
             }
             else if (lblsch.Text == "27" && lblprj.Text != "12761")
             {
@@ -3229,8 +3293,17 @@ namespace CmlTechniques.CMS
             }
             else if (lblsch.Text == "26")
             {
-                if (IsNumeric(_26duty.Text) == true)
-                    _percentage = Convert.ToDecimal(_26duty.Text);
+                if (lblprj.Text == "SRH")
+                {
+                    if (IsNumeric(_26sfst.Text) == true)
+                        _percentage = Convert.ToDecimal(_26sfst.Text);
+
+                }
+                else
+                {
+                    if (IsNumeric(_26duty.Text) == true)
+                        _percentage = Convert.ToDecimal(_26duty.Text);
+                }
             }
             else if (lblsch.Text == "27" && lblprj.Text != "12761")
             {
@@ -3588,11 +3661,21 @@ namespace CmlTechniques.CMS
                 if (IsNumeric(_10cet.Text) == true)
                     _percentage = Convert.ToDecimal(_10cet.Text);
             }
-            else if (lblsch.Text == "25" || lblprj.Text == "SRH")
+            else if (lblsch.Text == "25" && lblprj.Text == "SRH")
             {
                 decimal _total = per_com1() + per_com2() + per_com3() + per_com4() + per_com5() + per_com6();
                 decimal _qty = Convert.ToDecimal(_25snoof.Text);
                 _percentage = (_total / (_qty * 6)) * 100;
+            }
+            else if (lblsch.Text == "26")
+            {
+                if (lblprj.Text == "SRH")
+                {
+                    decimal _total = per_com1() + per_com2() + per_com3() + per_com4();
+                    decimal _qty = Convert.ToDecimal(_26snoof.Text);
+                    _percentage = (_total / (_qty * 4)) * 100;
+
+                }
             }
             return _percentage;
         }
@@ -4638,20 +4721,43 @@ namespace CmlTechniques.CMS
                 }
                 else if (lblsch.Text == "26")
                 {
-                    _25pwron.Text = row[14].ToString();
-                    _25pc1.Text = row[24].ToString();
-                    _25co1.Text = row[25].ToString();
-                    _25wd1.Text = row[26].ToString();
-                    _25pc2.Text = row[27].ToString();
-                    _25co2.Text = row[28].ToString();
-                    _25wd2.Text = row[29].ToString();
-                    _25idc.Text = row["test7"].ToString();
-                    _25accept1.Text = row["accept1"].ToString();
-                    _25filed1.Text = row["filed1"].ToString();
-                    _25commts.Text = row[18].ToString();
-                    _25actby.Text = row[19].ToString();
-                    _25actdt.Text = row[20].ToString();
-                    _26duty.Text = row["per_com4"].ToString();
+                    if (lblprj.Text == "SRH")
+                    {
+                        _26scit.Text = row["test1"].ToString();
+                        _26sdvt.Text = row["test2"].ToString();
+                        _26sapt.Text = row["test3"].ToString();
+                        _26sfst.Text = row["test4"].ToString();
+                        _26sit.Text = row["test5"].ToString();
+                        _26sphgt.Text = row["test6"].ToString();
+
+                        _26saccept1.Text = row["accept1"].ToString();
+                        _26sfiled1.Text = row["filed1"].ToString();
+                        _26scommts.Text = row[18].ToString();
+                        _26sactby.Text = row[19].ToString();
+                        _26sactdt.Text = row[20].ToString();
+
+
+                        _26snoof.Text = row["devices1"].ToString();
+
+                    }
+                    else
+                    {
+
+                        _25pwron.Text = row[14].ToString();
+                        _25pc1.Text = row[24].ToString();
+                        _25co1.Text = row[25].ToString();
+                        _25wd1.Text = row[26].ToString();
+                        _25pc2.Text = row[27].ToString();
+                        _25co2.Text = row[28].ToString();
+                        _25wd2.Text = row[29].ToString();
+                        _25idc.Text = row["test7"].ToString();
+                        _25accept1.Text = row["accept1"].ToString();
+                        _25filed1.Text = row["filed1"].ToString();
+                        _25commts.Text = row[18].ToString();
+                        _25actby.Text = row[19].ToString();
+                        _25actdt.Text = row[20].ToString();
+                        _26duty.Text = row["per_com4"].ToString();
+                    }
                 }
                 else if (lblsch.Text == "27" && lblprj.Text != "12761")
                 {
@@ -5347,7 +5453,18 @@ namespace CmlTechniques.CMS
             ModalPopupExtender_25SRH.Hide();    
 
         }
+        protected void _26sbtnupdate_Click(object sender, EventArgs e)
+        {
+            Update("", _26scit.Text, _26sdvt.Text, _26sapt.Text, _26sfst.Text, _26sit.Text, _26sphgt.Text, "", "", "", "", "", "", "", "", "", "", _26snoof.Text, _26saccept1.Text, "", _26sfiled1.Text, "", _26scommts.Text, _26sactby.Text, _26sactdt.Text);
+            ModalPopupExtender_26SRH.Hide();
 
-        
+        }
+        protected void _26sbtncancel_Click(object sender, EventArgs e)
+        {
+            ModalPopupExtender_26SRH.Hide();
+
+        }
+
+
     }
 }

@@ -1014,7 +1014,9 @@ namespace CmlTechniques.CMS
                 if (lblprj.Text == "CCAD")
                     myframe1.Attributes.Add("src", "cas3Mreport.aspx?id=" + lblprj.Text);
                 else if (lblprj.Text == "OPH")
-                    myframe1.Attributes.Add("src", "casldreport_oph.aspx?id=" + lblprj.Text);      
+                    myframe1.Attributes.Add("src", "casldreport_oph.aspx?id=" + lblprj.Text);
+                else if (lblprj.Text == "SRH")
+                    myframe1.Attributes.Add("src", "casNCSreport.aspx?id=" + lblprj.Text + "&sch=" + lblsch.Text);  
                 else
                     myframe1.Attributes.Add("src", "casccsreport.aspx?id=" + lblprj.Text);
             }
