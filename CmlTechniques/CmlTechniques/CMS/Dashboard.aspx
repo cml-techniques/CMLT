@@ -36,6 +36,7 @@
         var chartData4;
         var chartData5;
         var chartData6;
+        var chartData7;
         var detailData;
         google.load("visualization", "1", { packages: ['corechart'] });
          
@@ -108,8 +109,8 @@
                 doc.addImage(columnchart4.getImageURI(), 0, height + 20, width, height);
                 doc.addPage();
                 //doc.addImage(columnchart5.getImageURI(), 0, 20, width, height);
-                  doc.addImage(columnchart6.getImageURI(), 0, height + 20, width, height); 
-                  doc.addImage(columnchart7.getImageURI(), 0, height, width, height); 
+                doc.addImage(columnchart6.getImageURI(), 0, 20, width, height); 
+                doc.addImage(columnchart7.getImageURI(), 0, height + 20, width, height); 
                 doc.save('Dashboard.pdf');                
             }, false);
 
