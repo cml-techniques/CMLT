@@ -1930,6 +1930,11 @@ namespace CmlTechniques.CMS
                             _p1 = -1;
                             _per1 = -1;
                         }
+                        else if (lblprj.Text == "SRH")
+                        {
+                            _total = Decimal.Round((_per1 * 0.5m) + (_per2 * 0.3m) + (_per3 * 0.2m), MidpointRounding.AwayFromZero);
+
+                        }
                         else
                         {
                             if (_per2 == -1 && _per3 != -1)

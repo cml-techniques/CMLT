@@ -222,7 +222,23 @@ namespace CmlTechniques.CMS
             }
             else if (lblsch.Text == "17" || lblsch.Text == "24" || lblsch.Text == "30" || (lblsch.Text == "25" && lblprj.Text != "SRH") || lblsch.Text == "26" || (lblsch.Text == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && (lblsch.Text == "38" || lblsch.Text == "45")) || (lblprj.Text == "MOE" && lblsch.Text == "32"))
             {
-                if (lblprj.Text != "SRH")
+                if ((lblprj.Text == "SRH") && lblsch.Text == "26")
+                {
+                    lbl2.Text = "FED FROM";
+                    lblhead.Text = "CAS ELV 9 Nurse Call System Commissioning Activity Schedule";
+                    lbloc.Text = "SYSTEMS MONITORED";
+                    lbnum.Text = "NO OF DEVICES";
+
+                    td_lbl3.Visible = false;
+                    td_1.Visible = false;
+                    drfed.Style.Add("display", "none");
+
+
+                    td_lbldes.Visible = false; td_txtdescr.Visible = false;
+                    td_lbl1.Visible = false;
+                    td_0.Visible = false;
+                }
+                else
                 {
                     lbl1.Text = "";
                     lbl2.Text = "DESCRIPTION";
@@ -243,25 +259,6 @@ namespace CmlTechniques.CMS
                         td_3.Visible = false; td_lbl1.Visible = false;
                     }
                 }
-                else
-                {
-                    lbl2.Text = "FED FROM";
-                    lblhead.Text = "CAS ELV 9 Nurse Call System Commissioning Activity Schedule";
-                    lbloc.Text = "SYSTEMS MONITORED";
-                    lbnum.Text = "NO.OF ACCESS CONTROLLED DOORS";
-
-                    td_lbl3.Visible = false;
-                    td_1.Visible = false;
-                    drfed.Style.Add("display", "none");
-
-
-                    td_lbldes.Visible = false; td_txtdescr.Visible = false;
-                    td_lbl1.Visible = false;
-                    td_0.Visible = false;
-
-                }
-
-
             }
                 else if (lblsch.Text == "24" || (lblsch.Text == "41" && lblprj.Text == "123") || (lblprj.Text == "11784" && lblsch.Text == "45") || (lblprj.Text == "MOE" && lblsch.Text == "32"))
                 {

@@ -1056,26 +1056,35 @@ namespace CmlTechniques.CMS
                         }
                         else if (row.col3.ToString() == "DB")
                         {
-                            if (_per2 == -1 && _per3 != -1)
+
+                            if (lblprj.Text == "SRH")
                             {
-                                _total = Decimal.Round(((_per1 * 0.5m) + (_per3 * 0.5m)), MidpointRounding.AwayFromZero);
-                                _p2 = -1;
-                            }
-                            else if (_per3 == -1 && _per2 != -1)
-                            {
-                                _total = Decimal.Round(((_per1 * 0.5m) + (_per2 * 0.5m)), MidpointRounding.AwayFromZero);
-                                _p3 = -1;
-                            }
-                            else if (_per2 == -1 && _per3 == -1)
-                            {
-                                _total = Decimal.Round(((_per1)), MidpointRounding.AwayFromZero);
-                                _p2 = -1;
-                                _p3 = -1;
+                                _total = Decimal.Round((_per1 * 0.5m) + (_per2 * 0.3m) + (_per3 * 0.2m), MidpointRounding.AwayFromZero);
+
                             }
                             else
                             {
-                                _total = Decimal.Round((_per2 * 0.6m) + (_per3 * 0.4m), MidpointRounding.AwayFromZero);
-                                _p1 = -1;
+                                if (_per2 == -1 && _per3 != -1)
+                                {
+                                    _total = Decimal.Round(((_per1 * 0.5m) + (_per3 * 0.5m)), MidpointRounding.AwayFromZero);
+                                    _p2 = -1;
+                                }
+                                else if (_per3 == -1 && _per2 != -1)
+                                {
+                                    _total = Decimal.Round(((_per1 * 0.5m) + (_per2 * 0.5m)), MidpointRounding.AwayFromZero);
+                                    _p3 = -1;
+                                }
+                                else if (_per2 == -1 && _per3 == -1)
+                                {
+                                    _total = Decimal.Round(((_per1)), MidpointRounding.AwayFromZero);
+                                    _p2 = -1;
+                                    _p3 = -1;
+                                }
+                                else
+                                {
+                                    _total = Decimal.Round((_per2 * 0.6m) + (_per3 * 0.4m), MidpointRounding.AwayFromZero);
+                                    _p1 = -1;
+                                }
                             }
                         }
                         else if (row.col3.ToString() == "LCP")

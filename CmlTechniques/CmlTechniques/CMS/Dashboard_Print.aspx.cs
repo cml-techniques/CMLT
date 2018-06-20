@@ -87,7 +87,8 @@ namespace CmlTechniques.CMS
                 List<ServiceDetails> datalist1 = new List<ServiceDetails>();
                 List<ServiceDetails> datalist2 = new List<ServiceDetails>();
                 List<ServiceDetails> datalist4 = new List<ServiceDetails>();
-                foreach (DataRow dr in _dt1.Rows)
+               List<ServiceDetails> datalist7 = new List<ServiceDetails>(); 
+            foreach (DataRow dr in _dt1.Rows)
                 {
                     ServiceDetails serdetails = new ServiceDetails
                     {
@@ -118,7 +119,22 @@ namespace CmlTechniques.CMS
                     }
                 nestedlist.Add(datalist2);
 
-                DataTable _dt3 = (DataTable)(HttpContext.Current.Session["GetServiceData_3"]);
+            DataTable _dt4 = (DataTable)(HttpContext.Current.Session["GetServiceData_7"]);
+
+            foreach (DataRow dr in _dt4.Rows)
+            {
+                ServiceDetails serdetails = new ServiceDetails
+                {
+                    Label = dr["CAS_NAME"].ToString(),
+                    Progress = Convert.ToDecimal(dr["AMOUNT"]),
+                    //PlannedProgress = Convert.ToDecimal(dr["PCOMPROGRESS"]),
+                    ID = Convert.ToInt32(dr["CAS_ID"])
+                };
+                datalist7.Add(serdetails);
+            }
+            nestedlist.Add(datalist7);
+
+            DataTable _dt3 = (DataTable)(HttpContext.Current.Session["GetServiceData_3"]);
 
                 foreach (DataRow dr in _dt3.Rows)
                 {
@@ -132,6 +148,8 @@ namespace CmlTechniques.CMS
                     datalist4.Add(serdetails);
                 }
                 nestedlist.Add(datalist4);
+
+
 
             return nestedlist;
         }

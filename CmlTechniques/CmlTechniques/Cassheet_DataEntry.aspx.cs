@@ -1556,7 +1556,7 @@ namespace CmlTechniques
                     lbl2.Text = "FED FROM";
                     lblhead.Text = "CAS ELV 9 Nurse Call System Commissioning Activity Schedule";
                     lbloc.Text = "SYSTEMS MONITORED";
-                    lbnum.Text = "NO.OF ACCESS CONTROLLED DOORS";
+                    lbnum.Text = "NO OF DEVICES";
 
                     td_lbl3.Visible = false;
                     td_txtfed.Visible = false;

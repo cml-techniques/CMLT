@@ -148,6 +148,12 @@ namespace CmlTechniques.CMS
             string _name = lblsch.Text;
 
 
+            if (lblprj.Text == "SRH" && (lblsch.Text == "25" || lblsch.Text == "26"))
+            {
+                _name = lblsch.Text + "_" + lblprj.Text;
+            }
+
+
             cryRpt.SetParameterValue("name", _name);
             cryRpt.SetParameterValue("project", get_project());
             cryRpt.SetParameterValue("data_title", Get_Title());

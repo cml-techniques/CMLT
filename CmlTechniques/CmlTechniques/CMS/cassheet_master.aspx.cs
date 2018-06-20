@@ -1146,8 +1146,8 @@ namespace CmlTechniques.CMS
                     if (lblprj.Text == "AFV") url = "Id=" + lblsch.Text + "&Prj=" + lblprj.Text + "&Type=0" + "&div=" + lbldiv.Text;
                     myframe1.Attributes.Add("src", "Summary_New.aspx?" + url);
                 }
-                //else if (isPcdProject)
-                //      myframe1.Attributes.Add("src", "Summary_New.aspx?Id=" + lblsch.Text + "&Prj=" + lblprj.Text +"&Type=0");
+                else if (lblprj.Text == "SRH")
+                    myframe1.Attributes.Add("src", "Summary_New.aspx?Id=" + lblsch.Text + "&Prj=" + lblprj.Text + "&Type=0");
                 else  if (!(lblprj.Text == "12761" && lblsch.Text == "23"))
                      myframe1.Attributes.Add("src", "Summary.aspx?id=0" + lblsch.Text + "_P" + lblprj.Text);
             }

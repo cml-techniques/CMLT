@@ -92,7 +92,7 @@ namespace CmlTechniques.CMS
             };
 
             Load_Service(_objdb.DBName);
-            List<int> list = _dtService.AsEnumerable().Where(x => (x.Field<int>("SYS_SER_ID") == 1 || x.Field<int>("SYS_SER_ID") == 2 || x.Field<int>("SYS_SER_ID") == 4)).Select(dr => dr.Field<int>("SYS_SER_ID")).ToList();
+            List<int> list = _dtService.AsEnumerable().Where(x => (x.Field<int>("SYS_SER_ID") == 1 || x.Field<int>("SYS_SER_ID") == 2 || x.Field<int>("SYS_SER_ID") == 3) || x.Field<int>("SYS_SER_ID") == 4).Select(dr => dr.Field<int>("SYS_SER_ID")).ToList();
             List<List<ServiceDetails>> nestedlist = new List<List<ServiceDetails>>();
             foreach (int i in list)
             {
@@ -108,6 +108,7 @@ namespace CmlTechniques.CMS
                 List<ServiceDetails> datalist1 = new List<ServiceDetails>();
                 List<ServiceDetails> datalist2 = new List<ServiceDetails>();
                 List<ServiceDetails> datalist4 = new List<ServiceDetails>();
+                List<ServiceDetails> datalist7 = new List<ServiceDetails>();
                 foreach (DataRow dr in _dt1.Tables[count - 1].Rows)
                 {
                     ServiceDetails serdetails = new ServiceDetails
@@ -121,8 +122,11 @@ namespace CmlTechniques.CMS
                         datalist1.Add(serdetails);
                     else if (i == 2)
                         datalist2.Add(serdetails);
+                    else if (i == 3)
+                        datalist7.Add(serdetails);
                     else if (i == 4)
                         datalist4.Add(serdetails);
+
                 }
                 if (i == 1)
                 {
@@ -134,11 +138,17 @@ namespace CmlTechniques.CMS
                     nestedlist.Add(datalist2);
                     HttpContext.Current.Session["GetServiceData_2"] = _dt1.Tables[count - 1];
                 }
+                else if (i == 3)
+                {
+                    nestedlist.Add(datalist7);
+                    HttpContext.Current.Session["GetServiceData_7"] = _dt1.Tables[count - 1];
+                }
                 else if (i == 4)
                 {
                     nestedlist.Add(datalist4);
                     HttpContext.Current.Session["GetServiceData_3"] = _dt1.Tables[count - 1];
                 }
+
             }
             return nestedlist;
         }
