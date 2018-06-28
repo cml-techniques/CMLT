@@ -1009,6 +1009,12 @@ namespace CmlTechniques.CMS
             else if (lblsch.Text == "21" || (lblprj.Text == "11784" && (string)Session["sch"] == "42")) { btnDummy_ModalPopupExtender8.Show(); _21lbl.Text = _title; }
             else if (lblsch.Text == "9" || (lblprj.Text == "11784" && lblsch.Text == "32"))
             {
+                string decodeTypeValue = Context.Server.HtmlDecode(hdnType.Value).Trim();
+               if (string.IsNullOrEmpty(hdnType.Value) || (String.IsNullOrWhiteSpace(decodeTypeValue)))
+                {
+                    hdnType.Value = Session["cat"].ToString() == "FD" ? "fusible" : "motorised";
+                }
+
                 if (lblprj.Text != "ASAO")
                 {
                     lblicom.Visible = false;
