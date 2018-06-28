@@ -17,6 +17,7 @@ namespace CmlTechniques.CMS
         public static DataTable _dtfilter;
         public static DataTable _dtresult;
         public static DataTable _summary;
+        public bool isNewProject;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -48,8 +49,9 @@ namespace CmlTechniques.CMS
                 
                 Hide_Details();
                 Session["zero"] = "1";
-                
-                
+
+                isNewProject = (Array.IndexOf(Constants.CMLTConstants.recentProjects, lblprj.Text) > -1) ? true : false;
+
                 //Head_Merging();
                 drfed.Style.Add("display", "none");
                 if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
@@ -57,6 +59,7 @@ namespace CmlTechniques.CMS
                     
                     Generate_Summary1();
                 }
+                else if (isNewProject) { Generate_Summary_New(); }
                 else
                 {
                     td_icom1.Visible = false;
@@ -64,6 +67,7 @@ namespace CmlTechniques.CMS
                     Generate_Summary();
                 }
             }
+            isNewProject = (Array.IndexOf(Constants.CMLTConstants.recentProjects, lblprj.Text) > -1) ? true : false;
         }
         private void Set_Title()
         {
@@ -296,6 +300,8 @@ namespace CmlTechniques.CMS
 
                 Generate_Summary1();
             }
+            else if (isNewProject) { Generate_Summary_New(); }
+
             ScriptManager.RegisterStartupScript(this, typeof(string), "close", "window.open('" + _path + "');", true);
         }
         protected void mymaster_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -566,10 +572,72 @@ namespace CmlTechniques.CMS
             }
             _dtresult = _filter.Any() ? _filter.CopyToDataTable() : _dtMaster.Clone();
             Load_Details();
-            if (lblprj.Text == "ASAO" || lblprj.Text=="ASAO1")
+            if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
                 Generate_Summary1();
+            else if (isNewProject) { Generate_Summary_New(); }
             else
                 Generate_Summary();
+        }
+        private void Generate_Summary_New() 
+        {
+            try
+            {
+                DataTable _dtsummary = new DataTable();
+                _dtsummary.Columns.Add("SYS_NAME", typeof(string));
+                _dtsummary.Columns.Add("QTY", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED1", typeof(string));
+                _dtsummary.Columns.Add("PER_COMPLETED2", typeof(string));
+                _dtsummary.Columns.Add("TOTAL", typeof(string));
+                _dtsummary.Columns.Add("CODE", typeof(string));
+                var distinctRows = (from DataRow dRow in _dtresult.Rows
+                                    select new { col1 = dRow["Sys_Id"], col2 = dRow["Sys_name"], col3 = dRow["Cat"] }).Distinct();
+                foreach (var row in distinctRows)
+                {
+                    //_row[0] = row.col1.ToString();
+                    //_row[1] = row.col2.ToString();
+                    decimal _p1 = 0;
+                    decimal _p2 = 0;
+                    decimal _p3 = 0;
+                    decimal _total = 0;
+                    int count = 0;
+                    var _result = from _data in _dtresult.AsEnumerable()
+                                  where _data.Field<int>("Sys_id") == Convert.ToInt32(row.col1.ToString())
+                                  select _data;
+                    foreach (var _row in _result)
+                    {
+                        _p1 += Convert.ToDecimal(_row["per_com1"].ToString());
+                        _p2 += Convert.ToDecimal(_row["per_com2"].ToString());
+                        count += 1;
+                    }
+                    if (_p1 != 0)
+                        _total = Decimal.Round((_p1 / Convert.ToDecimal(count)));
+                    DataRow _drow = _dtsummary.NewRow();
+                    _drow[0] = row.col2.ToString();
+                    _drow[1] = count.ToString();
+                    _drow[2] = Decimal.Round(_p1).ToString();
+
+                    if (_p1 > 0)
+                    {
+                        _drow[3] = (_p1 / 100).ToString();
+                    }
+                    else
+                        _drow[3] = "0";
+
+                    //_drow[3] = Decimal.Round(_p1).ToString();
+                    _drow[4] = Decimal.Round(_p2).ToString();
+                    _drow[5] = _total.ToString();
+                    _drow[6] = row.col3.ToString();
+                    _dtsummary.Rows.Add(_drow);
+                }
+                mygridsumm.DataSource = _dtsummary;
+                mygridsumm.DataBind();
+                _summary = _dtsummary;
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('" + ex.Message + "');", true);
+            }
         }
         private void Generate_Summary()
         {
@@ -772,6 +840,7 @@ namespace CmlTechniques.CMS
             Hide_Details();
             if (lblprj.Text == "ASAO" || lblprj.Text == "ASAO1")
                 Generate_Summary1();
+            else if (isNewProject) { Generate_Summary_New(); }
             else
                 Generate_Summary();
         }
@@ -785,6 +854,7 @@ namespace CmlTechniques.CMS
             Load_Details();
             if (lblprj.Text == "ASAO" || lblprj.Text=="ASAO1")
                 Generate_Summary1();
+            else if (isNewProject) { Generate_Summary_New(); }
             else
                 Generate_Summary();
         }

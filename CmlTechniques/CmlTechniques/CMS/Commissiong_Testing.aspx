@@ -284,6 +284,7 @@
                 <asp:BoundField DataField="C_id" />
                 <asp:BoundField DataField="Sys_Id" />
                 <asp:BoundField DataField="Sys_Name" />
+                <asp:BoundField DataField="cat_type" />
                 </Columns>
                 </asp:GridView>
                 <%--</ContentTemplate>
@@ -2866,6 +2867,7 @@
                             
                         </td>
                         <td class="tdstyle1">
+                             <asp:HiddenField ID="hdnType" runat="server" />
                             &nbsp;</td>
                         <td>
                             COMMENTS</td>

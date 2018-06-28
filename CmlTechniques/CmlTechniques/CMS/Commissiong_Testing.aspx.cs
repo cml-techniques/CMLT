@@ -919,6 +919,9 @@ namespace CmlTechniques.CMS
             Session["casid"] = _item1.Text;
             Session["idx"] = _idx.ToString();
             Session["cat"] = _cat.Text;
+
+            hdnType.Value = _srow.Cells[16].Text;
+
             //arrange_testing();
             // ScriptManager.RegisterStartupScript(this, typeof(string), "close", "alert('I'm Here!');", true);
 
@@ -1814,17 +1817,51 @@ namespace CmlTechniques.CMS
             }
             else if (lblsch.Text == "9" || (lblprj.Text == "11784" && lblsch.Text == "32"))
             {
-                if (_9aa.Text != "N/A")
+                decimal _no = 0;
+                count = 0;
+                if (hdnType.Value == "fusible")
                 {
-                    chk_9aa.Checked = true;
-                    if (_9aa.Text != "" && _9dtp.Text != "" && _9rp.Text != "")
-                        _percentage = 1;
+                    if (_9aa.Text != "N/A")
+                        _no += 1;
+                    if (_9dtp.Text != "N/A")
+                        _no += 1;
+                    if (_9rp.Text != "N/A")
+                        _no += 1;
+
+                    if (DateValidation(_9aa.Text) == true)
+                        count += 1;
+                    if (DateValidation(_9dtp.Text) == true)
+                        count += 1;
+                    if (DateValidation(_9rp.Text) == true)
+                        count += 1;
+
+                    if (_no > 0) _percentage = (Convert.ToDecimal(count) / _no) * 100;
+                    else _percentage = -1;
+
                 }
-                else if (_9moo.Text != "N/A")
+                else if (hdnType.Value == "motorised")
                 {
-                    chk_9moo.Checked = true;
-                    if (_9moo.Text != "" && _9sro.Text != "" && _9est.Text != "" && _9psrt.Text != "")
-                        _percentage = 1;
+                    if (_9moo.Text != "N/A" && _9aa.Text != "NA")
+                        _no += 1;
+                    if (_9sro.Text != "N/A" && _9dtp.Text != "NA")
+                        _no += 1;
+                    if (_9est.Text != "N/A" && _9rp.Text != "NA")
+                        _no += 1;
+                    if (_9est.Text != "N/A" && _9psrt.Text != "NA")
+                        _no += 1;
+
+                    if (DateValidation(_9moo.Text) == true)
+                        count += 1;
+                    if (DateValidation(_9sro.Text) == true)
+                        count += 1;
+                    if (DateValidation(_9est.Text) == true)
+                        count += 1;
+                    if (DateValidation(_9psrt.Text) == true)
+                        count += 1;
+
+                    if (_no > 0) _percentage = (Convert.ToDecimal(count) / _no) * 100;
+                    else _percentage = -1;
+
                 }
             }
             else if (lblsch.Text == "4" || (lblprj.Text == "11784" && lblsch.Text == "27"))

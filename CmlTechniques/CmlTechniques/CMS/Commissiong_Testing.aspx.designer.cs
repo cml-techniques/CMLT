@@ -4486,6 +4486,15 @@ namespace CmlTechniques.CMS {
         protected global::System.Web.UI.WebControls.TextBox _9actby;
         
         /// <summary>
+        /// hdnType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnType;
+        
+        /// <summary>
         /// _9commts control.
         /// </summary>
         /// <remarks>
