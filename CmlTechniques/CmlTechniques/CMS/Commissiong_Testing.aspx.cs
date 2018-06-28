@@ -1193,6 +1193,7 @@ namespace CmlTechniques.CMS
             e.Row.Cells[13].Visible = false;
             e.Row.Cells[14].Visible = false;
             e.Row.Cells[15].Visible = false;
+            e.Row.Cells[16].Visible = false;
             //e.Row.Cells[0].Enabled = false;
             //if (e.Row.Cells[1].Text != "") return;
             //if (e.Row.Cells[0].Text != "")
