@@ -636,7 +636,7 @@
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
                 success: function (data) {
-                    chartData = data.d;
+                    chartData = data.d.Result;
                 },
                 error: function () {
                     xhr1.abort();
@@ -653,10 +653,10 @@
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
                 success: function (data) {
-                    chartData1 = data.d[0];
-                    chartData2 = data.d[1];
-                    chartData6 = data.d[3];
-                    chartData7 = data.d[2];
+                    chartData1 = data.d.Result[0];
+                    chartData2 = data.d.Result[1];
+                    chartData6 = data.d.Result[3];
+                    chartData7 = data.d.Result[2];
                 },
                 error: function (data) {
                     xhr2.abort();
@@ -672,7 +672,7 @@
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
                 success: function (data) {
-                    chartData4 = data.d[0];
+                    chartData4 = data.d.Result[0];
                     //chartData5 = data.d[1];
                 },
                 error: function (data) {
@@ -717,7 +717,7 @@
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
                 success: function (data) {
-                    detailData = data.d;
+                    detailData = data.d.Result;
                 },
                 error: function () {
                     //$('#loader7').hide();
@@ -758,10 +758,10 @@
       
         
         $(window).resize(function () {
-            drawChart(chartData);
+            drawChart();
             drawServiceChart();
             //drawExecutiveChart(chartData3);
-            drawCassheetChart(chartData4);
+            drawCassheetChart();
             //drawDetailsChart(detailData, label);
             //drawDetailsChart1(detailData, label);
         });

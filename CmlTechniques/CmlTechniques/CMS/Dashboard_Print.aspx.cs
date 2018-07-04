@@ -8,6 +8,8 @@ using BusinessLogic;
 using App_Properties;
 using System.Data;
 using System.Web.Services;
+using System.Threading.Tasks;
+
 namespace CmlTechniques.CMS
 {
     public partial class Dashboard_Print : System.Web.UI.Page   
@@ -45,7 +47,8 @@ namespace CmlTechniques.CMS
             else lblcmlhead.Text = "CML International (" + _location + ") LLC";
         }
         [WebMethod]
-        public static List<ChartDetails> GetChartData(string prj)
+        //public static List<ChartDetails> GetChartData(string prj)
+       public static async Task<List<ChartDetails>> GetChartData(string prj)
         {
             BLL_Dml _objbll = new BLL_Dml();
 
@@ -71,10 +74,12 @@ namespace CmlTechniques.CMS
                 };
                 dataList.Add(details);
             }
+            await Task.Yield();
             return dataList;
         }
         [WebMethod]
-        public static List<List<ServiceDetails>> GetServiceData(string prj)
+        //public static List<List<ServiceDetails>> GetServiceData(string prj)
+            public static async Task<List<List<ServiceDetails>>> GetServiceData(string prj)
         {
 
             //List<int> list = _dtService.AsEnumerable().Where(x => (x.Field<int>("SYS_SER_ID") == 1 || x.Field<int>("SYS_SER_ID") == 2 || x.Field<int>("SYS_SER_ID") == 4)).Select(dr => dr.Field<int>("SYS_SER_ID")).ToList();
@@ -149,13 +154,14 @@ namespace CmlTechniques.CMS
                 }
                 nestedlist.Add(datalist4);
 
-
+            await Task.Yield();
 
             return nestedlist;
         }
 
         [WebMethod]
-        public static List<List<ChartDetails>> GetCasDetails(string prj)
+        //public static List<List<ChartDetails>> GetCasDetails(string prj)
+        public static async Task<List<List<ChartDetails>>> GetCasDetails(string prj)
         {
             List<List<ChartDetails>> nestedlist = new List<List<ChartDetails>>();
             DataTable _dt1 = (DataTable)(HttpContext.Current.Session["GetCasDetails_1"]);
@@ -190,11 +196,12 @@ namespace CmlTechniques.CMS
             nestedlist.Add(datalist2);
 
 
-
+            await Task.Yield();
             return nestedlist;
         }
         [WebMethod]
-        public static List<CasSheetDetails> GetModalDetails(int casid, string prj)
+        //public static List<CasSheetDetails> GetModalDetails(int casid, string prj)
+              public static async Task<List<CasSheetDetails>> GetModalDetails(int casid, string prj)
         {
             BLL_Dml _objbll = new BLL_Dml();
             _database _objdb = new _database { DBName = "DB_" + prj };
@@ -224,6 +231,7 @@ namespace CmlTechniques.CMS
             //    }
 
             //}
+            await Task.Yield();
             return datalist1;
         }
         private static void Load_Service(string prj)
