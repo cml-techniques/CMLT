@@ -62,16 +62,16 @@ namespace CmlTechniques.CMS
                     //lblfpath.Text = _path.Replace(">", "#");                                                    
 
                     package.Text = "Upload Document";
-
                     prj.Text = Get_ProjectName();
 
-                    if (lblmod.Text == "Method Statement" && lblprj.Text == "HMIM")
+                    if (lblmod.Text == "Method Statement")
                     {
-                        ViewState["ServiceID"] = _prm.Substring(_prm.IndexOf("_V4/1") + 6);
-                    }
+                        if (lblprj.Text == "HMIM") ViewState["ServiceID"] = _prm.Substring(_prm.IndexOf("_V4/1") + 6);
+                        else ViewState["ServiceID"] = _prm.Substring(_prm.IndexOf("_V4/") + 4, 1);
+                    } 
 
                     Load_ProjectCompany();
-                    Load_Module_users();
+                    Load_Module_users(); 
                     Setting();
 
                 }
