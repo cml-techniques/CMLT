@@ -33,11 +33,7 @@ namespace CmlTechniques.CMS
                 {
                     btnadd.Enabled = false;
 
-                    if (lblprj.Text == "ABS")
-                    {
-                        publicCls.publicCls _obj = new publicCls.publicCls();
-                        if (_obj.Load_User_Module_Permission(lblprj.Text, (string)Session["uid"], 3)) { btnadd.Enabled = true; Session["ModuleAccess"] = "1"; }
-                    }
+                    if (lblprj.Text == "ABS") Permission();
                 }
 
                 load_services(lblprj.Text);
@@ -52,6 +48,20 @@ namespace CmlTechniques.CMS
                 LoadModuleUsers();
 
 
+            }
+        }
+        private void Permission()
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clsuser _objcls = new _clsuser();
+            _objdb.DBName = "dbCML";
+            _objcls.uid = (string)Session["uid"];
+            _objcls.project_code = lblprj.Text;
+            string _access = _objbll.Get_User_cmsAccess(_objcls, _objdb);
+            if (_access != "Admin")
+            {
+                btnadd.Enabled = false;
             }
         }
         void _ReadCookies()

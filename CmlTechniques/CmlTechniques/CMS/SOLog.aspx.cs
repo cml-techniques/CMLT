@@ -86,7 +86,14 @@ namespace CmlTechniques.CMS
                 {
                     dvfixedhead.Visible = false;
                     dvGrid.Style["top"] = "81px";
-                }           
+                }
+
+                if ((string)Session["group"] != "ADMIN GROUP" && (string)Session["group"] != "SYS.ADMIN GROUP")
+                {
+                    btnadd.Enabled = false;
+
+                    if (lblprj.Text == "ABS") Permission();
+                }
             }
             else
             {
@@ -95,7 +102,20 @@ namespace CmlTechniques.CMS
 
             isNewProject = (Array.IndexOf(Constants.CMLTConstants.recentProjects, lblprj.Text) > -1) ? true : false;
         }
-
+        private void Permission()
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clsuser _objcls = new _clsuser();
+            _objdb.DBName = "dbCML";
+            _objcls.uid = (string)Session["uid"];
+            _objcls.project_code = lblprj.Text;
+            string _access = _objbll.Get_User_cmsAccess(_objcls, _objdb);
+            if (_access != "Admin")
+            {
+                btnadd.Enabled = false;
+            }
+        }
         protected void load_so_dir()
         {
             BLL_Dml _objbll = new BLL_Dml();

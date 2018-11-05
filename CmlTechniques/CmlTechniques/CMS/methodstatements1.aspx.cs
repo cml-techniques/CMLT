@@ -55,13 +55,10 @@ namespace CmlTechniques.CMS
 
                 if ((string)Session["group"] != "ADMIN GROUP" && (string)Session["group"] != "SYS.ADMIN GROUP")
                 {
-                    btnuploadnew.Visible = false;
+                    btnuploadnew.Enabled = false;
 
-                    if (lblprj.Text == "ABS")
-                    {
-                        publicCls.publicCls _obj = new publicCls.publicCls();
-                        btnuploadnew.Visible = _obj.Load_User_Module_Permission(lblprj.Text, (string)Session["uid"], 4);
-                    }
+                    if (lblprj.Text == "ABS") Permission();
+
                 }
                 if (lblprj.Text == "HMIM" || lblprj.Text == "HMHS" || lblprj.Text == "ABS")
                 {
@@ -72,6 +69,20 @@ namespace CmlTechniques.CMS
                     dvfixedhead.Visible = false;
                     dvfixedcontent.Style.Add("Top", "0px");
                 }
+            }
+        }
+        private void Permission()
+        {
+            BLL_Dml _objbll = new BLL_Dml();
+            _database _objdb = new _database();
+            _clsuser _objcls = new _clsuser();
+            _objdb.DBName = "dbCML";
+            _objcls.uid = (string)Session["uid"];
+            _objcls.project_code = lblprj.Text;
+            string _access = _objbll.Get_User_cmsAccess(_objcls, _objdb);
+            if (_access != "Admin")
+            {
+                btnuploadnew.Enabled = false;
             }
         }
         private void Get_ProjectName()
