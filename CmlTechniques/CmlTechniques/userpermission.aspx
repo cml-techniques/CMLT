@@ -74,6 +74,8 @@ body {
             </tr>
             <tr>
                 <td>
+                                            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>
                     <asp:Panel ID="Panel1" runat="server">
                         <table >
                             <tr>
@@ -96,13 +98,13 @@ body {
                         </table>
                         <br />
                     <br />
-                    <asp:Button ID="cmdsubmit" runat="server" Text="Submit" onclick="cmdsubmit_Click" 
-                             />
-                        
-                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                   
+                             <asp:Button ID="cmdsubmit" runat="server" Text="Submit" onclick="cmdsubmit_Click"/>
+                             
+                    </asp:Panel>
+                                  </ContentTemplate>
                         </asp:UpdatePanel>
                         
-                    </asp:Panel>
                         
                 </td>
             </tr>
