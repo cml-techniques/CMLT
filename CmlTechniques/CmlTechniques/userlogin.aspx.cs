@@ -7,6 +7,9 @@ using System.Web.UI.WebControls;
 using BusinessLogic;
 using App_Properties;
 using System.Xml;
+using System.Net;
+using Newtonsoft.Json;
+using System.Globalization;
 
 namespace CmlTechniques
 {
@@ -137,27 +140,15 @@ namespace CmlTechniques
        
         private List<string> LoadIPLocation(string ipAddress)
         {
-            string City = "";
-            string Country = "";
-            string Region = "";
-
+            IpInfo ipInfo = new IpInfo();
             try
             {
                 if (!string.IsNullOrEmpty(ipAddress))
                 {
-                    XmlDocument doc = new XmlDocument();
-                    string getdetails = "https://www.freegeoip.net/xml/" + ipAddress;
-                    doc.Load(getdetails);
-
-                    XmlNodeList node = doc.GetElementsByTagName("City");
-                    City = node[0].InnerText;
-
-                    node = doc.GetElementsByTagName("CountryName");
-                    Country = node[0].InnerText;
-
-                    node = doc.GetElementsByTagName("RegionName");
-                    Region = node[0].InnerText;
-                    doc = null;
+                    string info = new WebClient().DownloadString("http://ipinfo.io/" + ipAddress);
+                    ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                    RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                    ipInfo.Country = myRI1.EnglishName;
 
                 }
 
@@ -171,9 +162,9 @@ namespace CmlTechniques
 
             }
             List<string> locationdetails = new List<string>();
-            locationdetails.Add(Country);
-            locationdetails.Add(Region);
-            locationdetails.Add(City);
+            locationdetails.Add(ipInfo.Country);
+            locationdetails.Add(ipInfo.Region);
+            locationdetails.Add(ipInfo.City);
             return locationdetails;
         }
         protected void cmdlogin_Click(object sender, EventArgs e)
@@ -388,5 +379,32 @@ namespace CmlTechniques
                 Response.Redirect("CMS/CMS.aspx?id=" + _prm);
             }
         }
+    }
+    public class IpInfo
+    {
+
+        [JsonProperty("ip")]
+        public string Ip { get; set; }
+
+        [JsonProperty("hostname")]
+        public string Hostname { get; set; }
+
+        [JsonProperty("city")]
+        public string City { get; set; }
+
+        [JsonProperty("region")]
+        public string Region { get; set; }
+
+        [JsonProperty("country")]
+        public string Country { get; set; }
+
+        [JsonProperty("loc")]
+        public string Loc { get; set; }
+
+        [JsonProperty("org")]
+        public string Org { get; set; }
+
+        [JsonProperty("postal")]
+        public string Postal { get; set; }
     }
 }

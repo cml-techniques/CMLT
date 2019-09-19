@@ -51,6 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Desktop\Ajaxcal\1_4_1\BasicFrame.WebControls.BasicDatePicker.dll</HintPath>
     </Reference>
+    <Reference Include="CmlDLL">
+      <HintPath>..\..\CmlDLL\CmlDLL\bin\Release\CmlDLL.dll</HintPath>
+    </Reference>
     <Reference Include="com.flajaxian.FileUploader, Version=2.0.3430.0, Culture=neutral, PublicKeyToken=98ef6b70d9d62bae, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Downloads\com.flajaxian.FileUploader.dll</HintPath>
@@ -103,6 +106,9 @@
     <Reference Include="MultiFieldGroupingRepeater, Version=1.0.2231.26109, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Downloads\groupingrepeater_src\MultiFieldGroupingRepeater\bin\Release\MultiFieldGroupingRepeater.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
@@ -5048,6 +5054,7 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
     <Content Include="Handlers\Uploader.ashx" />
+    <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="RDLC\CrystalReport3.rpt" />
     <None Include="DTPschema.xsd" />
@@ -6477,12 +6484,6 @@
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CmlDLL\CmlDLL\CmlDLL.csproj">
-      <Project>{03715C3E-FE5E-4780-8DAC-30696A3E58A8}</Project>
-      <Name>CmlDLL</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

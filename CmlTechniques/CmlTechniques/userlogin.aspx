@@ -15,8 +15,6 @@
 <meta name="googlebot" content="index, follow" />
 <meta name="OriginalPublicationDate" content="2010/03/23 15:00:00" />
  
-<%--<META name="REVISIT-AFTER" content="1 days"><LINK rel="shortcut icon" href="images/Favicon.ico" type="image/x-icon" />
-<LINK rel="icon" type="image/gif" href="animated_favicon.gif" />--%>
     <title>CML Techniques | Online Project Management System</title>
     <link rel="shortcut icon" href="Images/favicon.ico"/> 
     <script type="text/javascript">
@@ -33,8 +31,6 @@
             document.getElementById('_login').value = dt.format("dd/MM/yyyy hh:mm:ss tt");
         }
         function getInternetExplorerVersion()
-        // Returns the version of Internet Explorer or a -1
-        // (indicating the use of another browser).
         {
             var rv = -1; // Return value assumes failure.
             if (navigator.appName == 'Microsoft Internet Explorer') {
